@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Beyond CNL Linter</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600&family=DM+Sans:wght@400;500;600;700&display=swap');
+
+    :root {
+      --bg-deep: #0a0e17;
+      --bg-panel: #111827;
+      --bg-surface: #1a2234;
+      --bg-input: #0d1320;
+      --border: #1e2d45;
+      --border-focus: #3b82f6;
+      --text-primary: #e2e8f0;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --accent: #3b82f6;
+      --accent-glow: rgba(59, 130, 246, 0.15);
+      --error: #ef4444;
+      --error-bg: rgba(239, 68, 68, 0.08);
+      --error-border: rgba(239, 68, 68, 0.3);
+      --warning: #f59e0b;
+      --warning-bg: rgba(245, 158, 11, 0.08);
+      --warning-border: rgba(245, 158, 11, 0.3);
+      --info: #3b82f6;
+      --info-bg: rgba(59, 130, 246, 0.08);
+      --info-border: rgba(59, 130, 246, 0.3);
+      --success: #10b981;
+      --success-bg: rgba(16, 185, 129, 0.1);
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'DM Sans', system-ui, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      border-bottom: 1px solid var(--border);
+      padding: 1.25rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--bg-panel);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--mono);
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    .logo-sub {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .version-badge {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.25rem 0.6rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .version-badge:hover {
+      border-color: var(--accent);
+      color: var(--text-secondary);
+    }
+
+    /* ===== MAIN LAYOUT ===== */
+    .main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      height: calc(100vh - 60px);
+    }
+
+    @media (max-width: 900px) {
+      .main {
+        grid-template-columns: 1fr;
+        height: auto;
+      }
+    }
+
+    /* ===== INPUT PANEL ===== */
+    .panel {
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .panel:last-child { border-right: none; }
+
+    .panel-header {
+      padding: 0.75rem 1.25rem;
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .panel-title {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .panel-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 0;
+    }
+
+    /* ===== INPUT CONTROLS ===== */
+    .input-controls {
+      padding: 1rem 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .url-input {
+      flex: 1;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      padding: 0.5rem 0.75rem;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .url-input:focus { border-color: var(--border-focus); }
+    .url-input::placeholder { color: var(--text-muted); }
+
+    .btn {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: white;
+    }
+    .btn-primary:hover { background: #2563eb; }
+    .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .btn-secondary {
+      background: var(--bg-surface);
+      color: var(--text-secondary);
+    }
+    .btn-secondary:hover { background: var(--border); color: var(--text-primary); }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: transparent;
+      color: var(--text-muted);
+    }
+    .btn-ghost:hover { color: var(--text-primary); }
+
+    .input-tabs {
+      display: flex;
+      gap: 0;
+    }
+
+    .input-tab {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      padding: 0.4rem 0.8rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .input-tab:first-child { border-radius: 4px 0 0 4px; }
+    .input-tab:last-child { border-radius: 0 4px 4px 0; }
+    .input-tab + .input-tab { border-left: none; }
+
+    .input-tab.active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .textarea-wrap {
+      flex: 1;
+      position: relative;
+    }
+
+    #textInput {
+      width: 100%;
+      height: 100%;
+      min-height: 180px;
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.7;
+      padding: 1rem 1.25rem;
+      background: var(--bg-deep);
+      border: none;
+      color: var(--text-primary);
+      resize: none;
+      outline: none;
+      tab-size: 2;
+    }
+
+    #textInput::placeholder { color: var(--text-muted); }
+
+    .url-section { display: none; }
+    .url-section.active { display: block; }
+    .text-section { display: none; }
+    .text-section.active { display: flex; flex-direction: column; flex: 1; }
+
+    /* ===== RESULTS PANEL ===== */
+    .results-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--text-muted);
+      padding: 2rem;
+      text-align: center;
+      gap: 1rem;
+    }
+
+    .results-empty-icon {
+      font-size: 2.5rem;
+      opacity: 0.3;
+    }
+
+    .results-empty-text {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      line-height: 1.8;
+    }
+
+    /* ===== SUMMARY BAR ===== */
+    .summary-bar {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1.25rem;
+      flex-shrink: 0;
+    }
+
+    .summary-status {
+      font-family: var(--mono);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+    }
+
+    .status-pass {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .status-fail {
+      background: var(--error-bg);
+      color: var(--error);
+      border: 1px solid var(--error-border);
+    }
+
+    .summary-counts {
+      display: flex;
+      gap: 1rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+    }
+
+    .count-item {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .count-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .count-dot.error { background: var(--error); }
+    .count-dot.warning { background: var(--warning); }
+    .count-dot.info { background: var(--info); }
+
+    .summary-time {
+      margin-left: auto;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+    }
+
+    /* ===== LAYER BREAKDOWN ===== */
+    .layer-breakdown {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      flex-wrap: wrap;
+    }
+
+    .layer-chip {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 3px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .layer-chip:hover { border-color: var(--text-muted); }
+    .layer-chip.active { border-color: var(--accent); color: var(--accent); background: var(--accent-glow); }
+    .layer-chip.has-errors { border-color: var(--error-border); color: var(--error); }
+
+    /* ===== FINDINGS LIST ===== */
+    .findings-list {
+      padding: 0.5rem 0;
+    }
+
+    .finding-item {
+      padding: 0.75rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.15s;
+      cursor: default;
+    }
+
+    .finding-item:hover { background: var(--bg-surface); }
+
+    .finding-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .finding-severity {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .finding-severity.error { background: var(--error); box-shadow: 0 0 6px var(--error); }
+    .finding-severity.warning { background: var(--warning); box-shadow: 0 0 6px var(--warning); }
+    .finding-severity.info { background: var(--info); }
+
+    .finding-category {
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .finding-line {
+      font-family: var(--mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      margin-left: auto;
+    }
+
+    .finding-rule {
+      font-family: var(--mono);
+      font-size: 0.6rem;
+      color: var(--text-muted);
+      padding: 0.1rem 0.4rem;
+      background: var(--bg-deep);
+      border-radius: 2px;
+    }
+
+    .finding-word {
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      color: var(--error);
+      margin-bottom: 0.3rem;
+      padding: 0.2rem 0.5rem;
+      background: var(--error-bg);
+      border-radius: 3px;
+      display: inline-block;
+      max-width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .finding-word.warning-word { color: var(--warning); background: var(--warning-bg); }
+    .finding-word.info-word { color: var(--info); background: var(--info-bg); }
+
+    .finding-reason {
+      font-size: 0.78rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* ===== DOWNLOAD BAR ===== */
+    .download-bar {
+      padding: 0.75rem 1.25rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      gap: 0.5rem;
+      flex-shrink: 0;
+      background: var(--bg-panel);
+    }
+
+    /* ===== LOADING STATE ===== */
+    .loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3rem;
+      gap: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 0.8rem;
+    }
+
+    .spinner {
+      width: 16px;
+      height: 16px;
+      border: 2px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <div>
+        <div class="logo">BEYOND CNL LINTER</div>
+        <div class="logo-sub">Grammar and Lexicon Checker for BEYOND</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <a href="https://github.com/alex987654/BEYOND" target="_blank" rel="noopener" class="version-badge" style="text-decoration:none;">github.com/alex987654/BEYOND</a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <div class="main">
+
+    <!-- INPUT PANEL -->
+    <div class="panel">
+      <div class="panel-header">
+        <span class="panel-title">Input</span>
+        <div class="input-tabs">
+          <button class="input-tab active" data-tab="text" onclick="switchTab('text')">Paste Text</button>
+          <button class="input-tab" data-tab="url" onclick="switchTab('url')">Fetch URL</button>
+        </div>
+      </div>
+
+      <div class="input-controls">
+        <div class="url-section" id="urlSection">
+          <div class="input-row">
+            <input type="text" class="url-input" id="urlInput"
+              placeholder="URL to a .md or .txt file (HTML pages: only text content is extracted)">
+            <button class="btn btn-primary" id="fetchBtn" onclick="fetchAndLint()">Fetch & Lint</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="text-section active" id="textSection">
+        <div class="textarea-wrap">
+          <textarea id="textInput" placeholder="Paste a Beyond CNL document here..."></textarea>
+        </div>
+      </div>
+
+      <div class="download-bar">
+        <button class="btn btn-primary" id="lintBtn" onclick="runLint()">Run Linter</button>
+        <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
+      </div>
+    </div>
+
+    <!-- RESULTS PANEL -->
+    <div class="panel" id="resultsPanel">
+      <div class="panel-header">
+        <span class="panel-title">Results</span>
+        <div id="downloadBtns" style="display:none;">
+          <button class="btn btn-ghost" onclick="downloadReport()">↓ Download .md report</button>
+        </div>
+      </div>
+
+      <div class="panel-body" id="resultsBody">
+        <div class="results-empty" id="emptyState">
+          <div class="results-empty-icon">◇</div>
+          <div class="results-empty-text">
+            Paste text or fetch a URL, then run the linter.<br>
+            Every word checked against the approved<br>
+            ~2,187-word Beyond CNL vocabulary.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/lexicon.js"></script>
+  <script src="js/linter.js"></script>
+  <script>
+    // ===== STATE =====
+    let lastResults = null;
+    let lastText = '';
+    let activeLayerFilter = null;
+
+    // ===== TAB SWITCHING =====
+    function switchTab(tab) {
+      document.querySelectorAll('.input-tab').forEach(t => t.classList.remove('active'));
+      document.querySelector(`[data-tab="${tab}"]`).classList.add('active');
+
+      document.getElementById('urlSection').classList.toggle('active', tab === 'url');
+      document.getElementById('textSection').classList.toggle('active', tab === 'text');
+    }
+
+    // ===== FETCH URL =====
+    async function fetchAndLint() {
+      const url = document.getElementById('urlInput').value.trim();
+      if (!url) return;
+
+      const fetchBtn = document.getElementById('fetchBtn');
+      fetchBtn.disabled = true;
+      fetchBtn.textContent = 'Fetching...';
+
+      showLoading();
+
+      try {
+        // Try direct fetch first (works for CORS-enabled URLs like GitHub raw)
+        let response;
+        try {
+          response = await fetch(url);
+        } catch (e) {
+          // Fall back to CORS proxy
+          response = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`);
+        }
+
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+
+        let text = await response.text();
+
+        // If HTML, extract text content
+        if (url.endsWith('.html') || text.trimStart().startsWith('<')) {
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(text, 'text/html');
+          // Remove script/style
+          doc.querySelectorAll('script, style').forEach(el => el.remove());
+          text = doc.body.innerText || doc.body.textContent || text;
+        }
+
+        document.getElementById('textInput').value = text;
+        switchTab('text');
+        runLint();
+
+      } catch (err) {
+        showError(`Failed to fetch URL: ${err.message}. Try pasting the text directly.`);
+      } finally {
+        fetchBtn.disabled = false;
+        fetchBtn.textContent = 'Fetch & Lint';
+      }
+    }
+
+    // ===== RUN LINTER =====
+    function runLint() {
+      const text = document.getElementById('textInput').value.trim();
+      if (!text) return;
+
+      lastText = text;
+      const results = BeyondLinter.lint(text);
+      lastResults = results;
+      activeLayerFilter = null;
+
+      renderResults(results);
+    }
+
+    // ===== RENDER RESULTS =====
+    function renderResults(results) {
+      const { findings, summary } = results;
+      const body = document.getElementById('resultsBody');
+
+      document.getElementById('downloadBtns').style.display = 'flex';
+
+      // Filter by layer if active
+      const filtered = activeLayerFilter
+        ? findings.filter(f => f.layer === activeLayerFilter)
+        : findings;
+
+      let html = '';
+
+      // Summary bar
+      html += `<div class="summary-bar">
+        <span class="summary-status ${summary.compliant ? 'status-pass' : 'status-fail'}">
+          ${summary.compliant ? 'COMPLIANT' : 'NON-COMPLIANT'}
+        </span>
+        <div class="summary-counts">
+          <span class="count-item"><span class="count-dot error"></span>${summary.errors} errors</span>
+          <span class="count-item"><span class="count-dot warning"></span>${summary.warnings} warnings</span>
+          <span class="count-item"><span class="count-dot info"></span>${summary.info} info</span>
+        </div>
+        <span class="summary-time">${summary.elapsedMs}ms</span>
+      </div>`;
+
+      // Layer filter chips
+      const layerNames = ['', 'Lexicon', 'Grammar', 'Evidential', 'Markdown', 'Hazard'];
+      html += `<div class="layer-breakdown">`;
+      for (let i = 1; i <= 5; i++) {
+        const count = summary.byLayer[i];
+        const hasErrors = findings.some(f => f.layer === i && f.severity === 'error');
+        const isActive = activeLayerFilter === i;
+        html += `<button class="layer-chip ${isActive ? 'active' : ''} ${hasErrors ? 'has-errors' : ''}"
+          onclick="filterLayer(${i})">L${i} ${layerNames[i]}: ${count}</button>`;
+      }
+      html += `<button class="layer-chip ${!activeLayerFilter ? 'active' : ''}"
+        onclick="filterLayer(null)">All: ${summary.totalFindings}</button>`;
+      html += `</div>`;
+
+      // Findings list
+      if (filtered.length === 0) {
+        html += `<div class="results-empty" style="height:auto;padding:3rem;">
+          <div class="results-empty-icon" style="font-size:1.5rem">✓</div>
+          <div class="results-empty-text">No findings${activeLayerFilter ? ' in this layer' : ''}.</div>
+        </div>`;
+      } else {
+        html += `<div class="findings-list">`;
+        filtered.forEach((f, idx) => {
+          const wordClass = f.severity === 'warning' ? 'warning-word' : f.severity === 'info' ? 'info-word' : '';
+          html += `<div class="finding-item">
+            <div class="finding-header">
+              <span class="finding-severity ${f.severity}"></span>
+              <span class="finding-category">${escapeHtml(f.category)}</span>
+              <span class="finding-rule">${f.rule}</span>
+              <span class="finding-line">L${f.layer} · line ${f.line}</span>
+            </div>
+            <div class="finding-word ${wordClass}">${escapeHtml(f.word)}</div>
+            <div class="finding-reason">${escapeHtml(f.reason)}</div>
+          </div>`;
+        });
+        html += `</div>`;
+      }
+
+      body.innerHTML = html;
+    }
+
+    // ===== LAYER FILTER =====
+    function filterLayer(layer) {
+      activeLayerFilter = layer;
+      if (lastResults) renderResults(lastResults);
+    }
+
+    // ===== DOWNLOAD REPORT =====
+    function downloadReport() {
+      if (!lastResults) return;
+
+      const report = BeyondLinter.generateMarkdownReport(lastText, lastResults);
+      const blob = new Blob([report], { type: 'text/markdown' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `beyond_cnl_lint_report_${new Date().toISOString().slice(0,10)}.md`;
+      a.click();
+      URL.revokeObjectURL(url);
+    }
+
+    // ===== HELPERS =====
+    function showLoading() {
+      document.getElementById('resultsBody').innerHTML =
+        `<div class="loading"><div class="spinner"></div>Fetching document...</div>`;
+    }
+
+    function showError(msg) {
+      document.getElementById('resultsBody').innerHTML =
+        `<div class="results-empty"><div class="results-empty-icon" style="color:var(--error)">✕</div>
+        <div class="results-empty-text" style="color:var(--error)">${escapeHtml(msg)}</div></div>`;
+    }
+
+    function clearAll() {
+      document.getElementById('textInput').value = '';
+      document.getElementById('urlInput').value = '';
+      document.getElementById('resultsBody').innerHTML =
+        document.getElementById('emptyState') ? document.getElementById('emptyState').outerHTML :
+        `<div class="results-empty"><div class="results-empty-icon">◇</div>
+        <div class="results-empty-text">Ready for input.</div></div>`;
+      document.getElementById('downloadBtns').style.display = 'none';
+      lastResults = null;
+      lastText = '';
+      activeLayerFilter = null;
+    }
+
+    function escapeHtml(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    // ===== KEYBOARD SHORTCUT =====
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+        e.preventDefault();
+        runLint();
+      }
+    });
+  </script>
+</body>
+</html>
