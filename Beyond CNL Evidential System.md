@@ -442,7 +442,7 @@ identifier conventions linking the body to the frontmatter.
 The envelope grammar does **not** validate the interior of a
 clause (the natural-English content between subject and E-tag);
 that work is done by the lexicon layer (Layer 1 of §7.1). The
-two layers compose: a clause is well-formed iff its envelope
+two layers compose: a clause is well-formed if its envelope
 derives from this grammar AND every token in its interior passes
 the lexicon check.
 
@@ -703,38 +703,6 @@ different layer (lexicon, evidential semantics, or human review).
 The envelope grammar is the structural backbone; the other
 layers do the content work.
 
-### 6.12 Implementation notes
-
-The grammar above is small enough to implement as a hand-rolled
-recursive-descent recognizer in JavaScript without any
-parser-generator dependency. A reference implementation:
-
-1. Tokenize the document into a stream of lines and code-block
-   boundaries.
-2. Parse frontmatter with a standard YAML parser; validate
-   against the schema in §5.
-3. Parse body as a sequence of Blocks, dispatching by leading
-   character (`#` → Heading, `>` → Blockquote, digit followed
-   by `.` and space → OrderedList, ` ``` ` → CodeBlock, otherwise
-   Paragraph).
-4. For each Block, parse contained TaggedClauses by locating the
-   last `(...)` immediately before the terminating `.\n` on each
-   clause line.
-5. Run register type checks (§6.8) against the parsed block type
-   and E-tag types.
-6. Run resolution checks (§6.9 and §6.9 premise table) against
-   the parsed frontmatter tables.
-7. Defer interior validation to the lexicon layer.
-
-If a future revision adds an interior grammar (subject-verb-object
-templates, allowed verb forms by E-tag type, agreement
-constraints), the EBNF above translates directly to an Ohm or
-PEG.js grammar file; the recognizer is replaced by the
-parser-generator's runtime, and this document becomes the
-human-readable companion to the machine-readable grammar file.
-No revision to the EBNF in this section would be required for
-that upgrade.
-
 ---
 
 ## 7. Enforcement Architecture
@@ -751,7 +719,7 @@ that upgrade.
 
 ### 7.2 Acceptance semantics (fail-safe default)
 
-A document `D` is **accepted** by Beyond CNL iff all of the
+A document `D` is **accepted** by Beyond CNL if all of the
 following hold:
 
 1. `D` derives from the `Document` nonterminal in §6.4.
