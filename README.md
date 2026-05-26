@@ -22,7 +22,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 | Procedural register          | ASD-STE100                  | Short sentences, one-word-one-meaning, imperative-led procedures |
 | Deterministic interpretation | Attempto Controlled English | Every parsable sentence has exactly one logical reading      |
 
-**Core property (Goguen-Meseguer non-interference):** two authors with identical procedures but different identities, different values, and different intentions produce the same identical Beyond CNL documents. 
+**Design target (Goguen-Meseguer non-interference):** two authors with identical procedures but different identities, different values, and different intentions produce the same identical Beyond CNL documents. 
 
 ## What the Language Removes
 
