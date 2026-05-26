@@ -64,7 +64,7 @@ banned constructions).
 
 ---
 
-## 2. The Evidential Whitelist
+## 2. The Evidential Allow-list
 
 Beyond CNL admits exactly **six evidential types**, organized into
 three tiers of decreasing directness. Only these six types may
@@ -254,7 +254,7 @@ a condition defined elsewhere in the document by identifier.
 
 ---
 
-## 3. The Evidential Blacklist
+## 3. The Evidential Deny-list
 
 The following epistemic bases are **grammatically inexpressible**
 in Beyond CNL. There are no E-tags for them, and the vocabulary
@@ -271,7 +271,7 @@ required to express them is excluded from the lexicon.
 | Desire                    | Leaks intent                                  |
 | Prediction without model  | Leaks confidence calibration                  |
 
-The blacklist is enforced not by explicit tagging but by
+The deny-list is enforced not by explicit tagging but by
 **lexicon exclusion**: the words needed to express these bases
 (believe, feel, think, hope, fear, expect, assume in the
 "suppose" sense, guess, suspect, imagine, predict without

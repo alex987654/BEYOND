@@ -1,6 +1,11 @@
 # SKILL: Beyond CNL — Method-Only Controlled Natural Language
 
-## Version 0.3.1
+## Version 0.3.2
+
+*Sync with Evidential System v0.2 / Envelope Grammar §6. The
+formal grammar in §6.7 of the Evidential System document is the
+authoritative source of truth for E-tag shape; this skill file
+is the operational companion.*
 
 ---
 
@@ -96,24 +101,38 @@ Remove every form of "to be":
 ### Evidential tags on every declarative clause
 
 Six types in three tiers. Tag goes in parentheses at end
-of clause, before the period.
+of clause, before the period. The formal shape of every
+E-tag is fixed by the EBNF in §6.7 of the Evidential System
+spec — examples below are operational; the grammar governs.
 
 **Tier 1 — Direct**
 
 ```
 (observed, instrument `ID`)
+(observed, operator)
 (detected, instrument `ID`)
+(registered, thermocouple `ID`)
 (measured, instrument `ID`, 1-sigma)
 (measured, counter `ID`)
-(sampled, instrument `ID`, n=500)
+(measured, receiver `ID`, ± 0.4 dB)
+(sampled, logger `ID`, n=500)
 ```
+
+The optional instrument-class prefix (`instrument`, `array`,
+`thermocouple`, `receiver`, `counter`, `logger`, `sensor`,
+`detector`, `balance`, ...) names the device's class before
+the inline-code identifier. The bare keyword `operator`
+covers unaided human observation; no backtick identifier is
+needed for it.
 
 **Tier 2 — Derived**
 
 ```
 (derived, from `MSR-4.2`, `DEF-1.1`)
 (calculated, from `MSR-3.1`, `MSR-3.2`)
+(follows, from `OBS-2.7`, `DEF-2.3`)
 (reported, in `REF-NIST-2023`)
+(cited, from `REF-NIST-2023`)
 (replicated, from `REF-LAB-A`, by instrument `ARR-3`)
 ```
 
@@ -121,11 +140,16 @@ of clause, before the period.
 
 ```
 (defined)
-(stipulated, for phase `Characterization`)
+(stipulated, for `Characterization`)
 (procedure)
 (procedure, step 3)
 (procedure, step 5, if `COND-2.1`)
 ```
+
+The `(defined)` tag takes no arguments — `(specified, …)` is
+**not** an admitted E-DEF form under §6.7. Use `(defined)`
+inside a fenced `definition` code block, or after a bolded
+term at its first occurrence.
 
 ### Compound sentences: each clause gets its own E-tag
 
@@ -555,18 +579,24 @@ defined term"
 
 | Element | Role | E-tag constraint |
 |---|---|---|
-| H1 `#` | Protocol identifier (one per doc) | — |
-| H2 `##` | Phase header | — |
-| Ordered list `1.` | Procedure steps | E-PRO only |
-| Blockquote `>` | Observation report | E-OBS or E-MSR |
-| Fenced code `definition` | Term definition | E-DEF |
-| Fenced code `constraint` | Formal constraint | E-DEF or E-DER |
+| H1 `#` | Protocol identifier (one per doc) | none (H-1) |
+| H2 `##` | Phase or section header | none (H-1) |
+| Ordered list `1.` | Procedure steps | E-PRO only (O-1); must follow a heading beginning `Procedure` or `Steps` (O-2) |
+| Blockquote `>` | Observation report | E-OBS or E-MSR (B-1) |
+| Fenced code `definition` | Term definition | E-DEF (C-1) |
+| Fenced code `constraint` | Formal constraint | E-DEF or E-DER (C-2) |
+| Fenced code `measurement` | Recorded measurement | E-MSR (C-3) |
+| Fenced code (other info string) | Domain-specific | unrestricted, flagged for review (C-4) |
 | Inline code `` ` `` | Defined identifier | — |
 | Bold `**` | First occurrence of Technical Name | — |
-| Table | Parameter sets | Inherits from caption |
 
 **Forbidden:** italics, HTML, exclamation marks, indented
 code blocks (use fenced with info string).
+
+**Not in the §6.5 envelope:** tables, unordered lists, and
+images do not appear in the formal envelope grammar. Treat
+parameter sets as a fenced `definition` block or as inline
+`stipulated, for ScopeName` clauses.
 
 ---
 
@@ -635,7 +665,14 @@ Count clauses. Count E-tags. They match.
 
 ### 5. Using "must" for constraints
 Wrong: "Each amendment must contain a proof chain."
-Right: "Each amendment contains a proof chain (procedure)."
+Right (as procedure, imperative form): "Add a proof chain
+to each amendment (procedure)."
+Right (as constraint, declarative form in a `constraint`
+block): "Each amendment contains a proof chain (defined)."
+
+Note: `(procedure)` E-tags require an imperative leading
+verb (E-PRO-1). A declarative sentence cannot carry a
+`(procedure)` tag.
 
 ### 6. Precision as capability leak
 Wrong: "Our instruments resolve to 0.5 Hz precision."
@@ -660,11 +697,35 @@ Right: "The condition never activated (observed, `CTR-1`)."
 2. Extract measurements → declarative + `(measured)` E-tag
 3. Extract definitions → `definition` block + `(defined)`
 4. Extract derivations → declarative + `(derived)` E-tag
-5. Discard identity, values, opinions, intentions, requests
-6. Check every word against lexicon; replace or restructure
-7. Build YAML frontmatter
-8. Verify non-interference: would a different author produce
+5. Extract citations of prior records → declarative +
+   `(reported, in `REF-…`)` or `(cited, from `REF-…`)`;
+   add `REF-…` to `references:` frontmatter
+6. Discard identity, values, opinions, intentions, requests
+7. Check every word against lexicon; replace or restructure
+8. Build YAML frontmatter: declare every `` `ID` `` you used
+   in `instruments:`, `references:`, or `conditions:`
+9. Verify non-interference: would a different author produce
    the same document from the same data?
+
+---
+
+## Candidate E-tags (not yet admitted)
+
+§10 of the Evidential System spec lists three E-tag types
+under consideration for future versions. **Do not generate
+them** — they fail current linting and the schema version
+will reject documents that use them.
+
+| Candidate | Form                                                                    | Status |
+|---|---|---|
+| E-SIM | `(simulated, from model `M`, parameters `P`, run `R`)`                    | Strong case; leak-surface review pending |
+| E-AGG | `(aggregated, from dataset `D`, method `M`, n=N)`                          | Useful in surveillance/characterization; review pending |
+| E-HYP | `(hypothesis, candidate `H`, from `[premise-refs]`, distinguishable-from `[other]`)` | Most developed of the three; requires `hypothesis_space:` frontmatter field; not admitted |
+
+A future version of the spec will move admitted candidates
+into §2 and bump the schema version. Until then, restrict
+output to the six admitted types: E-OBS, E-MSR, E-DER,
+E-RPT, E-DEF, E-PRO.
 
 ---
 

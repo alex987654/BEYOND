@@ -1,6 +1,6 @@
 # Beyond CNL: Companion Lexicon
 
-## For use alongside Beyond CNL SKILL v0.3.1
+## For use alongside Beyond CNL SKILL v0.3.2
 
 This file contains nouns, adjectives, adverbs, numerals,
 units, and function words with sense pins. The **verb list**

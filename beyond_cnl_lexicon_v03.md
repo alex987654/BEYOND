@@ -2208,7 +2208,7 @@ Six E-tag types in three tiers:
 
 Every declarative clause must carry one E-tag in fixed final
 parenthetical position. Evidential coverage must equal 1.0.
-Blacklisted bases (opinion, intuition, cultural knowledge,
+Deny-listed bases (opinion, intuition, cultural knowledge,
 belief, desire, ungrounded generalization) are enforced by
 lexicon exclusion: the words needed to express them do not
 exist in this vocabulary.
