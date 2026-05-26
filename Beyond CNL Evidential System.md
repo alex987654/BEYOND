@@ -1,4 +1,4 @@
-Beyond CNL: Evidential System and Envelope Grammar
+# Beyond CNL: Evidential System and Envelope Grammar
 
 ## Rules for Epistemic Marking and Formal Structure in a controlled, method-only subset of English
 
