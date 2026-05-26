@@ -418,14 +418,13 @@ below 1.0 indicates untagged assertions and fails validation.
 
 ### 6.4 Non-interference test
 
-The Goguen-Meseguer non-interference property is tested by
+Goguen-Meseguer non-interference is the design target and should be tested by
 **differential authoring**: two authors with different identities,
 values, and intentions are given the same observational data
 (instrument readings, definitions, procedure specification) and
 asked to produce Beyond CNL documents. The documents must be
-**byte-identical** after normalization (whitespace, identifier
-ordering). Divergence indicates a leak in the evidential system
-or the lexicon.
+**identical** after normalization (whitespace, identifier
+ordering). 
 
 ---
 
