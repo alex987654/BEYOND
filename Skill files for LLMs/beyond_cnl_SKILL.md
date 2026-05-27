@@ -1,8 +1,8 @@
 # SKILL: Beyond CNL — Method-Only Controlled Natural Language
 
-## Version 0.3.2
+## Version 0.4.0
 
-*Sync with Evidential System v0.2 / Envelope Grammar §6. The
+*Sync with Evidential System v0.4 / Envelope Grammar §6. The
 formal grammar in §6.7 of the Evidential System document is the
 authoritative source of truth for E-tag shape; this skill file
 is the operational companion.*
@@ -22,7 +22,8 @@ The language achieves safety through grammar, not policy.
 Every restriction exists because the vocabulary or syntax
 needed to express unsafe content has been removed. A
 compliant document reads like a laboratory protocol:
-procedures, measurements, definitions, observations.
+procedures, measurements, definitions, observations,
+simulations, aggregates, and bounded hypothesis spaces.
 
 ---
 
@@ -100,7 +101,7 @@ Remove every form of "to be":
 
 ### Evidential tags on every declarative clause
 
-Six types in three tiers. Tag goes in parentheses at end
+Nine types in three tiers. Tag goes in parentheses at end
 of clause, before the period. The formal shape of every
 E-tag is fixed by the EBNF in §6.7 of the Evidential System
 spec — examples below are operational; the grammar governs.
@@ -125,7 +126,7 @@ the inline-code identifier. The bare keyword `operator`
 covers unaided human observation; no backtick identifier is
 needed for it.
 
-**Tier 2 — Derived**
+**Tier 2 — Mediated**
 
 ```
 (derived, from `MSR-4.2`, `DEF-1.1`)
@@ -134,6 +135,9 @@ needed for it.
 (reported, in `REF-NIST-2023`)
 (cited, from `REF-NIST-2023`)
 (replicated, from `REF-LAB-A`, by instrument `ARR-3`)
+(simulated, from model `MOD-1`, parameters `PAR-1`, run `RUN-1`)
+(aggregated, from dataset `DAT-1`, method `MET-1`, n=500)
+(hypothesis, candidate `H-1`, from `MSR-1.1`, distinguishable-from `H-2`)
 ```
 
 **Tier 3 — Stipulative**
@@ -586,6 +590,9 @@ defined term"
 | Fenced code `definition` | Term definition | E-DEF (C-1) |
 | Fenced code `constraint` | Formal constraint | E-DEF or E-DER (C-2) |
 | Fenced code `measurement` | Recorded measurement | E-MSR (C-3) |
+| Fenced code `simulation` | Simulation output | E-SIM (C-5) |
+| Fenced code `aggregation` | Statistical aggregate | E-AGG (C-6) |
+| Paragraph under `Hypothesis` heading | Bounded hypothesis | E-HYP only there (HYP-PLACE) |
 | Fenced code (other info string) | Domain-specific | unrestricted, flagged for review (C-4) |
 | Inline code `` ` `` | Defined identifier | — |
 | Bold `**` | First occurrence of Technical Name | — |
@@ -595,8 +602,7 @@ code blocks (use fenced with info string).
 
 **Not in the §6.5 envelope:** tables, unordered lists, and
 images do not appear in the formal envelope grammar. Treat
-parameter sets as a fenced `definition` block or as inline
-`stipulated, for ScopeName` clauses.
+parameter sets as frontmatter `parameter_sets:` entries.
 
 ---
 
@@ -604,7 +610,7 @@ parameter sets as a fenced `definition` block or as inline
 
 ```yaml
 ---
-schema: beyond-cnl-v0.3
+schema: beyond-cnl-v0.4
 purpose: [narrow procedural purpose in Beyond CNL]
 phase: [Discovery | Validation | Characterization |
         Open-Contact | Negotiation]
@@ -623,6 +629,27 @@ technical_names:
   - term: [compound term]
     pos: noun
     definition: [using only core lexicon words]
+models:
+  - id: [MODEL-ID]
+    specification_ref: [REF-ID]
+    parameter_schema_ref: [REF-ID]
+parameter_sets:
+  - id: [PARAMETERS-ID]
+    model: [MODEL-ID]
+simulation_runs:
+  - id: [RUN-ID]
+    model: [MODEL-ID]
+    parameters: [PARAMETERS-ID]
+datasets:
+  - id: [DATASET-ID]
+    schema_ref: [REF-ID]
+methods:
+  - id: [METHOD-ID]
+    catalogue_ref: [REF-ID]
+hypothesis_space:
+  - id: [H-ID]
+    statement: [candidate statement in Beyond CNL]
+    discriminates_via: [MEASUREMENT-OR-DERIVATION-ID]
 ---
 ```
 
@@ -698,34 +725,29 @@ Right: "The condition never activated (observed, `CTR-1`)."
 3. Extract definitions → `definition` block + `(defined)`
 4. Extract derivations → declarative + `(derived)` E-tag
 5. Extract citations of prior records → declarative +
-   `(reported, in `REF-…`)` or `(cited, from `REF-…`)`;
+   ``(reported, in `REF-...`)`` or ``(cited, from `REF-...`)``;
    add `REF-…` to `references:` frontmatter
-6. Discard identity, values, opinions, intentions, requests
-7. Check every word against lexicon; replace or restructure
-8. Build YAML frontmatter: declare every `` `ID` `` you used
-   in `instruments:`, `references:`, or `conditions:`
-9. Verify non-interference: would a different author produce
+6. Extract simulation outputs → declarative + ``(simulated, from model `MOD`, parameters `PAR`, run `RUN`)``; declare all three frontmatter records
+7. Extract aggregates → declarative + ``(aggregated, from dataset `DAT`, method `MET`, n=N)``; declare dataset and method records
+8. Extract bounded hypotheses only under a `Hypothesis` heading → ``(hypothesis, candidate `H`, from `PREM`, distinguishable-from `OTHER`)``; declare candidates in `hypothesis_space:`
+9. Discard identity, values, opinions, intentions, requests
+10. Check every word against lexicon; replace or restructure
+11. Build YAML frontmatter: declare every `` `ID` `` you used
+   in the matching v0.4 frontmatter namespace
+12. Verify non-interference: would a different author produce
    the same document from the same data?
 
 ---
 
-## Candidate E-tags (not yet admitted)
+## v0.4 Extended E-tags
 
-§10 of the Evidential System spec lists three E-tag types
-under consideration for future versions. **Do not generate
-them** — they fail current linting and the schema version
-will reject documents that use them.
+E-SIM, E-AGG, and E-HYP are admitted in `schema: beyond-cnl-v0.4`.
 
-| Candidate | Form                                                                    | Status |
+| Tag | Form | Required frontmatter |
 |---|---|---|
-| E-SIM | `(simulated, from model `M`, parameters `P`, run `R`)`                    | Strong case; leak-surface review pending |
-| E-AGG | `(aggregated, from dataset `D`, method `M`, n=N)`                          | Useful in surveillance/characterization; review pending |
-| E-HYP | `(hypothesis, candidate `H`, from `[premise-refs]`, distinguishable-from `[other]`)` | Most developed of the three; requires `hypothesis_space:` frontmatter field; not admitted |
-
-A future version of the spec will move admitted candidates
-into §2 and bump the schema version. Until then, restrict
-output to the six admitted types: E-OBS, E-MSR, E-DER,
-E-RPT, E-DEF, E-PRO.
+| E-SIM | ``(simulated, from model `M`, parameters `P`, run `R`)`` | `models:`, `parameter_sets:`, `simulation_runs:` |
+| E-AGG | ``(aggregated, from dataset `D`, method `M`, n=N)`` | `datasets:`, `methods:` |
+| E-HYP | ``(hypothesis, candidate `H`, from `PREM`, distinguishable-from `OTHER`)`` | `hypothesis_space:` and a `Hypothesis` heading |
 
 ---
 
@@ -763,7 +785,8 @@ NEVER:  ! (exclamation mark)
 ALWAYS: (E-tag) at end of every declarative clause
 ALWAYS: instrument `ID` in every observation E-tag
 ALWAYS: premise references in every derivation E-tag
-ALWAYS: YAML frontmatter with schema, purpose, phase
+ALWAYS: YAML frontmatter with schema: beyond-cnl-v0.4
+ALWAYS: model/dataset/hypothesis IDs in their v0.4 namespaces
 ALWAYS: `inline code` for identifiers
 ALWAYS: **bold** for first Technical Name occurrence
 
@@ -800,4 +823,4 @@ the replacement strategies in the pitfalls section.
 
 ---
 
-*End of Beyond CNL Skill Document v0.3.1.*
+*End of Beyond CNL Skill Document v0.4.0.*

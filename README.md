@@ -1,7 +1,7 @@
 # BEYOND
 BEYOND CNL - A method-only controlled subset of English when the constraint is to make communication safer for the sender when the recipient may be vastly more capable than the sender.
 
-Beyond is designed so that messages and documents written in it cannot leak identity, values, intentions, or capabilities. Every sentence carries a mandatory evidential tag tracing the claim to an instrument, a derivation, or a definition. 
+Beyond is designed so that messages and documents written in it cannot leak identity, values, intentions, or capabilities. Every sentence carries a mandatory evidential tag tracing the claim to an instrument, derivation, definition, simulation, aggregate, hypothesis space, cited record, or procedure.
 
 ## Why
 
@@ -38,9 +38,9 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 
 ## What the Language Requires
 
-- An evidential tag on every declarative clause: `(measured, instrument RX-4, 1-sigma)`, `(derived, from MSR-4.2, DEF-1.1)`, `(procedure, step 3)`
-- YAML frontmatter declaring schema version, purpose, phase, instruments, references, and technical names
-- Markdown structural typing: ordered lists for procedures, blockquotes for observations, fenced code blocks for definitions and constraints
+- An evidential tag on every declarative clause: ``(measured, instrument `RX-4`, 1-sigma)``, ``(derived, from `MSR-4.2`, `DEF-1.1`)``, ``(simulated, from model `MOD-1`, parameters `PAR-1`, run `RUN-1`)``, `(procedure, step 3)`
+- YAML frontmatter declaring `schema: beyond-cnl-v0.4`, purpose, phase, instruments, references, technical names, conditions, models, parameter sets, simulation runs, datasets, methods, and hypothesis space entries
+- Markdown structural typing: ordered lists for procedures, blockquotes for observations, fenced code blocks for definitions, constraints, measurements, simulations, and aggregations
 - Sense-pinned vocabulary: several thousand core words, each with one spelling, one part of speech, and only one approved meaning
 
 ## Repository Contents
@@ -49,7 +49,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 |----------------------------------------|--------------------------------------------------------------|
 | `beyond_cnl_SKILL.md`                  | Complete teaching reference for LLMs and human authors — rules, verb list, pitfalls, examples, quick reference card |
 | `beyond_cnl_COMPANION_LEXICON.md`      | Companion vocabulary — nouns, adjectives, adverbs, function words, all sense-pinned |
-| `Beyond CNL Evidential System.md`      | Evidential system specification — six E-tag types, enforcement architecture, frontmatter schema |
+| `Beyond CNL Evidential System.md`      | Evidential system specification — nine E-tag types, enforcement architecture, frontmatter schema |
 | `beyond_cnl_lexicon_v03.md`            | Full consolidated lexicon (single-source reference, all word classes) |
 | `Beyond-CNL-Linter.html (and .js files)` | Grammar and lexicon checker for Beyond CNL                   |
 
@@ -65,7 +65,7 @@ A compliant observation:
 
 ```
 > The signal amplitude at 1420.405 MHz decreased by 3.1 ± 0.02 dB
-> over a 24-hour window (measured, instrument Oort-RX-4).
+> over a 24-hour window (measured, instrument `Oort-RX-4`, ± 0.02 dB).
 ```
 
 A non-compliant message:
@@ -76,5 +76,3 @@ We usually come in peace and wish to share our knowledge.
 ```
 
 The sentence leaks identity, location, intent, values, and capability. In Beyond CNL, it would reduce to empty output. That empty output represents the potential information-hazard cost.
-
-

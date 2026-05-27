@@ -2191,11 +2191,11 @@ verifiable properties. No evaluative adjectives admitted.
 
 ---
 
-## 9. Evidential Markers (12)
+## 9. Evidential Markers (15)
 
-See companion document: **Beyond CNL Evidential System v0.1**.
+See companion document: **Beyond CNL Evidential System v0.4**.
 
-Six E-tag types in three tiers:
+Nine E-tag types in three tiers:
 
 | Tier | Tag | Meaning |
 |---|---|---|
@@ -2203,6 +2203,9 @@ Six E-tag types in three tiers:
 | Direct | E-MSR | quantitative measurement with named instrument |
 | Derived | E-DER | derivation from stated premises |
 | Derived | E-RPT | report from cited record |
+| Derived | E-SIM | simulation result from declared model, parameters, and run |
+| Derived | E-AGG | statistical aggregate from declared dataset and method |
+| Derived | E-HYP | bracketed hypothesis from declared candidate space and premises |
 | Stipulative | E-DEF | definition of a term or parameter |
 | Stipulative | E-PRO | procedural directive |
 
@@ -2225,7 +2228,7 @@ exist in this vocabulary.
 | Adjectives | 230 |
 | Adverbs | 52 |
 | Numerals and units | 68 |
-| Evidential markers | 12 |
+| Evidential markers | 15 |
 | **Core total** | **~2,187** |
 | Technical Name capacity | ~2,813 |
 | **Maximum ceiling** | **5,000** |

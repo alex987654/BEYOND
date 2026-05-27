@@ -235,7 +235,7 @@ const BeyondLexicon = (() => {
   }
 
   // ===== APPROVED E-TAG TYPES =====
-  // Shapes follow the §6.7 EBNF of Beyond CNL Evidential System v0.2.
+  // Shapes follow the §6.7 EBNF of Beyond CNL Evidential System v0.4.
 
   const ETAG_TYPES = {
     'E-OBS': {
@@ -266,6 +266,25 @@ const BeyondLexicon = (() => {
       shape: 'verb, (in|from) RecordRef[, by SourceRef]',
       description: 'Reproduces finding from identified prior record'
     },
+    'E-SIM': {
+      tier: 2, name: 'Simulation Result',
+      verbs: ['simulated'],
+      shape: 'simulated, from model ModelRef, parameters ParameterSetRef, run SimulationRunRef',
+      description: 'Result produced by a declared model, parameter set, and run'
+    },
+    'E-AGG': {
+      tier: 2, name: 'Statistical Aggregate',
+      verbs: ['aggregated'],
+      shape: 'aggregated, from dataset DatasetRef, method MethodRef, n=N',
+      description: 'Statistical aggregate from a declared dataset and method'
+    },
+    'E-HYP': {
+      tier: 2, name: 'Bracketed Causal Hypothesis',
+      verbs: ['hypothesis'],
+      requiresPremise: true,
+      shape: 'hypothesis, candidate CandidateRef, from PremiseRefList, distinguishable-from CandidateRef',
+      description: 'Candidate selected from a declared hypothesis space, not personal belief'
+    },
     'E-DEF': {
       tier: 3, name: 'Definition',
       verbs: ['defined', 'stipulated'],
@@ -290,7 +309,7 @@ const BeyondLexicon = (() => {
   // ===== ENVELOPE-GRAMMAR CONSTANTS (§5, §6.7) =====
 
   // Schema version this linter validates (FRONT-4).
-  const LINTER_SCHEMA_VERSION = 'beyond-cnl-v0.3';
+  const LINTER_SCHEMA_VERSION = 'beyond-cnl-v0.4';
 
   // SourceRef's optional InstrumentClass prefix (§6.7).
   const INSTRUMENT_CLASSES = new Set([

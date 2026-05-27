@@ -1,5 +1,5 @@
 /**
- * Beyond CNL Linter Engine — Envelope Grammar (spec v0.2 / schema v0.3)
+ * Beyond CNL Linter Engine — Envelope Grammar (spec v0.4 / schema v0.4)
  *
  * Implements the §6.12 pipeline:
  *   tokenizeLines → parseFrontmatter → parseBody → parseTaggedClause / parseETag
@@ -43,7 +43,7 @@ const BeyondLinter = (() => {
     // 5. Register checks (§6.8)
     checkRegister(blocks, findings);
 
-    // 6. Resolution checks (§6.9 R-1..R-4, P-1..P-6) + FRONT-1
+    // 6. Resolution checks (§6.9 R-1..R-10, P-1..P-9) + FRONT-1
     checkResolution(clauses, fm, findings);
 
     // 7. Layer 1: lexicon (per token in clause interiors / headings)
@@ -157,6 +157,12 @@ const BeyondLinter = (() => {
       references: new Map(),
       conditions: new Map(),
       technicalNames: new Map(),
+      models: new Map(),
+      parameterSets: new Map(),
+      simulationRuns: new Map(),
+      datasets: new Map(),
+      methods: new Map(),
+      hypothesisCandidates: new Map(),
       scopes: new Set()
     };
 
@@ -261,7 +267,47 @@ const BeyondLinter = (() => {
     // Build maps for §6.9 resolution
     const idRe = /^[A-Za-z_][A-Za-z0-9_\-.]*$/;
 
-    (data.instruments || []).forEach(item => {
+    function asList(value) {
+      return Array.isArray(value) ? value : [];
+    }
+
+    function addIdentifiedItems(fieldName, map, requiredFields) {
+      asList(data[fieldName]).forEach(item => {
+        if (!item || !item.id) {
+          findings.push(makeFinding({
+            layer: 4, severity: SEVERITY.ERROR,
+            category: 'Missing identifier',
+            word: `${fieldName}[].id`, line: fences[0].idx,
+            reason: `${fieldName}[].id is required by the v0.4 frontmatter schema.`,
+            rule: 'FRONT-1'
+          }));
+          return;
+        }
+        if (!idRe.test(item.id)) {
+          findings.push(makeFinding({
+            layer: 4, severity: SEVERITY.ERROR,
+            category: 'Invalid identifier',
+            word: String(item.id), line: fences[0].idx,
+            reason: `${fieldName}[].id "${item.id}" violates the §6.2 Identifier production.`,
+            rule: 'IDENT'
+          }));
+        }
+        requiredFields.forEach(field => {
+          if (item[field] === undefined || item[field] === null || item[field] === '') {
+            findings.push(makeFinding({
+              layer: 4, severity: SEVERITY.ERROR,
+              category: 'Missing frontmatter field',
+              word: `${fieldName}[].${field}`, line: fences[0].idx,
+              reason: `${fieldName}[].${field} is required by the v0.4 frontmatter schema.`,
+              rule: 'FRONT-1'
+            }));
+          }
+        });
+        map.set(String(item.id), item);
+      });
+    }
+
+    asList(data.instruments).forEach(item => {
       if (!item || !item.id) return;
       if (!idRe.test(item.id)) {
         findings.push(makeFinding({
@@ -275,7 +321,7 @@ const BeyondLinter = (() => {
       empty.instruments.set(String(item.id), item);
     });
 
-    (data.references || []).forEach(item => {
+    asList(data.references).forEach(item => {
       if (!item || !item.id) return;
       if (!idRe.test(item.id)) {
         findings.push(makeFinding({
@@ -298,7 +344,7 @@ const BeyondLinter = (() => {
       empty.references.set(String(item.id), item);
     });
 
-    (data.conditions || []).forEach(item => {
+    asList(data.conditions).forEach(item => {
       if (!item || !item.id) return;
       if (!idRe.test(item.id)) {
         findings.push(makeFinding({
@@ -312,9 +358,75 @@ const BeyondLinter = (() => {
       empty.conditions.set(String(item.id), item);
     });
 
-    (data.technical_names || []).forEach(item => {
+    asList(data.technical_names).forEach(item => {
       if (!item || !item.term) return;
       empty.technicalNames.set(String(item.term), item);
+    });
+
+    addIdentifiedItems('models', empty.models, ['specification_ref', 'parameter_schema_ref']);
+    addIdentifiedItems('parameter_sets', empty.parameterSets, ['model']);
+    addIdentifiedItems('simulation_runs', empty.simulationRuns, ['model', 'parameters']);
+    addIdentifiedItems('datasets', empty.datasets, ['schema_ref']);
+    addIdentifiedItems('methods', empty.methods, ['catalogue_ref']);
+    addIdentifiedItems('hypothesis_space', empty.hypothesisCandidates, ['statement', 'discriminates_via']);
+
+    empty.parameterSets.forEach((item, id) => {
+      if (item.model && !empty.models.has(String(item.model))) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Unresolved parameter model',
+          word: String(item.model), line: fences[0].idx,
+          reason: `parameter_sets[] entry "${id}" names model "${item.model}", which is not declared in models.`,
+          rule: 'FRONT-MODEL'
+        }));
+      }
+    });
+
+    empty.simulationRuns.forEach((item, id) => {
+      const modelId = item.model && String(item.model);
+      const paramsId = item.parameters && String(item.parameters);
+      const params = paramsId ? empty.parameterSets.get(paramsId) : null;
+      if (modelId && !empty.models.has(modelId)) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Unresolved simulation model',
+          word: modelId, line: fences[0].idx,
+          reason: `simulation_runs[] entry "${id}" names model "${modelId}", which is not declared in models.`,
+          rule: 'FRONT-SIM-RUN'
+        }));
+      }
+      if (paramsId && !params) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Unresolved simulation parameters',
+          word: paramsId, line: fences[0].idx,
+          reason: `simulation_runs[] entry "${id}" names parameter set "${paramsId}", which is not declared in parameter_sets.`,
+          rule: 'FRONT-SIM-RUN'
+        }));
+      }
+      if (modelId && params && String(params.model) !== modelId) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Simulation run mismatch',
+          word: id, line: fences[0].idx,
+          reason: `simulation run "${id}" uses model "${modelId}" but parameter set "${paramsId}" belongs to model "${params.model}".`,
+          rule: 'FRONT-SIM-RUN'
+        }));
+      }
+    });
+
+    empty.hypothesisCandidates.forEach((item, id) => {
+      const tests = item.discriminates_via;
+      const hasTests = Array.isArray(tests) ? tests.length > 0 : Boolean(tests);
+      if (!hasTests) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Empty discriminating tests',
+          word: id, line: fences[0].idx,
+          reason: `hypothesis_space[] entry "${id}" must declare a non-empty discriminates_via field.`,
+          rule: 'E-HYP-3'
+        }));
+      }
     });
 
     // Scopes for E-DEF "stipulated, for ScopeName": phase names + any declared scopes
@@ -345,7 +457,11 @@ const BeyondLinter = (() => {
   // Minimal fallback: extracts top-level keys and arrays of `- id: X` style entries.
   // Used only when js-yaml isn't available. Does not enforce YAML 1.2 fidelity.
   function fallbackParseFrontmatter(text) {
-    const data = { instruments: [], references: [], conditions: [], technical_names: [] };
+    const data = {
+      instruments: [], references: [], conditions: [], technical_names: [],
+      models: [], parameter_sets: [], simulation_runs: [],
+      datasets: [], methods: [], hypothesis_space: []
+    };
     const lines = text.split('\n');
     let currentList = null;
     let currentItem = null;
@@ -354,7 +470,11 @@ const BeyondLinter = (() => {
       if (topKv && !line.startsWith(' ') && !line.startsWith('\t')) {
         const key = topKv[1];
         const val = topKv[2].trim();
-        if (val === '' && ['instruments', 'references', 'conditions', 'technical_names'].includes(key)) {
+        if (val === '' && [
+          'instruments', 'references', 'conditions', 'technical_names',
+          'models', 'parameter_sets', 'simulation_runs',
+          'datasets', 'methods', 'hypothesis_space'
+        ].includes(key)) {
           currentList = data[key];
           currentItem = null;
         } else {
@@ -581,7 +701,7 @@ const BeyondLinter = (() => {
 
     if (block.type === 'codeBlock') {
       // For known semantic info strings, treat each non-empty line as a clause
-      const targetInfo = ['definition', 'constraint', 'measurement'];
+      const targetInfo = ['definition', 'constraint', 'measurement', 'simulation', 'aggregation', 'hypothesis'];
       if (targetInfo.includes(block.infoString)) {
         block.lines.forEach(L => {
           const t = L.trimmed;
@@ -695,6 +815,13 @@ const BeyondLinter = (() => {
       sources: [],
       premises: [],
       records: [],
+      modelRef: null,
+      parameterSetRef: null,
+      simulationRunRef: null,
+      datasetRef: null,
+      methodRef: null,
+      hypothesisCandidate: null,
+      distinguishableFrom: null,
       uncertainty: null,
       sampleSize: null,
       scope: null,
@@ -711,6 +838,9 @@ const BeyondLinter = (() => {
       case 'E-MSR': parseMsrTag(verb, tail, out); break;
       case 'E-DER': parseDerTag(verb, tail, out); break;
       case 'E-RPT': parseRptTag(verb, tail, out); break;
+      case 'E-SIM': parseSimTag(verb, tail, out); break;
+      case 'E-AGG': parseAggTag(verb, tail, out); break;
+      case 'E-HYP': parseHypTag(verb, tail, out); break;
       case 'E-DEF': parseDefTag(verb, tail, out); break;
       case 'E-PRO': parseProTag(verb, tail, out); break;
     }
@@ -823,6 +953,76 @@ const BeyondLinter = (() => {
     }
   }
 
+  function parseSimTag(verb, tail, out) {
+    const m = tail.match(/^from\s+model\s+`([A-Za-z0-9_\-.]+)`\s*,\s*parameters\s+`([A-Za-z0-9_\-.]+)`\s*,\s*run\s+`([A-Za-z0-9_\-.]+)`$/);
+    if (!m) {
+      out.issues.push(`E-SIM "${verb}" expects (${verb}, from model \`MODEL-ID\`, parameters \`PARAMETERS-ID\`, run \`RUN-ID\`).`);
+      return;
+    }
+    out.modelRef = m[1];
+    out.parameterSetRef = m[2];
+    out.simulationRunRef = m[3];
+  }
+
+  function parseAggTag(verb, tail, out) {
+    const m = tail.match(/^from\s+dataset\s+`([A-Za-z0-9_\-.]+)`\s*,\s*method\s+`([A-Za-z0-9_\-.]+)`\s*,\s*n\s*=\s*(\d+)$/);
+    if (!m) {
+      out.issues.push(`E-AGG "${verb}" expects (${verb}, from dataset \`DATASET-ID\`, method \`METHOD-ID\`, n=N).`);
+      return;
+    }
+    out.datasetRef = m[1];
+    out.methodRef = m[2];
+    out.sampleSize = parseInt(m[3], 10);
+    if (out.sampleSize <= 0) {
+      out.issues.push('E-AGG sample size n must be a positive integer.');
+    }
+  }
+
+  function parseHypTag(verb, tail, out) {
+    const parts = splitTopLevelCommas(tail);
+    if (parts.length < 3) {
+      out.issues.push(`E-HYP "${verb}" expects (${verb}, candidate \`CANDIDATE-ID\`, from \`PREMISE-1\`, distinguishable-from \`OTHER-ID\`).`);
+      return;
+    }
+
+    const cand = parts[0].match(/^candidate\s+`([A-Za-z0-9_\-.]+)`$/);
+    if (!cand) {
+      out.issues.push('E-HYP requires the first argument to be "candidate `ID`".');
+      return;
+    }
+    out.hypothesisCandidate = cand[1];
+
+    let sawFrom = false;
+    let sawOther = false;
+    for (let i = 1; i < parts.length; i++) {
+      const p = parts[i].trim();
+      const fromM = p.match(/^from\s+`([A-Za-z0-9_\-.]+)`$/);
+      if (fromM) {
+        sawFrom = true;
+        out.premises.push(fromM[1]);
+        continue;
+      }
+      const premiseM = p.match(/^`([A-Za-z0-9_\-.]+)`$/);
+      if (sawFrom && !sawOther && premiseM) {
+        out.premises.push(premiseM[1]);
+        continue;
+      }
+      const otherM = p.match(/^distinguishable-from\s+`([A-Za-z0-9_\-.]+)`$/);
+      if (otherM) {
+        sawOther = true;
+        out.distinguishableFrom = otherM[1];
+        continue;
+      }
+      out.issues.push(`E-HYP clause "${p}" did not match "from \`PREMISE\`", "\`PREMISE\`", or "distinguishable-from \`CANDIDATE\`".`);
+    }
+    if (!sawFrom || out.premises.length === 0) {
+      out.issues.push('E-HYP requires at least one premise reference after "from".');
+    }
+    if (!out.distinguishableFrom) {
+      out.issues.push('E-HYP requires a distinguishable-from candidate reference.');
+    }
+  }
+
   function parseDefTag(verb, tail, out) {
     if (verb === 'defined') {
       if (tail) out.issues.push(`E-DEF "defined" takes no arguments — got "${tail}".`);
@@ -922,6 +1122,23 @@ const BeyondLinter = (() => {
       }
       if (!b.clauses) return;
 
+      if (b.type === 'paragraph') {
+        b.clauses.forEach(c => {
+          if (!c.etag || !c.etag.valid || c.etag.type !== 'E-HYP') return;
+          const head = b.precedingHeading || '';
+          if (!/^hypothesis\b/i.test(head.trim())) {
+            findings.push(makeFinding({
+              layer: 2, severity: SEVERITY.ERROR,
+              category: 'E-HYP placement',
+              word: `(${c.tagContent})`, line: c.line,
+              reason: 'E-HYP clauses must appear in paragraphs under a heading beginning with "Hypothesis".',
+              rule: 'HYP-PLACE'
+            }));
+          }
+        });
+        return;
+      }
+
       if (b.type === 'blockquote') {
         b.clauses.forEach(c => {
           if (!c.etag || !c.etag.valid) return;
@@ -1007,6 +1224,43 @@ const BeyondLinter = (() => {
               }));
             }
           });
+        } else if (info === 'simulation') {
+          b.clauses.forEach(c => {
+            if (!c.etag || !c.etag.valid) return;
+            if (c.etag.type !== 'E-SIM') {
+              findings.push(makeFinding({
+                layer: 2, severity: SEVERITY.ERROR,
+                category: 'Register mismatch (simulation block)',
+                word: `(${c.tagContent})`, line: c.line,
+                reason: `Code block "simulation" permits only E-SIM; got ${c.etag.type} (C-5).`,
+                rule: 'C-5'
+              }));
+            }
+          });
+        } else if (info === 'aggregation') {
+          b.clauses.forEach(c => {
+            if (!c.etag || !c.etag.valid) return;
+            if (c.etag.type !== 'E-AGG') {
+              findings.push(makeFinding({
+                layer: 2, severity: SEVERITY.ERROR,
+                category: 'Register mismatch (aggregation block)',
+                word: `(${c.tagContent})`, line: c.line,
+                reason: `Code block "aggregation" permits only E-AGG; got ${c.etag.type} (C-6).`,
+                rule: 'C-6'
+              }));
+            }
+          });
+        } else if (info === 'hypothesis') {
+          b.clauses.forEach(c => {
+            if (!c.etag || !c.etag.valid) return;
+            findings.push(makeFinding({
+              layer: 2, severity: SEVERITY.ERROR,
+              category: 'E-HYP placement',
+              word: `(${c.tagContent})`, line: c.line,
+              reason: 'E-HYP is permitted only in paragraph text under a heading beginning with "Hypothesis"; code-block hypothesis registers are not admitted.',
+              rule: 'HYP-PLACE'
+            }));
+          });
         } else if (info) {
           findings.push(makeFinding({
             layer: 2, severity: SEVERITY.INFO,
@@ -1020,7 +1274,7 @@ const BeyondLinter = (() => {
     });
   }
 
-  // ===== STEP 6: checkResolution (§6.9 R-1..R-4, P-1..P-6, FRONT-1) =====
+  // ===== STEP 6: checkResolution (§6.9 R-1..R-10, P-1..P-9, FRONT-1) =====
 
   function checkResolution(clauses, fm, findings) {
     clauses.forEach(c => {
@@ -1079,7 +1333,127 @@ const BeyondLinter = (() => {
         }
       }
 
-      // R-4 + P-1..P-6: PremiseRef
+      // R-5..R-7: E-SIM references → models, parameter_sets, simulation_runs
+      if (t.type === 'E-SIM') {
+        const model = t.modelRef && fm.models.get(t.modelRef);
+        const params = t.parameterSetRef && fm.parameterSets.get(t.parameterSetRef);
+        const run = t.simulationRunRef && fm.simulationRuns.get(t.simulationRunRef);
+        if (t.modelRef && !model) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved model reference',
+            word: '`' + t.modelRef + '`', line: c.line,
+            reason: `Model identifier "${t.modelRef}" not declared in models: (R-5, FRONT-1).`,
+            rule: 'R-5'
+          }));
+        }
+        if (t.parameterSetRef && !params) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved parameter reference',
+            word: '`' + t.parameterSetRef + '`', line: c.line,
+            reason: `Parameter-set identifier "${t.parameterSetRef}" not declared in parameter_sets: (R-6, FRONT-1).`,
+            rule: 'R-6'
+          }));
+        }
+        if (t.simulationRunRef && !run) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved simulation run',
+            word: '`' + t.simulationRunRef + '`', line: c.line,
+            reason: `Simulation run identifier "${t.simulationRunRef}" not declared in simulation_runs: (R-7, FRONT-1).`,
+            rule: 'R-7'
+          }));
+        }
+        if (params && String(params.model) !== t.modelRef) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Parameter/model mismatch',
+            word: '`' + t.parameterSetRef + '`', line: c.line,
+            reason: `Parameter set "${t.parameterSetRef}" belongs to model "${params.model}", not "${t.modelRef}".`,
+            rule: 'E-SIM-1'
+          }));
+        }
+        if (run && (String(run.model) !== t.modelRef || String(run.parameters) !== t.parameterSetRef)) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Simulation run mismatch',
+            word: '`' + t.simulationRunRef + '`', line: c.line,
+            reason: `Run "${t.simulationRunRef}" must reproduce from model "${t.modelRef}" and parameters "${t.parameterSetRef}".`,
+            rule: 'E-SIM-2'
+          }));
+        }
+      }
+
+      // R-8..R-9: E-AGG references → datasets, methods
+      if (t.type === 'E-AGG') {
+        if (t.datasetRef && !fm.datasets.has(t.datasetRef)) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved dataset reference',
+            word: '`' + t.datasetRef + '`', line: c.line,
+            reason: `Dataset identifier "${t.datasetRef}" not declared in datasets: (R-8, FRONT-1).`,
+            rule: 'R-8'
+          }));
+        }
+        if (t.methodRef && !fm.methods.has(t.methodRef)) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved method reference',
+            word: '`' + t.methodRef + '`', line: c.line,
+            reason: `Method identifier "${t.methodRef}" not declared in methods: (R-9, FRONT-1).`,
+            rule: 'R-9'
+          }));
+        }
+      }
+
+      // R-10: E-HYP candidate references → hypothesis_space
+      if (t.type === 'E-HYP') {
+        const candidate = t.hypothesisCandidate && fm.hypothesisCandidates.get(t.hypothesisCandidate);
+        const other = t.distinguishableFrom && fm.hypothesisCandidates.get(t.distinguishableFrom);
+        if (t.hypothesisCandidate && !candidate) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved hypothesis candidate',
+            word: '`' + t.hypothesisCandidate + '`', line: c.line,
+            reason: `Hypothesis candidate "${t.hypothesisCandidate}" not declared in hypothesis_space: (R-10, E-HYP-1).`,
+            rule: 'E-HYP-1'
+          }));
+        }
+        if (t.distinguishableFrom && !other) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved sibling candidate',
+            word: '`' + t.distinguishableFrom + '`', line: c.line,
+            reason: `Distinguishable candidate "${t.distinguishableFrom}" not declared in hypothesis_space: (R-10, E-HYP-2).`,
+            rule: 'E-HYP-2'
+          }));
+        }
+        if (t.hypothesisCandidate && t.hypothesisCandidate === t.distinguishableFrom) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Hypothesis self-comparison',
+            word: '`' + t.hypothesisCandidate + '`', line: c.line,
+            reason: 'E-HYP candidate and distinguishable-from candidate must differ.',
+            rule: 'E-HYP-2'
+          }));
+        }
+        if (candidate && other) {
+          const cSpace = String(candidate.space || 'default');
+          const oSpace = String(other.space || 'default');
+          if (cSpace !== oSpace) {
+            findings.push(makeFinding({
+              layer: 3, severity: SEVERITY.ERROR,
+              category: 'Hypothesis space mismatch',
+              word: '`' + t.hypothesisCandidate + '` / `' + t.distinguishableFrom + '`', line: c.line,
+              reason: `Hypothesis candidates must share a declared space; got "${cSpace}" and "${oSpace}".`,
+              rule: 'E-HYP-2'
+            }));
+          }
+        }
+      }
+
+      // R-4 + P-1..P-9: PremiseRef
       t.premises.forEach(pid => {
         const target = clauses._byId && clauses._byId.get(pid);
         const inRefs = fm.references.has(pid);
@@ -1102,6 +1476,15 @@ const BeyondLinter = (() => {
               word: '`' + pid + '`', line: c.line,
               reason: `Premise "${pid}" is an E-PRO clause; procedural clauses are not premises (P-6).`,
               rule: 'P-6'
+            }));
+          }
+          if (c.etag.type === 'E-HYP' && pt === 'E-HYP') {
+            findings.push(makeFinding({
+              layer: 3, severity: SEVERITY.ERROR,
+              category: 'Hypothesis premise',
+              word: '`' + pid + '`', line: c.line,
+              reason: `E-HYP premise "${pid}" is another E-HYP clause; hypotheses may not premise other hypotheses.`,
+              rule: 'E-HYP-4'
             }));
           }
           // Self-reference (trivial cycle)
@@ -1481,7 +1864,7 @@ const BeyondLinter = (() => {
         r += `- **Reason:** ${f.reason}\n\n`;
       });
     }
-    r += `---\n\n*Report generated by Beyond CNL Linter v0.3 (envelope grammar)*\n`;
+    r += `---\n\n*Report generated by Beyond CNL Linter v0.4 (envelope grammar)*\n`;
     return r;
   }
 

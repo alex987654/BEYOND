@@ -2,7 +2,7 @@
 
 ## Rules for Epistemic Marking and Formal Structure in a controlled, method-only subset of English
 
-### Version 0.2
+### Version 0.4
 
 ---
 
@@ -66,9 +66,9 @@ banned constructions).
 
 ## 2. The Evidential Allow-list
 
-Beyond CNL admits exactly **six evidential types**, organized into
-three tiers of decreasing directness. Only these six types may
-appear. Any assertion not tagged with one of these six types
+Beyond CNL admits exactly **nine evidential types**, organized into
+three tiers of decreasing directness. Only these nine types may
+appear. Any assertion not tagged with one of these nine types
 fails linting and must not appear in a Beyond CNL document.
 
 ### Tier 1 — Direct (the author or instrument registered the datum)
@@ -130,7 +130,7 @@ also carry a source or a `definition` reference.
 
 ---
 
-### Tier 2 — Derived (the author obtained the claim from premises)
+### Tier 2 — Mediated (the author obtained the claim from premises, records, models, datasets, or candidate spaces)
 
 #### E-DER: Derivation from Stated Premises
 
@@ -191,6 +191,97 @@ methodology is permitted; reinterpretation of values is not
 A claim tagged `(reported, in X)` where X itself only
 carries an E-RPT tag (rather than E-OBS, E-MSR, or E-DER)
 triggers a warning. Depth-2 or greater hearsay fails.
+
+---
+
+#### E-SIM: Simulation Result
+
+**Meaning:** The claim reports the output of a declared model run
+using a declared parameter set. It does not assert that the model
+matches the world; it reports what the model produced.
+
+**Canonical English form:**
+
+| Form | Example |
+|---|---|
+| `(simulated, from model [model-ref], parameters [parameter-ref], run [run-ref])` | "The projected count equals 847 (simulated, from model `MOD-1`, parameters `PAR-1`, run `RUN-1`)." |
+
+**Source requirements:** Model `M` must be declared in
+`models:` with an identifier, `specification_ref`, and
+`parameter_schema_ref`. Parameter set `P` must be declared in
+`parameter_sets:` and must name model `M`. Run `R` must be
+declared in `simulation_runs:` and must name the same model and
+parameter set.
+
+**Linter rule (E-SIM-1):** Every model, parameter-set, and run
+identifier in an E-SIM tag must resolve in frontmatter.
+
+**Linter rule (E-SIM-2):** The run must reproduce from the same
+model and parameter set named in the tag. Mismatched runs fail.
+
+---
+
+#### E-AGG: Statistical Aggregate
+
+**Meaning:** The claim reports a statistical aggregate computed
+from a declared dataset by a declared method.
+
+**Canonical English form:**
+
+| Form | Example |
+|---|---|
+| `(aggregated, from dataset [dataset-ref], method [method-ref], n=[count])` | "The median delay equals 4.2 ms (aggregated, from dataset `DAT-1`, method `MET-1`, n=500)." |
+
+**Source requirements:** Dataset `D` must be declared in
+`datasets:` with an identifier and `schema_ref`. Method `M`
+must be declared in `methods:` with an identifier and
+`catalogue_ref`. `n` is the sample size and must be a positive
+integer.
+
+**Linter rule (E-AGG-1):** Every dataset and method identifier
+in an E-AGG tag must resolve in frontmatter.
+
+**Linter rule (E-AGG-2):** E-AGG tags must declare `n=N` with
+a positive integer sample size.
+
+---
+
+#### E-HYP: Bracketed Causal Hypothesis
+
+**Meaning:** The claim names one candidate from an enumerated
+hypothesis space as compatible with stated premises. It does
+not assert personal belief or commitment to truth.
+
+**Canonical English form:**
+
+| Form | Example |
+|---|---|
+| `(hypothesis, candidate [candidate-ref], from [premise-refs], distinguishable-from [candidate-ref])` | "The delay pattern remains compatible with the measured delay (hypothesis, candidate `H-1`, from `MSR-1.1`, distinguishable-from `H-2`)." |
+
+**Source requirements:** Candidate `H` and the
+`distinguishable-from` candidate must be declared in
+`hypothesis_space:`. Each candidate entry has `id`, `statement`,
+and non-empty `discriminates_via`. Premise references resolve
+through the same mechanism as E-DER.
+
+**Linter rule (E-HYP-1):** Every E-HYP candidate identifier must
+resolve in `hypothesis_space:`. Bare candidate text in prose
+fails.
+
+**Linter rule (E-HYP-2):** The `distinguishable-from` argument
+must name a different candidate from the same declared
+hypothesis space.
+
+**Linter rule (E-HYP-3):** Hypothesis candidates must declare a
+non-empty `discriminates_via` field.
+
+**Linter rule (E-HYP-4):** E-HYP clauses may cite E-OBS, E-MSR,
+E-DER, E-RPT, E-SIM, E-AGG, or E-DEF premises. They must not
+cite another E-HYP clause as a premise. E-DER clauses may cite
+E-HYP clauses for prediction or analysis chains.
+
+**Linter rule (HYP-PLACE):** E-HYP clauses must appear in
+paragraph text under a heading beginning with `Hypothesis`.
 
 ---
 
@@ -299,7 +390,7 @@ parser can locate without semantic analysis.
 
 ```
 The signal amplitude decreases by 3 dB over 24 hours
-(measured, instrument `PWR-2`, 1-sigma ± 0.4 dB).
+(measured, instrument `PWR-2`, ± 0.4 dB).
 ```
 
 ### 4.2 Imperative clauses
@@ -369,7 +460,7 @@ the evidential infrastructure:
 
 ```yaml
 ---
-schema: beyond-cnl-v0.3
+schema: beyond-cnl-v0.4
 purpose: [narrow procedural purpose statement]
 phase: [Discovery | Validation | Characterization | Open-Contact | Negotiation]
 instruments:
@@ -386,6 +477,18 @@ references:
   - id: REF-LAB-A
     title: "Replication report, Lab A"
     access: restricted
+  - id: REF-MODEL-1
+    title: "Model specification"
+    access: public
+  - id: REF-PARAM-SCHEMA-1
+    title: "Parameter schema"
+    access: public
+  - id: REF-DATA-SCHEMA-1
+    title: "Dataset schema"
+    access: public
+  - id: REF-METHOD-1
+    title: "Method catalogue"
+    access: public
 technical_names:
   - term: harm metric
     pos: noun
@@ -396,12 +499,37 @@ technical_names:
 conditions:
   - id: COND-2.1
     statement: "harm metric exceeds threshold Z for two consecutive windows"
+models:
+  - id: MOD-1
+    specification_ref: REF-MODEL-1
+    parameter_schema_ref: REF-PARAM-SCHEMA-1
+parameter_sets:
+  - id: PAR-1
+    model: MOD-1
+simulation_runs:
+  - id: RUN-1
+    model: MOD-1
+    parameters: PAR-1
+datasets:
+  - id: DAT-1
+    schema_ref: REF-DATA-SCHEMA-1
+methods:
+  - id: MET-1
+    catalogue_ref: REF-METHOD-1
+hypothesis_space:
+  - id: H-1
+    statement: "delay pattern follows model output"
+    discriminates_via: [MSR-1.1]
+  - id: H-2
+    statement: "delay pattern follows dataset aggregate"
+    discriminates_via: [AGG-1.1]
 ---
 ```
 
 **Linter rule (FRONT-1):** Every instrument, reference, technical
-name, and condition referenced in the body must appear in the
-frontmatter. Unresolved references fail.
+name, condition, model, parameter set, simulation run, dataset,
+method, and hypothesis candidate referenced in the body must
+appear in the frontmatter. Unresolved references fail.
 
 **Linter rule (FRONT-2):** The `purpose:` field must parse as a
 valid Beyond CNL clause. It must not contain identity, intent,
@@ -412,21 +540,30 @@ five declared protocol phases. Future protocol-phase additions
 are made by revising this schema, not by ad-hoc additions in
 documents.
 
-**Linter rule (FRONT-4):** The `schema:` field must declare a
-schema version no newer than the linter implements. A document
-declaring a future schema version is rejected; this prevents
-silent downgrade of compliance checks.
+**Linter rule (FRONT-4):** The `schema:` field must declare
+`beyond-cnl-v0.4`. Documents declaring any other schema version
+are rejected.
 
 **Field constraints:**
 
-- `instruments[].id`, `references[].id`, and `conditions[].id` must
-  match the `Identifier` production in §6.3.
+- `instruments[].id`, `references[].id`, `conditions[].id`,
+  `models[].id`, `parameter_sets[].id`, `simulation_runs[].id`,
+  `datasets[].id`, `methods[].id`, and `hypothesis_space[].id`
+  must match the `Identifier` production in §6.3.
 - `references[].access` must be one of `public`, `restricted`, or
   `private`.
 - `technical_names[].term` is a multi-word noun phrase, sense-pinned.
 - `technical_names[].definition` and `conditions[].statement` are
   single Beyond CNL clauses, copula-free, with the period and
   E-tag omitted in YAML value position.
+- `models[]` entries require `specification_ref` and
+  `parameter_schema_ref`.
+- `parameter_sets[]` entries require `model`.
+- `simulation_runs[]` entries require `model` and `parameters`.
+- `datasets[]` entries require `schema_ref`.
+- `methods[]` entries require `catalogue_ref`.
+- `hypothesis_space[]` entries require `statement` and non-empty
+  `discriminates_via`.
 
 ---
 
@@ -483,9 +620,10 @@ Identifier      = ( Letter | "_" ) ( Letter | Digit | "-" | "_" | "." )* ;
 
 ### 6.3 Inline code (typed identifiers)
 
-All references to instruments, references, premises, scopes,
-and conditions appear as **inline code** (backtick-delimited) in
-clause text:
+All references to instruments, records, premises, scopes,
+conditions, models, parameter sets, simulation runs, datasets,
+methods, and hypothesis candidates appear as **inline code**
+(backtick-delimited) in clause text:
 
 ```ebnf
 InlineCode      = "`" IdentifierBody "`" ;
@@ -543,7 +681,8 @@ OrderedListItem = Digit+ "." SP ImperativeClause NL ;
 
 (* ---- Fenced code blocks ---- *)
 CodeBlock       = "```" InfoString NL CodeContent "```" NL ;
-InfoString      = "definition" | "constraint" | "measurement" | Identifier ;
+InfoString      = "definition" | "constraint" | "measurement"
+                | "simulation" | "aggregation" | Identifier ;
 CodeContent     = TaggedClause+ ;
 ```
 
@@ -573,13 +712,15 @@ UnitToken       = ?SI unit symbol or approved domain-specific unit? ;
 
 ### 6.7 E-tag grammar
 
-The six E-tag types defined in §2 have the following formal
+The nine E-tag types defined in §2 have the following formal
 shapes.
 
 ```ebnf
 ETagFrame       = "(" ETagBody ")" ;
 
-ETagBody        = ObsTag | MsrTag | DerTag | RptTag | DefTag | StipTag ;
+ETagBody        = ObsTag | MsrTag | DerTag | RptTag
+                | SimTag | AggTag | HypTag
+                | DefTag | StipTag ;
 
 ProcETagFrame   = "(" ProcTag ")" ;
 
@@ -609,6 +750,27 @@ RptTag          = RptVerb "," SP RptPrep SP RecordRef
 RptVerb         = "reported" | "cited" | "replicated" ;
 RptPrep         = "in" | "from" ;
 RecordRef       = InlineCode ;
+
+(* ---- E-SIM ---- *)
+SimTag          = "simulated" "," SP "from" SP "model" SP ModelRef
+                  "," SP "parameters" SP ParameterSetRef
+                  "," SP "run" SP SimulationRunRef ;
+ModelRef        = InlineCode ;
+ParameterSetRef = InlineCode ;
+SimulationRunRef = InlineCode ;
+
+(* ---- E-AGG ---- *)
+AggTag          = "aggregated" "," SP "from" SP "dataset" SP DatasetRef
+                  "," SP "method" SP MethodRef
+                  "," SP "n=" Digit+ ;
+DatasetRef      = InlineCode ;
+MethodRef       = InlineCode ;
+
+(* ---- E-HYP ---- *)
+HypTag          = "hypothesis" "," SP "candidate" SP CandidateRef
+                  "," SP "from" SP PremiseRefList
+                  "," SP "distinguishable-from" SP CandidateRef ;
+CandidateRef    = InlineCode ;
 
 (* ---- E-DEF ---- *)
 DefTag          = "defined" ;
@@ -646,7 +808,10 @@ rules formalize the integration described narratively in §9.
 | CodeBlock(definition)   | E-DEF (`defined` or `stipulated`)      | C-1     |
 | CodeBlock(constraint)   | E-DEF or E-DER                         | C-2     |
 | CodeBlock(measurement)  | E-MSR                                  | C-3     |
+| CodeBlock(simulation)   | E-SIM                                  | C-5     |
+| CodeBlock(aggregation)  | E-AGG                                  | C-6     |
 | CodeBlock(other)        | unrestricted, flagged for review       | C-4     |
+| E-HYP placement         | Must appear in a paragraph under a heading beginning with `Hypothesis` | HYP-PLACE |
 | Heading                 | E-tag not permitted                    | H-1     |
 
 ### 6.9 Reference resolution
@@ -657,6 +822,12 @@ rules formalize the integration described narratively in §9.
 | RecordRef InlineCode        | `references:` in frontmatter                        | R-2     |
 | ConditionRef InlineCode     | `conditions:` in frontmatter                        | R-3     |
 | PremiseRef InlineCode       | a tagged clause in the same document, or in a document cited via `references:` | R-4     |
+| ModelRef InlineCode         | `models:` in frontmatter                            | R-5     |
+| ParameterSetRef InlineCode  | `parameter_sets:` in frontmatter                    | R-6     |
+| SimulationRunRef InlineCode | `simulation_runs:` in frontmatter                   | R-7     |
+| DatasetRef InlineCode       | `datasets:` in frontmatter                          | R-8     |
+| MethodRef InlineCode        | `methods:` in frontmatter                           | R-9     |
+| CandidateRef InlineCode     | `hypothesis_space:` in frontmatter                  | R-10    |
 
 **Premise-tag eligibility (extends R-4):**
 
@@ -667,6 +838,9 @@ rules formalize the integration described narratively in §9.
 | E-DER                     | yes                  | P-3     |
 | E-DEF                     | yes (for definitional premises) | P-4 |
 | E-RPT only                | yes at depth 1; warning at depth 1; rejection at depth 2+ (matches E-RPT-3) | P-5 |
+| E-SIM                     | yes                  | P-7     |
+| E-AGG                     | yes                  | P-8     |
+| E-HYP                     | yes for E-DER; no for E-HYP | P-9 |
 | E-PRO                     | no — procedural clauses are not premises | P-6 |
 
 ### 6.10 Compound and conditional sentences (normalization)
@@ -713,7 +887,7 @@ layers do the content work.
 |---|---|---|
 | 1. Lexicon | Every token against approved word list; banned-construction check | Tokenizer + dictionary lookup |
 | 2. Envelope grammar | Document derives from §6 grammar; register and resolution rules pass | Hand-rolled recognizer (current) or PEG/Ohm (future); see §6.12 |
-| 3. Evidential semantics | E-tag content well-formed beyond syntax: premise chains non-circular, hearsay depth bounded, etc. | Custom linter rules (E-OBS-*, E-MSR-*, E-DER-*, E-RPT-*, E-DEF-*, E-PRO-*) |
+| 3. Evidential semantics | E-tag content well-formed beyond syntax: premise chains non-circular, hearsay depth bounded, simulation and aggregate refs resolved, hypothesis candidates bounded, etc. | Custom linter rules (E-OBS-*, E-MSR-*, E-DER-*, E-RPT-*, E-SIM-*, E-AGG-*, E-HYP-*, E-DEF-*, E-PRO-*) |
 | 4. Markdown structure | Heading sequence, forbidden Markdown elements, info-string validity | markdownlint + remark-lint |
 | 5. Human/AI review | Semantic coherence, information-hazard scan | Reviewer checklist |
 
@@ -806,7 +980,23 @@ to make the non-interference claim empirical.
    (procedure, step 5, if `COND-2.2`).
 ```
 
-### 8.3 Non-compliant examples (with failure reasons)
+### 8.3 Compliant v0.4 extension clauses
+
+````
+```simulation
+The projected count equals 847 (simulated, from model `MOD-1`, parameters `PAR-1`, run `RUN-1`).
+```
+
+```aggregation
+The median delay equals 4.2 ms (aggregated, from dataset `DAT-1`, method `MET-1`, n=500).
+```
+
+## Hypothesis
+
+The delay pattern remains compatible with the measured delay (hypothesis, candidate `H-1`, from `MSR-1.1`, distinguishable-from `H-2`).
+````
+
+### 8.4 Non-compliant examples (with failure reasons)
 
 **Failure: missing E-tag.**
 "The signal decreases over time." — No E-tag. Rejected at
@@ -845,8 +1035,8 @@ where `REF-X` itself only cites `REF-Y` with an E-RPT tag, and
 depth 1; rejection at depth 2 by rule P-5 (matches E-RPT-3).
 
 **Failure: schema version mismatch.**
-A document declaring `schema: beyond-cnl-v0.4` processed by a
-linter implementing only v0.3. Rejected by rule FRONT-4.
+A document declaring `schema: beyond-cnl-v0.3` or any value other
+than `schema: beyond-cnl-v0.4` is rejected by rule FRONT-4.
 
 ---
 
@@ -863,7 +1053,9 @@ formal register constraints in §6.8.
 | Fenced code `definition` | Every clause must carry E-DEF |
 | Fenced code `constraint` | Every clause must carry E-DEF or E-DER |
 | Fenced code `measurement` | Every clause must carry E-MSR |
-| Paragraph (body text) | Any E-tag permitted; mixed registers allowed |
+| Fenced code `simulation` | Every clause must carry E-SIM |
+| Fenced code `aggregation` | Every clause must carry E-AGG |
+| Paragraph (body text) | Any E-tag permitted; E-HYP requires a heading beginning `Hypothesis` |
 | Table cell | Inherits E-tag of the table's caption or introducing clause |
 
 The Markdown block type constrains which E-tags are valid
@@ -899,117 +1091,13 @@ E-tag types under these conditions:
    generate new values in prose. This is what makes criterion 3
    testable.
 
-### 10.1 Candidate extensions under consideration
+### 10.1 Current extension status
 
-The following extensions are not yet admitted but potentially planned for future versions. 
-Each requires further analysis of its leak surface, and each must be argued
-individually against all five criteria above; presence on this
-list is not a commitment to admission. Upon admission, a
-candidate migrates from §10 into §2 (with its own subsection),
-gains formal grammar in §6.7, and the schema version bumps.
-
-#### E-SIM: Simulation result
-
-**Form:** `(simulated, from model `M`, parameters `P`, run `R`)`.
-
-**Source requirements:** Model `M` must be declared in a new
-frontmatter `models:` field with an identifier, a specification
-reference (published code, mathematical specification, or both),
-and a parameter schema. Parameters `P` must conform to the
-schema. Run identifier `R` must be reproducible from `M` and `P`.
-
-**Status:** Strong case from the expressivity pilot (Documents 2,
-4, and 5 all required this register). No remaining design
-objection beyond the standard leak-surface review.
-
-#### E-AGG: Statistical aggregate
-
-**Form:** `(aggregated, from dataset `D`, method `M`, n=N)`.
-
-**Source requirements:** Dataset `D` must be declared in a new
-frontmatter `datasets:` field with a schema reference. Method
-`M` must be a named statistical procedure from a published
-catalogue. N is the sample size.
-
-**Status:** Useful in surveillance and characterization
-registers. Leak-surface review pending.
-
-#### E-HYP: Bracketed causal hypothesis
-
-**Form:**
-`(hypothesis, candidate `H`, from `[premise-refs]`, distinguishable-from `[other-candidate]`)`.
-
-**Source requirements:** Candidate `H` must be drawn from the
-document's `hypothesis_space:` frontmatter field, which
-enumerates the admissible candidates for the phenomenon under
-discussion. Each candidate has an identifier, a short
-declarative form (itself a valid Beyond CNL clause), and a
-non-empty `discriminates_via:` field listing one or more
-measurements or derivations that would distinguish it from at
-least one other candidate.
-
-**Linter rule (E-HYP-1):** Every E-HYP tag's candidate
-identifier must resolve in `hypothesis_space:`. Bare candidate
-text in prose fails.
-
-**Linter rule (E-HYP-2):** Either the `distinguishable-from`
-argument must name another candidate from the same space, OR
-the document must contain at least one E-DER clause whose
-premise list includes this E-HYP candidate and whose conclusion
-is a falsifiable prediction (a measurement-class claim). Bare
-hypothesis without either a sibling candidate or a derivable
-prediction fails.
-
-**Linter rule (E-HYP-3):** Hypothesis candidates must be declared
-with non-overlapping discriminating tests where possible. Two
-candidates with identical `discriminates_via:` lists trigger a
-warning (they are operationally indistinguishable and the
-hypothesis space is malformed).
-
-**Discussion against the five criteria:**
-
-- *Criterion 1 (no personal commitment):* The candidate is drawn
-  from a published enumeration, not introduced by the author.
-  The clause asserts that the candidate is *one of* the
-  enumerated explanations supported by the cited premises, not
-  that the author believes it. The natural-English reader may
-  still parse it as belief; the structural marker discourages
-  this and the linter prevents the language drift that would
-  normalize it.
-- *Criterion 2 (verifiable source/premise chain):* Premise
-  references are mandatory and resolve through the same R-4
-  mechanism as E-DER.
-- *Criterion 3 (non-interference):* Two authors with identical
-  data and identical `hypothesis_space:` declarations will
-  produce the same set of compatible candidates (modulo
-  enumeration order). If they select *different* candidates from
-  the same space, the divergence reveals a measurement gap, not
-  an identity leak. Free-form hypothesis generation would fail
-  this criterion; the enumeration requirement is what saves it.
-- *Criterion 4 (deterministic linting):* All checks are
-  structural (frontmatter resolution, premise resolution,
-  sibling/prediction presence). No semantic understanding is
-  required of the linter.
-- *Criterion 5 (enumerable value space):* The `hypothesis_space:`
-  field is the enumeration. Authors cannot bypass it.
-
-**Conjecture-and-test loop:** E-HYP alone enables authors to
-state a hypothesis; the full conjecture-and-test cycle closes
-only when E-HYP is combined with careful use of E-DER and E-MSR:
-E-HYP declares the candidate, E-DER derives what each candidate
-*predicts* about a future measurement, E-MSR records the test
-outcome, and a further E-DER attributes the outcome back to the
-supported candidate. E-HYP would therefore be a necessary but not
-sufficient ingredient for the loop; the loop's closure would remain
-a discipline of authorship rather than a language feature.
-
-**To be determined**
-
-- Whether E-HYP should be permitted only inside a dedicated
-  `## Hypotheses` section (analogous to the `## Procedure`
-  placement rule for E-PRO), so that hypothesis content is
-  structurally segregated from observation and derivation.
+Version 0.4 admits the former candidate tags E-SIM, E-AGG, and
+E-HYP. They now appear in §2, the formal grammar in §6.7, and
+the frontmatter schema in §5. No additional candidate E-tags are
+active in this version.
 
 ---
 
-*End of Evidential System and Grammar specification v0.2.*
+*End of Evidential System and Grammar specification v0.4.*

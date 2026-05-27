@@ -1,6 +1,6 @@
 # Beyond CNL: Companion Lexicon
 
-## For use alongside Beyond CNL SKILL v0.3.2
+## For use alongside Beyond CNL SKILL v0.4.0
 
 This file contains nouns, adjectives, adverbs, numerals,
 units, and function words with sense pins. The **verb list**
@@ -1714,7 +1714,7 @@ verifiable properties. No evaluative adjectives admitted.
 | Adjectives | 230 | This file |
 | Adverbs | 52 | This file |
 | Numerals and units | 68 | This file |
-| Evidential markers | 12 | SKILL file |
+| Evidential markers | 15 | SKILL file |
 | **Core total** | **~2,187** | — |
 | Technical Name capacity | ~2,813 | — |
 | **Maximum ceiling** | **5,000** | — |
@@ -1760,4 +1760,4 @@ indicates which sense belongs there.
 
 ---
 
-*End of Beyond CNL Companion Lexicon v0.3.1.*
+*End of Beyond CNL Companion Lexicon v0.4.0.*
