@@ -1,3 +1,8 @@
+---
+name: beyond-cnl
+description: Write, generate, convert, or validate documents in Beyond CNL, a method-only controlled subset of American English that achieves information-flow safety through grammar (E-Prime copula ban, mandatory evidential E-tags, a fixed verb and lexicon whitelist, and typed Markdown blocks). Use this skill whenever the user wants to author a Beyond CNL document, translate or convert standard English into Beyond CNL, check or audit a document for Beyond CNL compliance, work with evidential tags (E-tags), build the v0.4 document YAML frontmatter (instruments, references, conditions, technical_names, models, parameter_sets, simulation_runs, datasets, methods, hypothesis_space), or asks anything about the Beyond CNL language, its lexicon, verbs, or grammar — even when referred to informally (e.g. "method-only English", "the CNL", "the boundary language").
+---
+
 # SKILL: Beyond CNL — Method-Only Controlled Natural Language
 
 ## Version 0.4.0
@@ -811,15 +816,36 @@ DEFAULT: expressiveness gap = correct behavior
 
 ---
 
-## Companion Document
+## Companion Lexicon — when and how to load it
 
-The **Beyond CNL Lexicon** file contains the complete noun,
-adjective, adverb, numeral, and function-word lists with
-sense pins. Load it alongside this skill file for conversion
-tasks. For generation tasks, this skill file with the verb
-list above suffices — noun and adjective gaps surface at
-validation and resolve via the Technical Name mechanism or
-the replacement strategies in the pitfalls section.
+**File:** `beyond_cnl_COMPANION_LEXICON.md`, located alongside
+this skill file (same directory).
+
+**Contents:** the complete noun (937), adjective (230),
+adverb (52), numeral/unit (68), and function-word (139) lists
+with sense pins, plus dual-sense and dropped-noun tables. The
+verb list (313) lives in *this* skill file, not the lexicon;
+the lexicon's sections are numbered to continue from it (it
+starts at "3. Function Words"), so do not look for a Section 4
+inside it.
+
+**Load rule:**
+
+- **Conversion or compliance/validation task** — read
+  `beyond_cnl_COMPANION_LEXICON.md` before checking words
+  against the lexicon (workflow step 10 above). It carries the
+  whitelist this skill file does not.
+- **Generation task** — do **not** load it. This skill file
+  with the verb list above suffices; noun and adjective gaps
+  surface at validation and resolve via the Technical Name
+  mechanism or the pitfalls-section replacements.
+
+**Reading it efficiently:** at ~1,760 lines it should not be
+read whole. Jump to the relevant section — `## 5. Nouns`,
+`## 6. Adjectives`, `## 7. Adverbs`, `## 8. Numerals and
+Units`, `## 3. Function Words`, `## Dual-Sense Nouns`, or
+`## Dropped Nouns` — using a targeted view of just that
+heading's range.
 
 ---
 
