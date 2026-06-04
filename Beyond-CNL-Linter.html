@@ -498,6 +498,7 @@
     ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
   </style>
+  <link rel="stylesheet" href="css/markdown-editor.css">
 </head>
 <body>
 
@@ -522,8 +523,10 @@
       <div class="panel-header">
         <span class="panel-title">Input</span>
         <div class="input-tabs">
-          <button class="input-tab active" data-tab="text" onclick="switchTab('text')">Paste Text</button>
+          <button type="button" class="input-tab active" data-tab="text" onclick="openMarkdownFile()">Load Markdown file</button>
           <button class="input-tab" data-tab="url" onclick="switchTab('url')">Fetch URL</button>
+          <input type="file" id="markdownFileInput" accept=".md,.markdown,.mdown,.mkd,.txt,text/markdown,text/plain"
+            style="display:none;" onchange="loadMarkdownFile(event)">
         </div>
       </div>
 
@@ -531,7 +534,7 @@
         <div class="url-section" id="urlSection">
           <div class="input-row">
             <input type="text" class="url-input" id="urlInput"
-              placeholder="URL to a .md or .txt file (HTML pages: only text content is extracted)">
+              placeholder="URL to a .md, .markdown, or .txt file">
             <button class="btn btn-primary" id="fetchBtn" onclick="fetchAndLint()">Fetch & Lint</button>
           </div>
         </div>
@@ -539,7 +542,22 @@
 
       <div class="text-section active" id="textSection">
         <div class="textarea-wrap">
-          <textarea id="textInput" placeholder="Paste a Beyond CNL document here..."></textarea>
+          <div class="markdown-editor-shell">
+            <div class="markdown-toolbar" id="markdownToolbar" aria-label="Markdown formatting controls">
+              <button type="button" class="md-tool" data-md-command="heading" title="Heading" aria-label="Heading">H</button>
+              <button type="button" class="md-tool" data-md-command="bold" title="Bold" aria-label="Bold">B</button>
+              <button type="button" class="md-tool" data-md-command="italic" title="Italic" aria-label="Italic">I</button>
+              <button type="button" class="md-tool" data-md-command="code" title="Inline code" aria-label="Inline code">`</button>
+              <span class="md-tool-separator" aria-hidden="true"></span>
+              <button type="button" class="md-tool" data-md-command="unordered" title="Bulleted list" aria-label="Bulleted list">-</button>
+              <button type="button" class="md-tool" data-md-command="ordered" title="Numbered list" aria-label="Numbered list">1.</button>
+              <button type="button" class="md-tool" data-md-command="quote" title="Quote" aria-label="Quote">&gt;</button>
+              <button type="button" class="md-tool" data-md-command="link" title="Link" aria-label="Link">@</button>
+            </div>
+            <textarea id="textInput" class="markdown-source" placeholder="Load or edit a Beyond CNL Markdown document here..." aria-hidden="true" tabindex="-1"></textarea>
+            <div id="markdownEditor" class="markdown-editor" contenteditable="true" role="textbox" aria-multiline="true"
+              spellcheck="false" data-placeholder="Load or edit a Beyond CNL Markdown document here..."></div>
+          </div>
         </div>
       </div>
 
@@ -562,7 +580,7 @@
         <div class="results-empty" id="emptyState">
           <div class="results-empty-icon">◇</div>
           <div class="results-empty-text">
-            Paste text or fetch a URL, then run the linter.<br>
+            Load a Markdown or text file, then run the linter.<br>
             Every word checked against the approved<br>
             ~2,187-word Beyond CNL vocabulary.
           </div>
@@ -577,11 +595,28 @@
   <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
   <script src="js/lexicon.js"></script>
   <script src="js/linter.js"></script>
+  <script src="js/markdown-editor.js"></script>
   <script>
     // ===== STATE =====
     let lastResults = null;
     let lastText = '';
     let activeLayerFilter = null;
+    const ALLOWED_LOCAL_FILE_EXTENSIONS = ['.md', '.markdown', '.mdown', '.mkd', '.txt'];
+
+    function getInputText() {
+      if (window.BeyondMarkdownEditor) {
+        return window.BeyondMarkdownEditor.getMarkdown();
+      }
+      return document.getElementById('textInput').value;
+    }
+
+    function setInputText(text) {
+      if (window.BeyondMarkdownEditor) {
+        window.BeyondMarkdownEditor.setMarkdown(text);
+        return;
+      }
+      document.getElementById('textInput').value = text;
+    }
 
     // ===== TAB SWITCHING =====
     function switchTab(tab) {
@@ -592,10 +627,53 @@
       document.getElementById('textSection').classList.toggle('active', tab === 'text');
     }
 
+    // ===== LOCAL FILE LOADING =====
+    function openMarkdownFile() {
+      switchTab('text');
+      const input = document.getElementById('markdownFileInput');
+      input.value = '';
+      input.click();
+    }
+
+    async function loadMarkdownFile(event) {
+      const input = event.target;
+      const file = input.files && input.files[0];
+      if (!file) return;
+
+      if (!isAllowedLocalTextFile(file)) {
+        showError('Local input is limited to Markdown or plain text files: .md, .markdown, .mdown, .mkd, or .txt.');
+        input.value = '';
+        return;
+      }
+
+      try {
+        const text = await file.text();
+        setInputText(text);
+        switchTab('text');
+        resetResults(`Loaded ${file.name}. Ready to run the linter.`);
+      } catch (err) {
+        showError(`Failed to load file: ${err.message}.`);
+      } finally {
+        input.value = '';
+      }
+    }
+
+    function isAllowedLocalTextFile(file) {
+      const name = file.name.toLowerCase();
+      const hasAllowedExtension = ALLOWED_LOCAL_FILE_EXTENSIONS.some(ext => name.endsWith(ext));
+      const hasAllowedType = ['text/markdown', 'text/plain'].includes(file.type);
+      return hasAllowedExtension || hasAllowedType;
+    }
+
     // ===== FETCH URL =====
     async function fetchAndLint() {
       const url = document.getElementById('urlInput').value.trim();
       if (!url) return;
+
+      if (!isAllowedMarkdownUrl(url)) {
+        showError('URL input is limited to Markdown or plain text files: .md, .markdown, .mdown, .mkd, or .txt.');
+        return;
+      }
 
       const fetchBtn = document.getElementById('fetchBtn');
       fetchBtn.disabled = true;
@@ -617,30 +695,30 @@
 
         let text = await response.text();
 
-        // If HTML, extract text content
-        if (url.endsWith('.html') || text.trimStart().startsWith('<')) {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(text, 'text/html');
-          // Remove script/style
-          doc.querySelectorAll('script, style').forEach(el => el.remove());
-          text = doc.body.innerText || doc.body.textContent || text;
-        }
-
-        document.getElementById('textInput').value = text;
+        setInputText(text);
         switchTab('text');
         runLint();
 
       } catch (err) {
-        showError(`Failed to fetch URL: ${err.message}. Try pasting the text directly.`);
+        showError(`Failed to fetch URL: ${err.message}. Try loading a local Markdown or text file.`);
       } finally {
         fetchBtn.disabled = false;
         fetchBtn.textContent = 'Fetch & Lint';
       }
     }
 
+    function isAllowedMarkdownUrl(url) {
+      try {
+        const path = new URL(url, window.location.href).pathname.toLowerCase();
+        return ALLOWED_LOCAL_FILE_EXTENSIONS.some(ext => path.endsWith(ext));
+      } catch (e) {
+        return ALLOWED_LOCAL_FILE_EXTENSIONS.some(ext => url.toLowerCase().split(/[?#]/)[0].endsWith(ext));
+      }
+    }
+
     // ===== RUN LINTER =====
     function runLint() {
-      const text = document.getElementById('textInput').value.trim();
+      const text = getInputText().trim();
       if (!text) return;
 
       lastText = text;
@@ -752,12 +830,15 @@
     }
 
     function clearAll() {
-      document.getElementById('textInput').value = '';
+      setInputText('');
       document.getElementById('urlInput').value = '';
+      resetResults('Ready for input.');
+    }
+
+    function resetResults(message) {
       document.getElementById('resultsBody').innerHTML =
-        document.getElementById('emptyState') ? document.getElementById('emptyState').outerHTML :
         `<div class="results-empty"><div class="results-empty-icon">◇</div>
-        <div class="results-empty-text">Ready for input.</div></div>`;
+        <div class="results-empty-text">${escapeHtml(message)}</div></div>`;
       document.getElementById('downloadBtns').style.display = 'none';
       lastResults = null;
       lastText = '';
