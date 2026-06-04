@@ -1,6 +1,6 @@
 # Beyond CNL: Companion Lexicon
 
-## For use alongside Beyond CNL SKILL v0.4.0
+## For use alongside Beyond CNL SKILL v0.4.1
 
 This file contains nouns, adjectives, adverbs, numerals,
 units, and function words with sense pins. The **verb list**
@@ -14,7 +14,7 @@ suffices.
 
 ---
 
-## 3. Function Words (139)
+## 3. Function Words (137)
 
 ### Articles and demonstratives (6)
 `a`, `an`, `the`, `this`, `that`, `each`
@@ -31,9 +31,13 @@ suffices.
 `during`, `for`, `from`, `in`, `into`, `near`, `of`, `off`,
 `on`, `out`, `over`, `through`, `to`, `under`
 
-### Conjunctions (12)
-`and`, `or`, `nor`, `but`, `yet`, `so`, `if`, `then`,
-`unless`, `until`, `while`, `because`
+### Conjunctions (10)
+`and`, `or`, `nor`, `but`, `yet`, `if`, `then`,
+`unless`, `until`, `while`
+
+Removed in v0.4: `so` and `because`. Causal and purposive
+linkage now routes through the E-PRO `for` slot or E-DER; see
+SKILL pitfalls and Evidential System §3 deny-list.
 
 ### Relative and interrogative (8)
 `who`, `which`, `that` (relative), `what`, `where`, `when`,
@@ -75,7 +79,7 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 ---
 ---
 
-## 5. Nouns (937)
+## 5. Nouns (939)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
@@ -370,7 +374,7 @@ lexical entries.
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (125)
+### C. Measurement and Quantity (127)
 
 | Word | Sense pin |
 |---|---|
@@ -465,10 +469,12 @@ lexical entries.
 | `precision` | degree to which repeated measurements agree with each other |
 | `pressure` | force per unit area, in pascals |
 | `probability` | numerical measure of likelihood, range 0 to 1 |
+| `product` | result of multiplying two or more quantities. Arithmetic sense only; the manufactured-good sense stays `output` or `unit` |
 | `profile` | graph of a quantity as a function of position along a line |
 | `proportion` | relation of one quantity to another expressed as a fraction or ratio |
 | `pulse` | brief deviation of a quantity from its baseline value |
 | `quantity` | measurable amount or number |
+| `quotient` | result of dividing one quantity by another. Distinct from `ratio` (same-kind quantities) and `fraction` (part of a whole) |
 | `radius` | distance from the center of a circle or sphere to its boundary |
 | `range` | difference between maximum and minimum values; or extent of coverage |
 | `rate` | quantity per unit time |
@@ -1708,9 +1714,9 @@ verifiable properties. No evaluative adjectives admitted.
 
 | Category | Count | Location |
 |---|---|---|
-| Function words | 139 | This file |
+| Function words | 137 | This file |
 | Method-only verbs | 313 | SKILL file |
-| Nouns | ~950 | This file |
+| Nouns | ~952 | This file |
 | Adjectives | 230 | This file |
 | Adverbs | 52 | This file |
 | Numerals and units | 68 | This file |
@@ -1756,8 +1762,8 @@ indicates which sense belongs there.
 | `duplicate` | `copy`, `replica` |
 | `collection` | `set`, `group` |
 | `plaintext` | `cleartext` |
-| `fundamental` | `ground-state` |
+| `fundamental` (arts noun) | `ground-state` |
 
 ---
 
-*End of Beyond CNL Companion Lexicon v0.4.0.*
+*End of Beyond CNL Companion Lexicon v0.4.1.*
