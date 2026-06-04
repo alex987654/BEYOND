@@ -47,11 +47,11 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 
 | File                                   | Description                                                  |
 |----------------------------------------|--------------------------------------------------------------|
-| `beyond_cnl_SKILL.md`                  | Complete teaching reference for LLMs and human authors — rules, verb list, pitfalls, examples, quick reference card |
+| `SKILL.md`                  | Complete teaching reference for LLMs and human authors — rules, verb list, pitfalls, examples, quick reference card |
 | `beyond_cnl_COMPANION_LEXICON.md`      | Companion vocabulary — nouns, adjectives, adverbs, function words, all sense-pinned |
 | `Beyond CNL Evidential System.md`      | Evidential system specification — nine E-tag types, enforcement architecture, frontmatter schema |
-| `beyond_cnl_lexicon_v03.md`            | Full consolidated lexicon (single-source reference, all word classes) |
-| `Beyond-CNL-Linter.html (and .js files)` | Grammar and lexicon checker for Beyond CNL                   |
+| `Beyond CNL Lexicon.md`            | Full consolidated lexicon (single-source reference, all word classes) |
+| `Beyond-CNL-Linter.html (and .js files)` | Grammar and lexicon checker for Beyond CNL text                 |
 
 ## Links
 
