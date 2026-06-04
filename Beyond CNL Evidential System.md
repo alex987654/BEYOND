@@ -2,7 +2,7 @@
 
 ## Rules for Epistemic Marking and Formal Structure in a controlled, method-only subset of English
 
-### Version 0.4
+### Version 0.4.1
 
 ---
 
@@ -152,12 +152,20 @@ definitions. These identifiers use the document's internal
 numbering scheme (section.clause).
 
 **Linter rule (E-DER-1):** Every premise reference must resolve
-to a clause in the same document (or in a cited document) that
-itself carries a Tier 1 or Tier 2 E-tag. Circular derivations
-fail.
+to a grounded premise (a clause carrying a Tier 1 or Tier 2
+E-tag, or a definition/condition per E-DER-3) in the same
+document or in a cited document. Circular derivations fail.
 
 **Linter rule (E-DER-2):** The derivation verb (`derived`,
 `calculated`, `follows`) must appear; bare `(from ...)` fails.
+
+**Linter rule (E-DER-3):** A premise reference may resolve to: a
+clause carrying a Tier 1 or Tier 2 E-tag; a definition (`DEF-*`);
+a **Technical-Name term** grounded by its `definition` block; or
+a condition (`COND-*`) declared in `conditions:`. This admits
+mechanism and rationale statements that ground on a definition or
+condition rather than a measured clause, and removes any reason
+to tag such statements `(defined)`. See §6.9 (R-11, P-10, P-11).
 
 ---
 
@@ -292,7 +300,8 @@ paragraph text under a heading beginning with `Hypothesis`.
 **Meaning:** The author establishes the meaning of a term, a
 parameter value, or a procedural convention by stipulation.
 Definitions do not assert facts about the world; they create
-vocabulary for the document.
+vocabulary for the document. A causal or functional claim is not
+a definition; tag such a claim E-DER (see E-DER-3).
 
 **Canonical English forms:**
 
@@ -327,6 +336,7 @@ It does not assert a fact; it issues an instruction.
 | `(procedure)` | "Set the symbol-rate cap to 0.1 bits per day (procedure)." |
 | `(procedure, step [N])` | "Pause all outward transmission for 14 days (procedure, step 3)." |
 | `(procedure, if [condition-ref])` | "Reset the counter to zero (procedure, if `COND-2.1`)." |
+| `(procedure, for [condition-ref])` | "Limit the heat time (procedure, step 7, for `COND-FRONT-SEPARATION`)." |
 
 **Syntax:** Procedural clauses use the imperative mood (bare
 verb stem as first word) and carry the `(procedure)` E-tag.
@@ -340,8 +350,23 @@ must begin with an imperative verb from the approved verb list.
 evidential-claim verbs (observe, measure, detect, report).
 Procedures prescribe; they do not assert.
 
-**Linter rule (E-PRO-3):** Conditional procedures must reference
-a condition defined elsewhere in the document by identifier.
+**Linter rule (E-PRO-3):** Conditional procedures (`if`) must
+reference a condition declared in `conditions:` by identifier.
+
+**Linter rule (E-PRO-4):** The rationale slot `for [condition-ref]`
+names the declared condition a step contributes to. Its argument
+must resolve to a `conditions:` entry and carries no free text. It
+asserts a structural contribution to that condition, not a purpose
+or intent; because the condition set is author-independent given
+the same goal-data, `for` links pass the §7.4 non-interference
+test. `if` gates a step on a condition; `for` records which
+condition a step serves. Both may appear in one tag.
+
+**Linter rule (E-PRO-5):** A procedural clause must not contain a
+purpose or cause subordinate clause (`so that`, `in order to`,
+purposive `so`, `because`). Step rationale is expressible only
+through the `for` slot or through a separate declarative E-DER
+clause (§4.6, §3).
 
 ---
 
@@ -361,13 +386,21 @@ required to express them is excluded from the lexicon.
 | Belief                    | Leaks propositional attitudes                 |
 | Desire                    | Leaks intent                                  |
 | Prediction without model  | Leaks confidence calibration                  |
+| Purpose / teleological linkage | Leaks intent and goal structure          |
 
 The deny-list is enforced not by explicit tagging but by
 **lexicon exclusion**: the words needed to express these bases
 (believe, feel, think, hope, fear, expect, assume in the
 "suppose" sense, guess, suspect, imagine, predict without
 premise reference, seem without instrument source) are absent
-from the approved verb list.
+from the approved verb list. For the purpose/teleology row, v0.4
+removes `so` and `because` from the admitted conjunctions and
+bans purpose/cause subordinate clauses (`so that`, `in order to`)
+in prose (E-PRO-5). The non-leaking residue of "why" — which
+condition a step serves, and which premise a mechanism follows
+from — is carried by the E-PRO `for` slot (E-PRO-4) and by E-DER
+(E-DER-3). Logical consequence remains expressible through E-DER
+`follows` and the adverb `therefore`.
 
 ---
 
@@ -399,7 +432,7 @@ Imperative (procedural) clauses follow this template:
 
 ```
 [Verb] [object] [prepositional modifiers] (procedure[, step N]
-[, if condition-ref]).
+[, if condition-ref][, for condition-ref]).
 ```
 
 **Example:**
@@ -410,7 +443,7 @@ Set the symbol-rate cap to 0.1 bits per day (procedure, step 1).
 
 ### 4.3 Compound sentences
 
-In compound sentences joined by `and`, `or`, `but`, or `so`,
+In compound sentences joined by `and`, `or`, or `but`,
 each independent clause carries its own E-tag:
 
 ```
@@ -447,7 +480,21 @@ carry an E-DER tag with the relative-clause content as a premise.
 an anomaly." — "well" is evaluative (banned); no E-tag on the
 relative clause; "anomaly" without quantification.
 
-The prose templates in §§4.1–4.4 are the human-readable form of
+### 4.6 Rationale clauses
+
+A step's rationale is not prose. It is expressed either by the
+E-PRO `for` slot on the step, or by a separate declarative E-DER
+clause whose premise is the relevant condition or definition. No
+subordinate purpose or cause clause is admitted (E-PRO-5, §3).
+
+**Permitted:** "Limit the heat time (procedure, step 7, for
+`COND-FRONT-SEPARATION`)." / "Limited heat time prevents front
+contact (follows, from `COND-FRONT-SEPARATION`)."
+
+**Not permitted:** "Limit the heat time so the fronts remain
+separated." — purposive `so` (banned).
+
+The prose templates in §§4.1–4.6 are the human-readable form of
 the formal grammar specified in §6. Where the two appear to
 disagree, the formal grammar in §6 governs.
 
@@ -529,7 +576,12 @@ hypothesis_space:
 **Linter rule (FRONT-1):** Every instrument, reference, technical
 name, condition, model, parameter set, simulation run, dataset,
 method, and hypothesis candidate referenced in the body must
-appear in the frontmatter. Unresolved references fail.
+appear in the frontmatter. Equivalently, every `InlineCode`
+identifier in the body must resolve under §6.9 — including a
+Technical-Name noun used in clause text (R-11) — and a backtick
+wrapping a core-lexicon word or a multi-token phrase is not a
+valid identifier (§6.3, R-12) and fails. Unresolved references
+fail.
 
 **Linter rule (FRONT-2):** The `purpose:` field must parse as a
 valid Beyond CNL clause. It must not contain identity, intent,
@@ -682,7 +734,8 @@ OrderedListItem = Digit+ "." SP ImperativeClause NL ;
 (* ---- Fenced code blocks ---- *)
 CodeBlock       = "```" InfoString NL CodeContent "```" NL ;
 InfoString      = "definition" | "constraint" | "measurement"
-                | "simulation" | "aggregation" | Identifier ;
+                | "simulation" | "aggregation" | "relation"
+                | Identifier ;
 CodeContent     = TaggedClause+ ;
 ```
 
@@ -702,13 +755,22 @@ ImperativeVerb  = ?bare-stem verb from the approved imperative verb list? ;
 ClauseInterior  = Token ( SP Token )* ;
 
 Token           = LexicalWord | InlineCode | Number | InClauseComma
-                | UnitToken ;
+                | UnitToken | OperatorToken ;
 
 LexicalWord     = ?word form present in the approved lexicon,
                    with banned-construction check applied (see §3)? ;
 InClauseComma   = "," ;
 UnitToken       = ?SI unit symbol or approved domain-specific unit? ;
+OperatorToken   = "/" | "×" | "+" | "−" | "=" ;
 ```
+
+An `InlineCode` token whose `IdentifierBody` equals a core-lexicon
+word form is rejected (R-12): such a word appears as a plain
+`LexicalWord`, not as a backticked identifier. An `OperatorToken`
+appears only inside a `relation` code block (rule C-7); elsewhere
+arithmetic is expressed with the lexicon nouns `sum`, `difference`,
+`product`, `quotient`, `ratio`, `fraction` and the function words
+`of`, `to`, `by`, `per`.
 
 ### 6.7 E-tag grammar
 
@@ -780,7 +842,8 @@ ScopeName       = ?one of the document's declared scopes (e.g., a phase name)? ;
 (* ---- E-PRO ---- *)
 ProcTag         = "procedure"
                   ( "," SP "step" SP Digit+ )?
-                  ( "," SP "if" SP ConditionRef )? ;
+                  ( "," SP "if" SP ConditionRef )?
+                  ( "," SP "for" SP ConditionRef )? ;
 ConditionRef    = InlineCode ;
 
 (* ---- Source reference (shared) ---- *)
@@ -810,6 +873,7 @@ rules formalize the integration described narratively in §9.
 | CodeBlock(measurement)  | E-MSR                                  | C-3     |
 | CodeBlock(simulation)   | E-SIM                                  | C-5     |
 | CodeBlock(aggregation)  | E-AGG                                  | C-6     |
+| CodeBlock(relation)     | E-DER; `OperatorToken` permitted here only | C-7 |
 | CodeBlock(other)        | unrestricted, flagged for review       | C-4     |
 | E-HYP placement         | Must appear in a paragraph under a heading beginning with `Hypothesis` | HYP-PLACE |
 | Heading                 | E-tag not permitted                    | H-1     |
@@ -828,6 +892,15 @@ rules formalize the integration described narratively in §9.
 | DatasetRef InlineCode       | `datasets:` in frontmatter                          | R-8     |
 | MethodRef InlineCode        | `methods:` in frontmatter                           | R-9     |
 | CandidateRef InlineCode     | `hypothesis_space:` in frontmatter                  | R-10    |
+| Technical-Name InlineCode (noun in clause interior) | `technical_names:` in frontmatter | R-11 |
+| InlineCode wrapping a core-lexicon word, or a multi-token phrase | (no namespace) — rejected as evasion | R-12 |
+
+A `PremiseRef` may additionally resolve to a `conditions:` entry
+(`COND-*`) or a `technical_names:` term; its eligibility then
+follows from the E-tag on that entry's defining clause — the
+`constraint` block (E-DEF or E-DER) for a condition, the
+`definition` block (E-DEF) for a Technical Name. This formalizes
+E-DER-3.
 
 **Premise-tag eligibility (extends R-4):**
 
@@ -842,6 +915,8 @@ rules formalize the integration described narratively in §9.
 | E-AGG                     | yes                  | P-8     |
 | E-HYP                     | yes for E-DER; no for E-HYP | P-9 |
 | E-PRO                     | no — procedural clauses are not premises | P-6 |
+| Condition (`COND-*`) grounding clause | yes (E-DER-3)            | P-10 |
+| Technical-Name `definition` block | yes (E-DER-3)               | P-11 |
 
 ### 6.10 Compound and conditional sentences (normalization)
 
@@ -849,7 +924,7 @@ The grammar treats compound and conditional sentences as
 **multiple TaggedClauses in sequence**, not as a single
 multi-clause construct. A "compound sentence" in §4.3's sense
 is normalized before parsing: a coordinating conjunction (`,
-and`, `, or`, `, but`, `, so`) between two ETagFrames is split
+and`, `, or`, `, but`) between two ETagFrames is split
 into two clauses, each carrying its own E-tag and ending in its
 own period.
 
@@ -1055,6 +1130,7 @@ formal register constraints in §6.8.
 | Fenced code `measurement` | Every clause must carry E-MSR |
 | Fenced code `simulation` | Every clause must carry E-SIM |
 | Fenced code `aggregation` | Every clause must carry E-AGG |
+| Fenced code `relation` | Every clause must carry E-DER; operator notation permitted only here |
 | Paragraph (body text) | Any E-tag permitted; E-HYP requires a heading beginning `Hypothesis` |
 | Table cell | Inherits E-tag of the table's caption or introducing clause |
 
@@ -1073,9 +1149,9 @@ E-tag types under these conditions:
 
 1. The new type must structurally prevent the asserted content
    from being read as the author's personal commitment to truth.
-   Opinion, intuition, cultural knowledge, belief, desire, and
-   ungrounded generalization must remain inexpressible after the
-   extension.
+   Opinion, intuition, cultural knowledge, belief, desire, purpose,
+   and ungrounded generalization must remain inexpressible after
+   the extension.
 2. The new type must specify a verifiable source or premise chain.
 3. The new type must pass the Goguen-Meseguer non-interference
    test: its introduction must not cause divergence
@@ -1100,4 +1176,4 @@ active in this version.
 
 ---
 
-*End of Evidential System and Grammar specification v0.4.*
+*End of Evidential System and Envelope Grammar specification v0.4.1.*
