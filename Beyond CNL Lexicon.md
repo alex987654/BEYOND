@@ -1,6 +1,7 @@
-# Beyond CNL: Complete Sense-Pinned Lexicon
+# BEYOND CNL: Complete Sense-Pinned Lexicon
 
-## Version 0.3 — Single-Source Reference
+## Version 0.4 — Single-Source Reference
+
 
 ---
 
@@ -54,6 +55,7 @@ frontmatter.
 | Interjections (`oh`, `wow`, `alas`, `hello`, `goodbye`) | Affect disclosure |
 | Affect nouns (`joy`, `sorrow`, `anger`, `love`, `hate`, `pride`, `shame`) | Affect disclosure |
 | Metaphor markers (`like` comparison, `as if`, `as though`) | Leaks cognitive architecture |
+| Purposive/causal subordinators (`so that`, `in order to`, `because`, purposive `so`) | Intent / teleology |
 
 ### 1.5 Validation criteria
 
@@ -122,7 +124,7 @@ A word belongs in the lexicon if and only if:
 
 ---
 
-## 3. Function Words (139)
+## 3. Function Words (137)
 
 ### Articles and demonstratives (6)
 `a`, `an`, `the`, `this`, `that`, `each`
@@ -139,9 +141,13 @@ A word belongs in the lexicon if and only if:
 `during`, `for`, `from`, `in`, `into`, `near`, `of`, `off`,
 `on`, `out`, `over`, `through`, `to`, `under`
 
-### Conjunctions (12)
-`and`, `or`, `nor`, `but`, `yet`, `so`, `if`, `then`,
-`unless`, `until`, `while`, `because`
+### Conjunctions (10)
+`and`, `or`, `nor`, `but`, `yet`, `if`, `then`,
+`unless`, `until`, `while`
+
+Removed in v0.4: `so`, `because`. Causal/purposive linkage routes
+through the E-PRO `for` slot or E-DER; logical consequence remains
+via `therefore` and E-DER `follows`.
 
 ### Relative and interrogative (8)
 `who`, `which`, `that` (relative), `what`, `where`, `when`,
@@ -566,7 +572,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `render` | tr | produce a visual representation from data or instructions |
 
 ---
-## 5. Nouns (937)
+## 5. Nouns (939)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
@@ -793,6 +799,15 @@ lexical entries.
 
 ### B. Materials and Substances (64)
 
+Element-admission rule: a chemical element enters the core lexicon
+only if it appears in general procedural, atmospheric, structural,
+or aqueous contexts across domains (the elements listed below).
+Domain-specialty elements (for example dopants and trace materials)
+enter per document through the Technical Name escape mechanism
+(§1.3). A document must not mix a bare core element name and a
+backticked specialty element of the same role without declaring
+the latter.
+
 | Word | Sense pin |
 |---|---|
 | `acid` | substance that donates protons or accepts electron pairs in solution |
@@ -861,7 +876,7 @@ lexical entries.
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (125)
+### C. Measurement and Quantity (127)
 
 | Word | Sense pin |
 |---|---|
@@ -956,10 +971,12 @@ lexical entries.
 | `precision` | degree to which repeated measurements agree with each other |
 | `pressure` | force per unit area, in pascals |
 | `probability` | numerical measure of likelihood, range 0 to 1 |
+| `product` | result of multiplying two or more quantities. Arithmetic sense only; the manufactured-good sense stays `output` or `unit` |
 | `profile` | graph of a quantity as a function of position along a line |
 | `proportion` | relation of one quantity to another expressed as a fraction or ratio |
 | `pulse` | brief deviation of a quantity from its baseline value |
 | `quantity` | measurable amount or number |
+| `quotient` | result of dividing one quantity by another. Distinct from `ratio` (same-kind quantities) and `fraction` (part of a whole) |
 | `radius` | distance from the center of a circle or sphere to its boundary |
 | `range` | difference between maximum and minimum values; or extent of coverage |
 | `rate` | quantity per unit time |
@@ -2212,7 +2229,7 @@ Nine E-tag types in three tiers:
 Every declarative clause must carry one E-tag in fixed final
 parenthetical position. Evidential coverage must equal 1.0.
 Deny-listed bases (opinion, intuition, cultural knowledge,
-belief, desire, ungrounded generalization) are enforced by
+belief, desire, purpose, ungrounded generalization) are enforced by
 lexicon exclusion: the words needed to express them do not
 exist in this vocabulary.
 
@@ -2222,9 +2239,9 @@ exist in this vocabulary.
 
 | Category | Count |
 |---|---|
-| Function words | 139 |
+| Function words | 137 |
 | Method-only verbs | 313 |
-| Nouns (incl. dual-sense entries) | ~950 |
+| Nouns (incl. dual-sense entries) | ~952 |
 | Adjectives | 230 |
 | Adverbs | 52 |
 | Numerals and units | 68 |
@@ -2252,4 +2269,4 @@ exclusion and sense-pin serves this property.
 
 ---
 
-*End of Beyond CNL Lexicon v0.3.*
+*End of Beyond CNL Lexicon v0.4.*
