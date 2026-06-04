@@ -1,16 +1,18 @@
 ---
 name: beyond-cnl
-description: Write, generate, convert, or validate documents in Beyond CNL, a method-only controlled subset of American English that achieves information-flow safety through grammar (E-Prime copula ban, mandatory evidential E-tags, a fixed verb and lexicon whitelist, and typed Markdown blocks). Use this skill whenever the user wants to author a Beyond CNL document, translate or convert standard English into Beyond CNL, check or audit a document for Beyond CNL compliance, work with evidential tags (E-tags), build the v0.4 document YAML frontmatter (instruments, references, conditions, technical_names, models, parameter_sets, simulation_runs, datasets, methods, hypothesis_space), or asks anything about the Beyond CNL language, its lexicon, verbs, or grammar — even when referred to informally (e.g. "method-only English", "the CNL", "the boundary language").
+description: Write, generate, convert, or validate documents in Beyond CNL, a method-only controlled subset of American English that achieves information-flow safety through grammar (E-Prime copula ban, mandatory evidential E-tags, a fixed verb and lexicon allow-list, and typed Markdown blocks). Use this skill whenever the user wants to author a Beyond CNL document, translate or convert standard English into Beyond CNL, check or audit a document for Beyond CNL compliance, work with evidential tags (E-tags), build the v0.4 document YAML frontmatter (instruments, references, conditions, technical_names, models, parameter_sets, simulation_runs, datasets, methods, hypothesis_space), or asks anything about the Beyond CNL language, its lexicon, verbs, or grammar — even when referred to informally (e.g. "method-only English", "the CNL", "the boundary language").
 ---
 
 # SKILL: Beyond CNL — Method-Only Controlled Natural Language
 
-## Version 0.4.0
+## Version 0.4.1
 
 *Sync with Evidential System v0.4 / Envelope Grammar §6. The
 formal grammar in §6.7 of the Evidential System document is the
 authoritative source of truth for E-tag shape; this skill file
 is the operational companion.*
+
+*v0.4.1 changelog: (1) `for COND` rationale slot on E-PRO; (2) `so`/`because` removed from the lexicon, purposive/causal linkage banned in prose; (3) FRONT-1 identifier-declaration enforcement clarified; (4) `product`/`quotient` admitted as arithmetic-result nouns.*
 
 ---
 
@@ -77,6 +79,7 @@ Remove every form of "to be":
 | Affect nouns | joy, sorrow, anger, fear, love, hate, pride, shame | Affect |
 | Metaphor markers | like (comparison), as if, as though | Cognitive architecture |
 | Exclamation marks | ! | Expressive |
+| Purposive/causal subordinators | so that, in order to, because, purposive "so" | Intent / teleology |
 
 ### Common non-lexicon words and their replacements
 
@@ -99,6 +102,8 @@ Remove every form of "to be":
 | denote | designate |
 | characterize | describe, measure, map |
 | override | cancel |
+| because / so (purpose or result) | restructure: step rationale via `for COND` (E-PRO) or a declarative E-DER `(follows, from …)` |
+| divided-by (coined operator) | the ratio of X to Y; or the `product`/`quotient` nouns |
 
 ---
 
@@ -153,12 +158,15 @@ needed for it.
 (procedure)
 (procedure, step 3)
 (procedure, step 5, if `COND-2.1`)
+(procedure, step 5, for `COND-2.1`)
 ```
 
 The `(defined)` tag takes no arguments — `(specified, …)` is
 **not** an admitted E-DEF form under §6.7. Use `(defined)`
 inside a fenced `definition` code block, or after a bolded
 term at its first occurrence.
+
+The `for `COND`` argument names the declared condition a step contributes to (the rationale slot). Its argument resolves to a `conditions:` entry only; it carries no free text. It mirrors `if `COND``, which gates a step on a condition.
 
 ### Compound sentences: each clause gets its own E-tag
 
@@ -570,7 +578,7 @@ No gerunds. No modal stacking.
 ### Imperative (max 20 words)
 
 ```
-[Verb] [object] [modifiers] (procedure[, step N][, if COND]).
+[Verb] [object] [modifiers] (procedure[, step N][, if COND][, for COND]).
 ```
 
 ### Past-participle-as-adjective: ALLOWED
@@ -597,6 +605,7 @@ defined term"
 | Fenced code `measurement` | Recorded measurement | E-MSR (C-3) |
 | Fenced code `simulation` | Simulation output | E-SIM (C-5) |
 | Fenced code `aggregation` | Statistical aggregate | E-AGG (C-6) |
+| Fenced code `relation` | Formula / arithmetic relation | E-DER (C-7); operator notation admitted only here |
 | Paragraph under `Hypothesis` heading | Bounded hypothesis | E-HYP only there (HYP-PLACE) |
 | Fenced code (other info string) | Domain-specific | unrestricted, flagged for review (C-4) |
 | Inline code `` ` `` | Defined identifier | — |
@@ -721,6 +730,27 @@ Wrong: "the preceding window" → "the last window"
 Wrong: "The condition did not activate."
 Right: "The condition never activated (observed, `CTR-1`)."
 
+### 10. Rationale without a home
+Wrong: "Limit heat time so the fronts remain separated."
+(purposive `so` — banned). Right, step-local: "Limit heat
+time (procedure, step 7, for `COND-FRONT-SEPARATION`)." Right,
+as mechanism: "Limited heat time prevents front contact
+(follows, from `COND-FRONT-SEPARATION`)."
+
+### 11. `(defined)` on a mechanism claim
+Wrong: "Higher collector voltage pulls electrons through the
+base (defined)." A causal/functional claim is not a
+stipulation. Right: tag it E-DER with the premise referencing
+a definition or condition: "(follows, from `REVERSE-BIAS`)".
+
+### 12. Undeclared identifiers (FRONT-1)
+Every `inline-code` identifier in the body must resolve to a
+declared `technical_names`, `conditions`, `references`, or
+`instruments` entry. Backticking a word does not exempt it:
+a backtick that wraps a plain lexicon word (e.g. `` `hydrogen` ``)
+or a whole phrase (e.g. `` `A | B | C` ``) is evasion, not an
+identifier. Reconcile body identifiers against frontmatter.
+
 ---
 
 ## Conversion: Standard English → Beyond CNL
@@ -735,11 +765,16 @@ Right: "The condition never activated (observed, `CTR-1`)."
 6. Extract simulation outputs → declarative + ``(simulated, from model `MOD`, parameters `PAR`, run `RUN`)``; declare all three frontmatter records
 7. Extract aggregates → declarative + ``(aggregated, from dataset `DAT`, method `MET`, n=N)``; declare dataset and method records
 8. Extract bounded hypotheses only under a `Hypothesis` heading → ``(hypothesis, candidate `H`, from `PREM`, distinguishable-from `OTHER`)``; declare candidates in `hypothesis_space:`
-9. Discard identity, values, opinions, intentions, requests
-10. Check every word against lexicon; replace or restructure
-11. Build YAML frontmatter: declare every `` `ID` `` you used
+9. Attach step rationale via `for COND` (E-PRO) or a
+   declarative E-DER — never via purposive "so"/"because"
+10. Discard identity, values, opinions, intentions, requests
+11. Check every word against lexicon; replace or restructure
+12. Build YAML frontmatter: declare every `` `ID` `` you used
    in the matching v0.4 frontmatter namespace
-12. Verify non-interference: would a different author produce
+13. Reconcile (FRONT-1): every `inline-code` identifier in the
+   body resolves to a frontmatter declaration; flag lexicon
+   words and phrases wrapped in backticks as evasion
+14. Verify non-interference: would a different author produce
    the same document from the same data?
 
 ---
@@ -786,6 +821,7 @@ NEVER:  might may could (speculation)
 NEVER:  ask suggest recommend demand propose
 NEVER:  very really truly obviously clearly
 NEVER:  ! (exclamation mark)
+NEVER:  so because (purposive/causal subordination)
 
 ALWAYS: (E-tag) at end of every declarative clause
 ALWAYS: instrument `ID` in every observation E-tag
@@ -794,10 +830,13 @@ ALWAYS: YAML frontmatter with schema: beyond-cnl-v0.4
 ALWAYS: model/dataset/hypothesis IDs in their v0.4 namespaces
 ALWAYS: `inline code` for identifiers
 ALWAYS: **bold** for first Technical Name occurrence
+ALWAYS: every `inline-code` identifier declared in frontmatter (FRONT-1)
+ALWAYS: `for COND` (or E-DER) for step rationale
 
 DEFAULT: ambiguity = rejection
 DEFAULT: missing E-tag = rejection
 DEFAULT: non-lexicon word = rejection
+DEFAULT: undeclared identifier = rejection
 DEFAULT: expressiveness gap = correct behavior
 ```
 
@@ -821,8 +860,8 @@ DEFAULT: expressiveness gap = correct behavior
 **File:** `beyond_cnl_COMPANION_LEXICON.md`, located alongside
 this skill file (same directory).
 
-**Contents:** the complete noun (937), adjective (230),
-adverb (52), numeral/unit (68), and function-word (139) lists
+**Contents:** the complete noun (939), adjective (230),
+adverb (52), numeral/unit (68), and function-word (137) lists
 with sense pins, plus dual-sense and dropped-noun tables. The
 verb list (313) lives in *this* skill file, not the lexicon;
 the lexicon's sections are numbered to continue from it (it
@@ -834,7 +873,7 @@ inside it.
 - **Conversion or compliance/validation task** — read
   `beyond_cnl_COMPANION_LEXICON.md` before checking words
   against the lexicon (workflow step 10 above). It carries the
-  whitelist this skill file does not.
+  allow-list this skill file does not.
 - **Generation task** — do **not** load it. This skill file
   with the verb list above suffices; noun and adjective gaps
   surface at validation and resolve via the Technical Name
@@ -849,4 +888,4 @@ heading's range.
 
 ---
 
-*End of Beyond CNL Skill Document v0.4.0.*
+*End of Beyond CNL Skill Document v0.4.1.*
