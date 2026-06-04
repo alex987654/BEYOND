@@ -43,8 +43,11 @@ const BeyondLinter = (() => {
     // 5. Register checks (§6.8)
     checkRegister(blocks, findings);
 
-    // 6. Resolution checks (§6.9 R-1..R-10, P-1..P-9) + FRONT-1
+    // 6. Resolution checks (§6.9 R-1..R-10, P-1..P-11) + FRONT-1
     checkResolution(clauses, fm, findings);
+
+    // 6b. FRONT-1 identifier reconciliation (§6.9 R-11, R-12)
+    checkIdentifierDeclarations(blocks, clauses, fm, findings);
 
     // 7. Layer 1: lexicon (per token in clause interiors / headings)
     checkLexicon(blocks, clauses, findings);
@@ -360,7 +363,20 @@ const BeyondLinter = (() => {
 
     asList(data.technical_names).forEach(item => {
       if (!item || !item.term) return;
-      empty.technicalNames.set(String(item.term), item);
+      const term = String(item.term);
+      empty.technicalNames.set(term, item);
+      // R-14: a single-token Technical Name that is also a core lexicon word.
+      // Per the domain-general core principle, core words are not registered as
+      // Technical Names. (Multi-word terms like "harm metric" are unaffected.)
+      if (BeyondLexicon.isApproved(term.toLowerCase())) {
+        findings.push(makeFinding({
+          layer: 4, severity: SEVERITY.ERROR,
+          category: 'Technical Name shadows a core lexicon word',
+          word: term, line: fences[0].idx,
+          reason: `Technical Name "${term}" is also a core-lexicon word. Per the domain-general core principle, core words are not registered as Technical Names; use the plain word, or choose a distinct domain term (for example a multi-word Technical Name) (R-14).`,
+          rule: 'R-14'
+        }));
+      }
     });
 
     addIdentifiedItems('models', empty.models, ['specification_ref', 'parameter_schema_ref']);
@@ -826,6 +842,7 @@ const BeyondLinter = (() => {
       sampleSize: null,
       scope: null,
       conditionRef: null,
+      forRef: null,
       step: null,
       issues
     };
@@ -1047,7 +1064,9 @@ const BeyondLinter = (() => {
       if (stepM) { out.step = parseInt(stepM[1]); continue; }
       const ifM = p.match(/^if\s+`([A-Za-z0-9_\-.]+)`$/);
       if (ifM) { out.conditionRef = ifM[1]; continue; }
-      out.issues.push(`E-PRO clause "${p}" did not match "step N" or "if \`CONDITION\`".`);
+      const forM = p.match(/^for\s+`([A-Za-z0-9_\-.]+)`$/);
+      if (forM) { out.forRef = forM[1]; continue; }
+      out.issues.push(`E-PRO clause "${p}" did not match "step N", "if \`CONDITION\`", or "for \`CONDITION\`".`);
     }
   }
 
@@ -1320,6 +1339,19 @@ const BeyondLinter = (() => {
         }
       }
 
+      // E-PRO-4: `for` rationale slot must resolve to a declared condition
+      if (t.forRef) {
+        if (!fm.conditions.has(t.forRef)) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Unresolved rationale condition',
+            word: '`' + t.forRef + '`', line: c.line,
+            reason: `Rationale condition "${t.forRef}" (for-slot) not declared in conditions: (R-3, E-PRO-4).`,
+            rule: 'E-PRO-4'
+          }));
+        }
+      }
+
       // E-DEF stipulated scope must be a declared scope
       if (t.type === 'E-DEF' && t.scope) {
         if (!fm.scopes.has(t.scope)) {
@@ -1457,12 +1489,14 @@ const BeyondLinter = (() => {
       t.premises.forEach(pid => {
         const target = clauses._byId && clauses._byId.get(pid);
         const inRefs = fm.references.has(pid);
-        if (!target && !inRefs) {
+        const inConditions = fm.conditions.has(pid);   // E-DER-3, P-10
+        const inTechNames = fm.technicalNames.has(pid); // E-DER-3, P-11
+        if (!target && !inRefs && !inConditions && !inTechNames) {
           findings.push(makeFinding({
             layer: 3, severity: SEVERITY.ERROR,
             category: 'Unresolved premise reference',
             word: '`' + pid + '`', line: c.line,
-            reason: `Premise "${pid}" does not resolve to any tagged clause in this document or to a record in references: (R-4).`,
+            reason: `Premise "${pid}" does not resolve to a tagged clause, a record in references:, a condition (COND-*), or a Technical-Name definition (R-4, E-DER-3).`,
             rule: 'R-4'
           }));
           return;
@@ -1514,6 +1548,74 @@ const BeyondLinter = (() => {
         }
       }
     });
+  }
+
+  // ===== STEP 6b: FRONT-1 identifier reconciliation (§6.9 R-11, R-12) =====
+  // Every InlineCode identifier in clause interiors and headings must resolve
+  // to a frontmatter declaration. A backtick wrapping a core-lexicon word or a
+  // multi-token phrase is rejected as evasion (R-12). This closes the gap by
+  // which backticked body identifiers were stripped before the lexicon check
+  // and never resolved against the frontmatter.
+
+  function buildIdentifierResolver(fm) {
+    const maps = [fm.instruments, fm.references, fm.conditions, fm.technicalNames,
+                  fm.models, fm.parameterSets, fm.simulationRuns, fm.datasets,
+                  fm.methods, fm.hypothesisCandidates];
+    return id => maps.some(m => m && typeof m.has === 'function' && m.has(id));
+  }
+
+  function checkIdentifierDeclarations(blocks, clauses, fm, findings) {
+    const resolves = buildIdentifierResolver(fm);
+    const idBody = /^[A-Za-z0-9_\-.]+$/;
+
+    const checkText = (text, line) => {
+      const codes = text && text.match(/`[^`]*`/g);
+      if (!codes) return;
+      codes.forEach(tok => {
+        const body = tok.slice(1, -1);
+        if (body.length === 0) return;
+        // R-12: not a single §6.3 IdentifierBody token (whitespace, |, etc.).
+        // A structural malformation: the backticked text cannot be one identifier.
+        if (!idBody.test(body)) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.ERROR,
+            category: 'Invalid identifier token',
+            word: tok, line,
+            reason: `"${body}" is not a single identifier: it contains characters outside the §6.3 IdentifierBody (whitespace, "|", and similar). Backticks must wrap one declared identifier (R-12).`,
+            rule: 'R-12'
+          }));
+          return;
+        }
+        // Declared identifier (any namespace) resolves cleanly. A declared term
+        // that also happens to be a core word is diagnosed once at its
+        // declaration (R-14), not here, to avoid repeating the finding per use.
+        if (resolves(body)) return;
+        // R-13: a core-lexicon word written in backticks but not declared.
+        // A typing/register choice, not a hard error: backticks mark a declared
+        // identifier, so the word reads correctly as plain text. Recoverable.
+        if (BeyondLexicon.isApproved(body.toLowerCase())) {
+          findings.push(makeFinding({
+            layer: 3, severity: SEVERITY.WARNING,
+            category: 'Lexicon word written as an identifier',
+            word: tok, line,
+            reason: `"${body}" is a core-lexicon word. Backticks mark a declared identifier (a Technical Name or a frontmatter reference); write this word as plain text (R-13).`,
+            rule: 'R-13'
+          }));
+          return;
+        }
+        // R-11: a non-core identifier that resolves to no frontmatter namespace.
+        findings.push(makeFinding({
+          layer: 3, severity: SEVERITY.ERROR,
+          category: 'Undeclared identifier',
+          word: tok, line,
+          reason: `Identifier "${body}" resolves to no frontmatter namespace (technical_names, conditions, instruments, references, models, parameter_sets, simulation_runs, datasets, methods, hypothesis_space). Register it as a Technical Name (R-11, FRONT-1).`,
+          rule: 'R-11'
+        }));
+      });
+    };
+
+    blocks.forEach(b => { if (b.type === 'heading') checkText(b.text || '', b.startLine); });
+    clauses.forEach(c => { if (c.interior) checkText(c.interior, c.line); });
   }
 
   function detectCycleFrom(start, byId) {
