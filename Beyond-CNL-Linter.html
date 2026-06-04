@@ -40,7 +40,10 @@
       font-family: var(--sans);
       background: var(--bg-deep);
       color: var(--text-primary);
-      min-height: 100vh;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
       line-height: 1.6;
     }
 
@@ -52,6 +55,7 @@
       align-items: center;
       justify-content: space-between;
       background: var(--bg-panel);
+      flex-shrink: 0;
     }
 
     .header-left {
@@ -103,12 +107,19 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0;
-      height: calc(100vh - 60px);
+      flex: 1 1 auto;
+      min-height: 0;
     }
 
     @media (max-width: 900px) {
+      body {
+        height: auto;
+        overflow: auto;
+      }
+
       .main {
         grid-template-columns: 1fr;
+        min-height: 0;
         height: auto;
       }
     }
@@ -124,7 +135,9 @@
     .panel:last-child { border-right: none; }
 
     .panel-header {
-      padding: 0.75rem 1.25rem;
+      padding: 0 1.25rem;
+      height: 48px;
+      box-sizing: border-box;
       background: var(--bg-surface);
       border-bottom: 1px solid var(--border);
       display: flex;
@@ -150,12 +163,18 @@
 
     /* ===== INPUT CONTROLS ===== */
     .input-controls {
-      padding: 1rem 1.25rem;
       display: flex;
       flex-direction: column;
       gap: 0.75rem;
-      border-bottom: 1px solid var(--border);
       flex-shrink: 0;
+      padding: 0;
+      border-bottom: none;
+    }
+
+    /* Only occupy space when the URL fetch row is showing */
+    .input-controls:has(.url-section.active) {
+      padding: 1rem 1.25rem;
+      border-bottom: 1px solid var(--border);
     }
 
     .input-row {
@@ -267,7 +286,7 @@
     .url-section { display: none; }
     .url-section.active { display: block; }
     .text-section { display: none; }
-    .text-section.active { display: flex; flex-direction: column; flex: 1; }
+    .text-section.active { display: flex; flex-direction: column; flex: 1; min-height: 0; }
 
     /* ===== RESULTS PANEL ===== */
     .results-empty {
