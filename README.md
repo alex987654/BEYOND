@@ -57,15 +57,15 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 
 * [Linter](https://alex987654.github.io/BEYOND/Beyond-CNL-Linter.html)
 * [Evidential System](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Evidential%20System.md)
-* [Lexicon](https://github.com/alex987654/BEYOND/blob/main/beyond_cnl_lexicon_v03.md)
+* [Lexicon](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Lexicon.md)
 
 ## Example
 
 A compliant observation:
 
 ```
-> The signal amplitude at 1420.405 MHz decreased by 3.1 ± 0.02 dB
-> over a 24-hour window (measured, instrument `Oort-RX-4`, ± 0.02 dB).
+> The signal amplitude at 1420.405 MHz decreased by 3.1 dB
+> over a 24-hour window (measured, instrument `Oort-RX-4`).
 ```
 
 A non-compliant message:
