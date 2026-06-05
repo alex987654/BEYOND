@@ -2353,18 +2353,12 @@ exist in this vocabulary.
 
 ### Self-describing property
 
-Every word used in a sense-pin description appears in the
-lexicon itself (or is a standard English function word).
-Definitions use only lexicon words. This ensures the lexicon
-can define itself without external reference, which is a
-necessary property for a language intended for communication
-with an entity of unknown capability and unknown access to
-external English dictionaries.
+Every word used in a sense-pin description appears in the lexicon itself or is a standard English function word.
 
-This property is a design goal, not yet fully enforced: some
-sense-pin descriptions still use ordinary explanatory English
-words that fall outside the approved lexicon. Tightening every
-definition to draw only on lexicon words remains future work.
+Definitions for Technical Names use only lexicon words. This ensures the lexicon
+can define itself without external reference, which is a necessary property for a language intended for communication with an entity of unknown capability and unknown access to external English dictionaries.
+
+This property is a design goal, not yet fully enforced.
 
 ### Goguen-Meseguer non-interference test
 
