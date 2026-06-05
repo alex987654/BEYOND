@@ -64,7 +64,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 A compliant observation:
 
 ```
-> The signal amplitude at 1420.405 MHz decreased by 3.1 dB
+> The signal amplitude at 1420.405 mega hertz decreased by 3.1 decibel
 > over a 24-hour window (measured, instrument `Oort-RX-4`).
 ```
 
