@@ -1,4 +1,5 @@
 # BEYOND
+
 BEYOND CNL - A method-only controlled subset of English when the constraint is to make communication safer for the sender when the recipient may be vastly more capable than the sender.
 
 Beyond is designed so that messages and documents written in it cannot leak identity, values, intentions, or capabilities. Every sentence carries a mandatory evidential tag tracing the claim to an instrument, derivation, definition, simulation, aggregate, hypothesis space, cited record, or procedure.
@@ -22,7 +23,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 | Procedural register          | ASD-STE100                  | Short sentences, one-word-one-meaning, imperative-led procedures |
 | Deterministic interpretation | Attempto Controlled English | Every parsable sentence has exactly one logical reading      |
 
-**Design target (Goguen-Meseguer non-interference):** two authors with identical procedures but different identities, different values, and different intentions produce the same identical Beyond CNL documents. 
+**Design target (Goguen-Meseguer non-interference):** two authors with identical procedures but different identities, different values, and different intentions produce the same identical Beyond CNL documents.
 
 ## What the Language Removes
 
@@ -55,15 +56,16 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 
 ## Links
 
-* [Linter](https://alex987654.github.io/BEYOND/Beyond-CNL-Linter.html)
-* [Evidential System](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Evidential%20System.md)
-* [Lexicon](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Lexicon.md)
+- [Linter](https://alex987654.github.io/BEYOND/Beyond-CNL-Linter.html)
+- [Evidential System](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Evidential%20System.md)
+- [Lexicon](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Lexicon.md)
 
 ## Example
 
 A compliant observation:
 
-```
+`
+`
 > The signal amplitude at 1420.405 mega hertz decreased by 3.1 decibel
 > over a 24-hour window (measured, instrument `Oort-RX-4`).
 ```

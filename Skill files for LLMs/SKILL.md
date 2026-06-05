@@ -177,7 +177,7 @@ floor remained constant (measured, `RX-4`).
 
 ---
 
-## Approved Verb List (313)
+## Approved Verb List (325)
 
 This is the **complete** set. If a verb does not appear here,
 it cannot appear in a Beyond CNL document. Transitivity:
@@ -527,16 +527,33 @@ it cannot appear in a Beyond CNL document. Transitivity:
 | `precess` | intr | rotate orientation of orbital or spin axis |
 | `transit` | tr | pass across disc of larger body |
 
-### Physics (6)
+### Physics (8)
 
 | Verb | Tr | Sense |
 |---|---|---|
 | `annihilate` | tr | convert matter and antimatter into energy |
 | `collide` | intr | strike against another body |
+| `conduct` | tr | transmit heat, electric current, or sound through a medium |
 | `diffract` | intr | spread after passing through aperture |
 | `excite` | tr | raise to higher energy state |
+| `insulate` | tr | prevent the passage of heat, electric current, or sound |
 | `ionize` | tr | remove or add electrons to atom or molecule |
 | `polarize` | tr | restrict oscillation to single plane |
+
+### Chemistry (10)
+
+| Verb | Tr | Sense |
+|---|---|---|
+| `catalyze` | tr | increase the rate of a reaction using a catalyst |
+| `condense` | both | change from vapor to liquid |
+| `corrode` | both | degrade a metal by chemical reaction |
+| `crystallize` | both | form crystals from a solution or melt |
+| `dilute` | tr | reduce the concentration of a solution by adding solvent |
+| `dissolve` | tr | cause a solute to pass into solution |
+| `evaporate` | both | change from liquid to vapor |
+| `neutralize` | tr | react an acid with a base to remove reactive properties |
+| `oxidize` | tr | cause to combine with oxygen or lose electrons |
+| `synthesize` | tr | form a compound from simpler substances |
 
 ### Information theory (9)
 

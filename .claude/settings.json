@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(sed -n '1713,1745p' \"Skill files for LLMs/beyond_cnl_COMPANION_LEXICON.md\")",
+      "Bash(sed -n '2238,2252p' \"Beyond CNL Lexicon.md\")",
+      "Bash(sed -n '191,196p' \"Beyond CNL Lexicon.md\")",
+      "Bash(python3 /tmp/expand_lexicon.py)",
+      "Bash(sed -n '/### Physics \\(8\\)/,/### Information theory/p' \"Beyond CNL Lexicon.md\")",
+      "Bash(sed -n '/## 8. Numerals and Units \\(69\\)/,/## 9\\\\./p' \"Beyond CNL Lexicon.md\")",
+      "Bash(sed -n '/### Chemistry \\(10\\)/,/### Information theory/p' \"Skill files for LLMs/SKILL.md\")",
+      "Bash(grep -nE '\\\\| `\\(anode|bond|charge|organ|scalar|aqueous|atomic|theorem\\)` ' \"Skill files for LLMs/beyond_cnl_COMPANION_LEXICON.md\")",
+      "Bash(sed -n '/## 10\\\\. Complete Lexicon Summary/,/Self-describing/p' \"Beyond CNL Lexicon.md\")",
+      "Bash(grep '| `')",
+      "Bash(grep -vE '^\\\\+.{200,}')",
+      "Bash(sed -n '1,60p')",
+      "Bash(python3 -)"
+    ]
+  }
+}

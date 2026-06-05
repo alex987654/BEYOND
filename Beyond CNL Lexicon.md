@@ -1,6 +1,6 @@
 # BEYOND CNL: Complete Sense-Pinned Lexicon
 
-## Version 0.4 — Single-Source Reference
+## Version 0.4.2 — Single-Source Reference
 
 
 ---
@@ -188,7 +188,7 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 
 ---
 
-## 4. Method-Only Verbs (313 unique)
+## 4. Method-Only Verbs (325 unique)
 
 Each verb has one approved sense. Transitivity: (tr) transitive,
 (intr) intransitive, (both) either.
@@ -537,16 +537,33 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `precess` | intr | rotate the orientation of an orbital or spin axis |
 | `transit` | tr | pass across the disc of a larger body as seen by observer |
 
-### Physics (6)
+### Physics (8)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
 | `annihilate` | tr | convert matter and antimatter into energy |
 | `collide` | intr | strike against another body |
+| `conduct` | tr | transmit heat, electric current, or sound through a medium |
 | `diffract` | intr | spread after passing through aperture or around obstacle |
 | `excite` | tr | raise to a higher energy state |
+| `insulate` | tr | prevent the passage of heat, electric current, or sound |
 | `ionize` | tr | remove or add electrons to an atom or molecule |
 | `polarize` | tr | restrict oscillation of a wave to a single plane |
+
+### Chemistry (10)
+
+| Verb | Tr | Sense pin |
+|---|---|---|
+| `catalyze` | tr | increase the rate of a reaction using a catalyst |
+| `condense` | both | change from vapor to liquid |
+| `corrode` | both | degrade a metal by chemical reaction |
+| `crystallize` | both | form crystals from a solution or melt |
+| `dilute` | tr | reduce the concentration of a solution by adding solvent |
+| `dissolve` | tr | cause a solute to pass into solution |
+| `evaporate` | both | change from liquid to vapor |
+| `neutralize` | tr | react an acid with a base to remove reactive properties |
+| `oxidize` | tr | cause to combine with oxygen or lose electrons |
+| `synthesize` | tr | form a compound from simpler substances |
 
 ### Information theory (9)
 
@@ -572,7 +589,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `render` | tr | produce a visual representation from data or instructions |
 
 ---
-## 5. Nouns (939)
+## 5. Nouns (1014)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
@@ -797,7 +814,7 @@ lexical entries.
 | `wire` | single strand of drawn metal |
 
 
-### B. Materials and Substances (64)
+### B. Materials and Substances (92)
 
 Element-admission rule: a chemical element enters the core lexicon
 only if it appears in general procedural, atmospheric, structural,
@@ -811,24 +828,37 @@ the latter.
 | Word | Sense pin |
 |---|---|
 | `acid` | substance that donates protons or accepts electron pairs in solution |
+| `acidity` | measure of the concentration of protons in a solution |
 | `adhesive` | substance applied to surfaces to bond them together |
 | `air` | mixture of gases composing a planetary atmosphere at surface level |
 | `alloy` | metallic material composed of two or more elements |
 | `aluminum` | metallic element, atomic number 13 |
+| `anode` | electrode at which oxidation occurs |
 | `atmosphere` | layer of gas surrounding a celestial body, retained by gravity |
+| `bond` | (chemistry sense) force of attraction holding atoms together in a molecule or crystal |
 | `carbon` | nonmetallic element, atomic number 6 |
+| `catalyst` | substance that increases the rate of a reaction without being consumed |
+| `cathode` | electrode at which reduction occurs |
 | `ceramic` | hard brittle material made by heating mineral compounds |
 | `chemical` | substance with a defined molecular composition |
 | `clay` | fine-grained sedimentary material that becomes plastic when wet |
+| `colloid` | mixture in which fine particles disperse throughout another substance |
 | `compound` | substance composed of two or more elements in fixed proportions |
 | `concrete` | composite material of cement, aggregate, and water |
 | `coolant` | fluid circulated to absorb and remove heat |
 | `copper` | metallic element, atomic number 29 |
+| `corrosion` | gradual chemical degradation of a metal by its environment |
 | `crystal` | (material sense) solid with atoms arranged in a periodic lattice. Not the optical component; see Physical Objects (`lens`) |
+| `dipole` | pair of equal and opposite charges separated by a distance |
+| `distillation` | separation of mixture components by evaporation and condensation |
 | `dust` | fine dry particles of solid material suspended in gas or settled on surfaces |
 | `dye` | substance that changes the color of a material by chemical bonding |
+| `electrode` | conductor through which current enters or leaves an electrolyte or device |
+| `electrolyte` | substance that conducts current through the movement of ions |
 | `element` | (chemical sense) substance containing only one type of atom. Not the structural component; see Physical Objects |
+| `emulsion` | colloid of one liquid dispersed in another |
 | `fiber` | (material sense) thin elongated strand of natural or synthetic material |
+| `filtration` | separation of solids from a fluid by passing through a porous medium |
 | `fluid` | substance that flows and conforms to the shape of its container: liquid or gas |
 | `foam` | material consisting of gas bubbles trapped in a solid or liquid matrix |
 | `fuel` | substance consumed to release energy |
@@ -839,6 +869,8 @@ the latter.
 | `hydrogen` | element, atomic number 1; lightest element |
 | `ice` | solid phase of water |
 | `iron` | metallic element, atomic number 26 |
+| `isomer` | molecule with the same atoms as another but a different arrangement |
+| `lattice` | (crystal sense) regular periodic arrangement of atoms in a solid |
 | `lead` | (metal sense) metallic element, atomic number 82. Not the electrical wire; see Physical Objects |
 | `liquid` | state of matter with fixed volume but no fixed shape |
 | `lubricant` | substance applied between surfaces to reduce friction |
@@ -847,15 +879,23 @@ the latter.
 | `metal` | element or alloy that conducts electricity and heat, typically reflective and malleable |
 | `mineral` | naturally occurring inorganic solid with defined crystal structure and composition |
 | `mixture` | combination of two or more substances not chemically bonded |
+| `monomer` | small molecule that bonds with others to form a polymer |
 | `nitrogen` | element, atomic number 7 |
 | `oil` | viscous liquid, hydrophobic, derived from biological or geological sources |
 | `ore` | naturally occurring material from which a metal or mineral can be extracted |
+| `oxidation` | loss of electrons by a substance during a reaction |
+| `oxide` | compound of oxygen with another element |
 | `oxygen` | element, atomic number 8 |
 | `paint` | liquid coating that dries to form a colored film |
 | `particle` | small discrete piece of matter |
 | `pigment` | substance producing color by selective absorption and reflection of light |
 | `plastic` | synthetic polymer that can be molded when heated |
+| `polymer` | large molecule composed of repeating bonded units |
 | `powder` | dry material consisting of very fine particles |
+| `precipitate` | solid that forms and separates from a solution during a reaction |
+| `reactant` | substance consumed during a chemical reaction |
+| `reaction` | (chemistry sense) process in which substances transform into different substances |
+| `reagent` | substance added to a system to cause or test a reaction |
 | `residue` | material remaining after a process removes the primary substance |
 | `resin` | viscous substance that hardens on exposure to air, heat, or catalyst |
 | `rubber` | elastic polymer that returns to shape after being stretched or compressed |
@@ -865,18 +905,23 @@ the latter.
 | `silicon` | element, atomic number 14; semiconductor |
 | `silver` | metallic element, atomic number 47 |
 | `solid` | state of matter with fixed shape and volume |
+| `solubility` | measure of the amount of solute that dissolves in a given solvent |
+| `solute` | substance dissolved in a solvent |
 | `solution` | homogeneous mixture of a solute dissolved in a solvent |
 | `solvent` | liquid substance that dissolves a solute |
 | `steel` | alloy of iron and carbon |
 | `stone` | hard solid piece of mineral matter |
+| `sublimation` | change of a substance from solid directly to vapor |
 | `substance` | matter with uniform composition throughout |
 | `tin` | metallic element, atomic number 50 |
 | `titanium` | metallic element, atomic number 22 |
+| `titration` | measurement of a solution's concentration by controlled reaction |
+| `valence` | combining capacity of an atom, equal to the number of bonds it forms |
 | `vapor` | gaseous form of a substance that normally exists as liquid or solid at ambient conditions |
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (127)
+### C. Measurement and Quantity (146)
 
 | Word | Sense pin |
 |---|---|
@@ -886,13 +931,16 @@ the latter.
 | `amplitude` | maximum displacement of a wave from its equilibrium value |
 | `angle` | (measurement sense) figure formed by two lines meeting at a point, measured in degrees or radians |
 | `area` | (measurement sense) extent of a two-dimensional surface, in squared length units |
+| `attenuation` | reduction in the amplitude or intensity of a signal over distance |
 | `average` | sum of values divided by their count |
 | `bandwidth` | range of frequencies a channel can carry |
 | `baseline` | initial measured state against which changes are compared |
 | `budget` | finite allocation of a resource with defined upper bound |
 | `calibration` | process of adjusting an instrument to match a known standard |
+| `capacitance` | measure of a system's ability to store electric charge |
 | `capacity` | maximum amount a system can hold, process, or transmit |
 | `ceiling` | upper limit of a parameter or operating range |
+| `charge` | (electric sense) property of matter that causes electric force, measured in coulombs |
 | `coefficient` | dimensionless multiplier in a mathematical expression |
 | `concentration` | amount of substance per unit volume of mixture |
 | `confidence` | quantified degree of certainty in a statistical estimate |
@@ -909,8 +957,10 @@ the latter.
 | `datum` | single recorded value of an observation or measurement |
 | `decay` | progressive decrease in a quantity over time |
 | `degree` | unit of angular or temperature measure |
+| `denominator` | number below the line in a fraction |
 | `density` | mass per unit volume |
 | `depth` | distance from a surface downward or inward |
+| `derivative` | (mathematics sense) rate of change of a function with respect to its variable |
 | `deviation` | departure of a value from a reference |
 | `diameter` | (measurement sense) length of a straight line through the center of a circle or sphere |
 | `difference` | result of subtracting one quantity from another |
@@ -927,6 +977,7 @@ the latter.
 | `energy` | capacity to perform work, measured in joules |
 | `error` | difference between measured value and true value |
 | `estimate` | approximate value calculated from available data |
+| `exponent` | number indicating how many times a factor multiplies itself |
 | `factor` | number that multiplies another; or cause contributing to a result |
 | `field` | (physics sense) region of space where a force acts on susceptible objects. Not the ground area; see Physical Objects |
 | `floor` | (measurement sense) lower bound of a parameter or operating range |
@@ -934,12 +985,17 @@ the latter.
 | `force` | interaction that changes the motion of a body, in newtons |
 | `fraction` | part of a whole expressed as a ratio |
 | `frequency` | number of complete cycles per unit time, in hertz |
+| `friction` | force resisting relative motion between surfaces in contact |
 | `gain` | ratio of output to input in a signal path |
 | `gradient` | rate of change of a quantity with respect to distance |
 | `half-life` | time for a quantity undergoing exponential decay to reduce by half |
 | `height` | vertical distance from base to top |
 | `impedance` | opposition to alternating current in a circuit, in ohms |
+| `impulse` | (physics sense) change in momentum produced by a force over time |
 | `increment` | amount by which a value increases in one step |
+| `inertia` | resistance of a body to change in its state of motion |
+| `infinity` | quantity greater than any finite value |
+| `integral` | quantity equal to the area under the curve of a function |
 | `intensity` | power per unit area, or magnitude of a quantity per unit |
 | `interval` | bounded range of values or span of time between two events |
 | `latitude` | angular distance north or south of an equator |
@@ -947,8 +1003,10 @@ the latter.
 | `level` | position on a scale of quantity, intensity, or rank |
 | `limit` | value that a quantity approaches or must not exceed |
 | `load` | force, weight, or demand placed on a system |
+| `logarithm` | exponent to which a fixed factor must be raised to produce a given number |
 | `longitude` | angular distance east or west of a prime meridian |
 | `luminance` | luminous intensity per unit projected area |
+| `luminosity` | total power radiated by a star or source |
 | `magnitude` | size of a quantity regardless of sign or direction; or brightness of a celestial body on a logarithmic scale |
 | `margin` | difference between an actual value and a boundary or limit |
 | `mass` | quantity of matter in a body, measured in kilograms |
@@ -957,6 +1015,7 @@ the latter.
 | `median` | middle value when a set is ordered |
 | `minimum` | smallest value in a set or range |
 | `noise` | unwanted random variation in a signal or measurement |
+| `numerator` | number above the line in a fraction |
 | `offset` | constant value added to shift a baseline |
 | `output` | quantity produced by a system or process |
 | `peak` | highest instantaneous value in a time-varying quantity |
@@ -965,6 +1024,7 @@ the latter.
 | `phase` | (measurement sense) position within a cycle, measured as an angle |
 | `pitch` | (measurement sense) perceived frequency of a sound; or spacing between repeated structural features |
 | `polarity` | sign of a charge or direction of a field |
+| `polynomial` | expression of summed terms, each a factor times a variable raised to a power |
 | `position` | location in space specified by coordinates |
 | `potential` | stored energy per unit charge, mass, or quantity |
 | `power` | rate of energy transfer or work done per unit time, in watts |
@@ -983,11 +1043,13 @@ the latter.
 | `ratio` | quotient of two quantities of the same kind |
 | `reading` | value obtained from an instrument at a specific time |
 | `reference` | known standard against which measurements are compared |
+| `remainder` | quantity left after one integer is divided by another |
 | `resistance` | opposition to flow of current, in ohms; or opposition to motion |
 | `resolution` | smallest distinguishable difference between two values |
 | `response` | output produced by a system in reaction to an input |
 | `result` | outcome of a calculation, test, or experiment |
 | `sample` | subset taken from a population for measurement |
+| `scalar` | quantity having magnitude but no direction |
 | `scale` | system of ordered marks for measurement; or ratio between a model and the real object |
 | `score` | numerical value assigned by a defined evaluation procedure |
 | `sensitivity` | ratio of output change to input change |
@@ -1009,6 +1071,7 @@ the latter.
 | `throughput` | quantity processed per unit time |
 | `time` | measurable extent of duration, in seconds |
 | `tolerance` | permitted range of deviation from a specified value |
+| `torque` | turning force acting about an axis |
 | `total` | sum of all components |
 | `trend` | direction of change in a quantity over successive measurements |
 | `transparency` | fraction of incident light transmitted through a material |
@@ -1017,6 +1080,7 @@ the latter.
 | `value` | numerical magnitude assigned to a quantity |
 | `variance` | mean of squared deviations from the mean |
 | `velocity` | rate of change of position with respect to time, with direction |
+| `viscosity` | measure of a fluid's resistance to flow |
 | `voltage` | electric potential difference between two points, in volts |
 | `volume` | extent of three-dimensional space occupied by a body |
 | `wavelength` | distance between successive crests of a wave |
@@ -1250,7 +1314,7 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (175)
+### F. Natural and Scientific (193)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
@@ -1264,6 +1328,7 @@ expansion nouns.
 | `angular-momentum` | product of moment of inertia and angular velocity |
 | `antimatter` | matter composed of antiparticles |
 | `antiparticle` | particle with same mass and opposite charge to its matter counterpart |
+| `aquifer` | underground layer of rock that holds and transmits water |
 | `asteroid` | small rocky body orbiting a star |
 | `asteroid-belt` | region of a star system containing many asteroids |
 | `atom` | smallest unit of a chemical element retaining its identity |
@@ -1292,6 +1357,7 @@ expansion nouns.
 | `dark-rift` | band of obscuring dust along the plane of a disc galaxy |
 | `debris-field` | region containing fragments from a disrupted body |
 | `degeneracy` | condition where distinct quantum states have equal energy |
+| `deposition` | (geology sense) laying down of sediment by a natural process |
 | `diffraction` | bending of waves around obstacles or through apertures |
 | `dispersion` | dependence of wave propagation speed on wavelength |
 | `doppler-shift` | change in observed frequency due to relative motion between source and observer |
@@ -1306,6 +1372,7 @@ expansion nouns.
 | `emission` | release of energy as radiation or particles |
 | `emission-line` | spectral line produced by emission of photons at a specific wavelength |
 | `entanglement` | quantum correlation between particles such that measurement of one constrains the other |
+| `enzyme` | protein that catalyzes a biochemical reaction |
 | `erosion` | gradual removal of surface material by wind, water, or ice |
 | `eruption` | sudden expulsion of material from a body's interior |
 | `event-horizon` | boundary of a black hole beyond which no signal escapes |
@@ -1332,12 +1399,14 @@ expansion nouns.
 | `heliopause` | boundary where a star's wind ceases to dominate the surrounding medium |
 | `hemisphere` | half of a sphere, divided by a plane through the center |
 | `horizon` | apparent line where a planetary surface meets the sky |
+| `host` | (biology sense) organism on or in which another organism lives |
 | `hurricane` | large rotating storm system with low central pressure |
 | `hydrogen` | (scientific context) the most abundant element in the universe. See also Materials |
 | `hyperfine-transition` | transition between energy levels split by interaction of nuclear and electronic magnetic moments |
 | `impact` | collision of a high-velocity body with a surface |
 | `impact-crater` | depression formed by a high-velocity collision |
 | `insect` | small animal with six legs, segmented body, and external shell |
+| `insulator` | material that resists the flow of electric current or heat |
 | `interference` | superposition of waves producing regions of reinforcement and cancellation |
 | `invariant` | quantity unchanged under a specified transformation |
 | `ion` | atom or molecule with a net electric charge |
@@ -1358,6 +1427,7 @@ expansion nouns.
 | `mammal` | animal with regulated body temperature, hair, and milk-producing glands |
 | `mantle` | layer of a rocky body between crust and core |
 | `mean-free-path` | average distance a particle travels between collisions |
+| `metabolism` | set of chemical reactions that sustain an organism |
 | `meteor` | streak of light produced when a small body enters an atmosphere at high speed |
 | `meteorite` | a meteor that reaches a planetary surface |
 | `metric` | (physics sense) mathematical object describing the geometry of spacetime |
@@ -1379,7 +1449,9 @@ expansion nouns.
 | `ocean-world` | planet or moon with a global liquid ocean |
 | `octave` | interval between two frequencies where one equals twice the other |
 | `orbit` | (scientific sense) curved path of a body around another under gravity |
+| `organ` | distinct part of an organism that performs a specific function |
 | `organism` | individual living system |
+| `oscillation` | repetitive variation of a quantity about a central value |
 | `overtone` | frequency component above the fundamental in a complex tone |
 | `ozone` | triatomic form of oxygen, O₃ |
 | `pair-production` | creation of a particle-antiparticle pair from energy |
@@ -1398,6 +1470,7 @@ expansion nouns.
 | `plate` | (tectonic sense) large rigid section of a planetary crust. Not the flat sheet; see Physical Objects |
 | `polarization` | orientation of oscillation of a transverse wave |
 | `pollen` | fine powder produced by seed plants for reproduction |
+| `porosity` | fraction of a material's volume that is empty space |
 | `predator` | organism that captures and consumes other organisms |
 | `prey` | organism captured and consumed by a predator |
 | `proper-motion` | angular displacement of a star across the celestial sphere per unit time |
@@ -1410,12 +1483,16 @@ expansion nouns.
 | `quasar` | extremely luminous nucleus of a distant galaxy powered by accretion |
 | `radial-velocity` | component of velocity along the line of sight |
 | `radiation` | energy emitted as electromagnetic waves or subatomic particles |
+| `radioactivity` | spontaneous emission of radiation from unstable nuclei |
 | `rain` | liquid water falling from an atmosphere as droplets |
 | `red-giant` | star in a late evolutionary phase with expanded outer layers |
 | `redshift` | increase in wavelength of radiation from a receding source |
 | `reef` | ridge of rock, coral, or sand near a water surface |
+| `reflection` | (physics sense) return of a wave from a surface |
+| `refraction` | bending of a wave as it passes between media |
 | `regolith` | layer of loose material on a planetary surface |
 | `resonance` | condition where a periodic driving force matches a natural frequency |
+| `respiration` | process by which an organism converts nutrients into energy |
 | `ring-system` | disc of particles orbiting a planet in its equatorial plane |
 | `ringlet` | narrow band within a ring system |
 | `river` | natural flowing channel of water |
@@ -1426,9 +1503,11 @@ expansion nouns.
 | `sea` | large body of salt water, smaller than an ocean |
 | `sediment` | material deposited by water, wind, or ice |
 | `seed` | reproductive unit of a plant containing an embryo and nutrients |
+| `semiconductor` | material with conductivity between that of a conductor and an insulator |
 | `solar-wind` | stream of charged particles emitted by a star |
 | `spacetime` | four-dimensional continuum of three spatial and one temporal dimension |
 | `species` | group of organisms that can reproduce with each other to produce viable offspring |
+| `specimen` | individual sample of an organism or material taken for examination |
 | `spectral-line` | discrete feature in a spectrum at a specific wavelength |
 | `spin` | intrinsic angular momentum of a particle |
 | `spiral-arm` | curved structure extending from the center of a disc galaxy |
@@ -1453,12 +1532,15 @@ expansion nouns.
 | `tsunami` | large ocean wave generated by submarine disturbance |
 | `vacuum` | region containing no matter; or lowest energy state of a field |
 | `vent` | (scientific sense) opening in a surface through which gas or heated fluid escapes |
+| `virus` | infectious agent that replicates only within a host cell |
 | `void` | large region of space containing few or no galaxies |
 | `volcano` | opening in a planetary surface through which magma erupts |
+| `watershed` | area of land that drains to a common water body |
 | `wave` | disturbance that propagates through a medium or field |
 | `waveform` | shape of a wave as a function of time or position |
 | `wavefunction` | mathematical description of the quantum state of a system |
 | `weather` | short-term state of an atmosphere at a specific time and place |
+| `weathering` | breakdown of rock by exposure to atmosphere and water |
 | `white-dwarf` | dense remnant core of a low-mass star |
 | `wind` | large-scale movement of atmospheric gas |
 | `worldline` | path of an object through spacetime |
@@ -1466,7 +1548,7 @@ expansion nouns.
 | `nadir` | point on the celestial sphere directly below the observer |
 
 
-### G. Abstract and System (168)
+### G. Abstract and System (178)
 
 | Word | Sense pin |
 |---|---|
@@ -1482,6 +1564,7 @@ expansion nouns.
 | `authority` | designated right to make decisions or approve actions |
 | `automation` | execution of procedures without human intervention |
 | `autonomy` | capacity of a system to operate without external control |
+| `axiom` | statement taken as true without proof, used as a basis for derivation |
 | `backup` | duplicate copy maintained for recovery after failure |
 | `balance` | state where opposing quantities are equal |
 | `basis` | foundational set from which other elements are derived |
@@ -1505,11 +1588,13 @@ expansion nouns.
 | `codec` | device or algorithm that encodes or decodes data |
 | `codeword` | symbol sequence assigned to a source symbol in a coding scheme |
 | `cohort` | group of agents or items that share a defining temporal or procedural boundary |
+| `combination` | selection of elements from a set without regard to order |
 | `command` | (system sense) instruction sent to a device or program |
 | `communication` | transfer of information between agents or systems |
 | `complexity` | measure of the number of interacting components or steps in a system |
 | `conflict` | state where two requirements or actions are mutually incompatible |
 | `consensus` | state where all required parties agree on a decision |
+| `contradiction` | pair of statements that cannot both be true |
 | `copy` | identical reproduction of data or an artifact |
 | `cost` | quantity of resource consumed to achieve an outcome |
 | `counter` | device or variable that tracks a running count |
@@ -1549,6 +1634,7 @@ expansion nouns.
 | `identifier` | unique label assigned to an item for unambiguous reference |
 | `image` | two-dimensional representation of a scene or object |
 | `implementation` | (system sense) realization of a specification in working form |
+| `implication` | logical relation in which one statement entails another |
 | `index` | ordered lookup structure mapping keys to locations |
 | `indicator` | (system sense) variable whose value signals a condition |
 | `information` | reduction in uncertainty, measured in bits |
@@ -1557,6 +1643,7 @@ expansion nouns.
 | `instruction` | single directive to be executed by a system |
 | `integrity` | property of data remaining unaltered and complete |
 | `interface` | boundary at which two systems exchange material, energy, or information |
+| `intersection` | (set sense) set of elements common to two or more sets |
 | `inventory` | complete list of items with quantities |
 | `item` | single discrete thing in a collection |
 | `key` | (data sense) value used for lookup, encryption, or identification |
@@ -1580,6 +1667,7 @@ expansion nouns.
 | `model` | simplified representation of a system used for projection or analysis |
 | `modulation` | variation of a carrier signal property to encode data |
 | `mutual-information` | measure of information one variable provides about another |
+| `negation` | logical operation that reverses the truth of a statement |
 | `network` | interconnected set of nodes and links |
 | `node` | point of connection or computation in a network or graph |
 | `notation` | system of symbols used to represent values or operations |
@@ -1601,12 +1689,14 @@ expansion nouns.
 | `pattern` | recurring arrangement or regularity in data |
 | `payload` | content carried by a message, distinct from its headers and metadata |
 | `permission` | authorization to access a resource or perform an action |
+| `permutation` | ordered arrangement of the elements of a set |
 | `pipeline` | sequence of processing stages connected in series |
 | `platform` | (system sense) foundational system on which other systems run |
 | `pointer` | value that indicates the location of another value |
 | `pool` | shared collection of resources available for allocation |
 | `port` | (system sense) numbered endpoint for network communication |
 | `prefix` | string prepended to another string |
+| `premise` | statement taken as a basis from which a conclusion follows |
 | `primitive` | basic operation or data type from which complex ones are built |
 | `priority` | relative rank determining order of processing |
 | `process` | (system sense) executing instance of a program |
@@ -1664,6 +1754,7 @@ expansion nouns.
 | `target` | specified objective or reference value |
 | `template` | reusable pattern from which instances are produced |
 | `term` | (system sense) named element in a formal expression |
+| `theorem` | statement proved from axioms by derivation |
 | `threshold` | (system sense) value at which a trigger fires |
 | `token` | single meaningful unit in a sequence: a word, symbol, or code |
 | `tool` | (system sense) software component used to perform a specific task |
@@ -1675,6 +1766,7 @@ expansion nouns.
 | `trigger` | (system sense) condition that initiates an automatic response |
 | `tuple` | ordered sequence of fixed-length elements |
 | `type` | classification that defines the set of valid values and operations |
+| `union` | (set sense) set of all elements belonging to any of two or more sets |
 | `variable` | named storage location whose value can change |
 | `vector` | ordered list of numerical values; or quantity with magnitude and direction |
 | `version` | (system sense) identified iteration of a component |
@@ -1784,7 +1876,7 @@ confirm domain coverage. No duplication in the count.
 
 ---
 
-## 6. Adjectives (230 unique)
+## 6. Adjectives (239 unique)
 
 All adjectives describe physically measurable or logically
 verifiable properties. No evaluative adjectives admitted.
@@ -1865,10 +1957,11 @@ verifiable properties. No evaluative adjectives admitted.
 | `spherical` | having the shape of a sphere |
 | `vertical` | perpendicular to the local gravitational equipotential surface |
 
-### Physical properties (24)
+### Physical properties (28)
 
 | Adjective | Sense pin |
 |---|---|
+| `aqueous` | dissolved in or containing water |
 | `brittle` | breaking without significant change in shape when force exceeds threshold |
 | `conductive` | allowing electric current or heat to pass through readily |
 | `corrosive` | causing gradual chemical destruction of a material |
@@ -1878,9 +1971,11 @@ verifiable properties. No evaluative adjectives admitted.
 | `fragile` | breaking under small applied force |
 | `hard` | resisting indentation or scratching |
 | `hollow` | having an empty interior |
+| `ionic` | consisting of or relating to ions |
 | `magnetic` | producing or responding to a magnetic field |
 | `malleable` | capable of being shaped by pressure without breaking |
 | `opaque` | blocking passage of light |
+| `organic` | (chemistry sense) containing carbon-hydrogen bonds |
 | `permeable` | allowing fluid to pass through |
 | `porous` | containing many small openings that allow fluid to pass |
 | `reflective` | returning a high fraction of incident light from the surface |
@@ -1888,6 +1983,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `rough` | having an uneven surface with measurable irregularities |
 | `smooth` | having a surface with very small irregularities |
 | `soft` | yielding readily to pressure |
+| `soluble` | capable of dissolving in a solvent |
 | `stiff` | resisting bending or flexing |
 | `strong` | withstanding large forces without failure |
 | `transparent` | allowing light to pass through without significant scattering |
@@ -1945,7 +2041,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `intact` | undamaged; retaining all original parts and function |
 | `internal` | located on or coming from the inside |
 
-### Quantity and comparison (22)
+### Quantity and comparison (23)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1963,6 +2059,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `identical` | matching in every measured property |
 | `incremental` | increasing by a defined step |
 | `insufficient` | less than the required quantity |
+| `logarithmic` | varying as the logarithm of a quantity |
 | `maximum` | at the greatest permitted or observed value |
 | `minimum` | at the smallest permitted or observed value |
 | `multiple` | consisting of more than one |
@@ -2044,17 +2141,21 @@ verifiable properties. No evaluative adjectives admitted.
 | `planetary` | relating to a planet |
 | `suborbital` | following a trajectory that does not complete a full orbit |
 
-### Physics (12)
+### Physics (16)
 
 | Adjective | Sense pin |
 |---|---|
 | `acoustic` | relating to sound waves |
+| `atomic` | relating to atoms |
+| `electric` | relating to or carrying electric charge |
 | `electromagnetic` | relating to electric and magnetic fields and their radiation |
 | `gravitational` | relating to gravity |
 | `inertial` | relating to a frame of reference with no net force |
 | `isotropic` | having the same properties in all directions |
 | `anisotropic` | having different properties in different directions |
+| `molecular` | relating to molecules |
 | `nonlinear` | not proportional; output not a linear function of input |
+| `nuclear` | relating to the nucleus of an atom |
 | `optical` | relating to light in the visible range or to optics |
 | `quantum` | relating to discrete units of energy or to quantum mechanics |
 | `relativistic` | relating to effects at speeds approaching the speed of light |
@@ -2174,12 +2275,12 @@ verifiable properties. No evaluative adjectives admitted.
 
 ---
 
-## 8. Numerals and Units (68)
+## 8. Numerals and Units (69)
 
 ### Cardinals and ordinals
 `zero` through `twenty`, `thirty`, `forty`, `fifty`, `sixty`,
 `seventy`, `eighty`, `ninety`, `hundred`, `thousand`, `million`,
-`billion`
+`billion`, `trillion`
 
 `first` through `tenth`, `last`, `final`, `penultimate`
 
@@ -2190,7 +2291,7 @@ verifiable properties. No evaluative adjectives admitted.
 ### Common derived units
 `hertz`, `newton`, `pascal`, `joule`, `watt`, `coulomb`,
 `volt`, `ohm`, `farad`, `siemens`, `weber`, `tesla`, `henry`,
-`lumen`, `lux`, `becquerel`, `gray`, `sievert`
+`lumen`, `lux`, `becquerel`, `decibel`, `sievert`
 
 ### SI prefixes
 `yocto`, `zepto`, `atto`, `femto`, `pico`, `nano`, `micro`,
@@ -2240,13 +2341,13 @@ exist in this vocabulary.
 | Category | Count |
 |---|---|
 | Function words | 137 |
-| Method-only verbs | 313 |
-| Nouns (incl. dual-sense entries) | ~952 |
-| Adjectives | 230 |
+| Method-only verbs | 325 |
+| Nouns (incl. dual-sense entries) | ~1027 |
+| Adjectives | 239 |
 | Adverbs | 52 |
-| Numerals and units | 68 |
+| Numerals and units | 69 |
 | Evidential markers | 15 |
-| **Core total** | **~2,187** |
+| **Core total** | **~2,284** |
 | Technical Name capacity | ~2,813 |
 | **Maximum ceiling** | **5,000** |
 
@@ -2260,6 +2361,11 @@ necessary property for a language intended for communication
 with an entity of unknown capability and unknown access to
 external English dictionaries.
 
+This property is a design goal, not yet fully enforced: some
+sense-pin descriptions still use ordinary explanatory English
+words that fall outside the approved lexicon. Tightening every
+definition to draw only on lexicon words remains future work.
+
 ### Goguen-Meseguer non-interference test
 
 The lexicon passes if two authors with identical procedures
@@ -2269,4 +2375,4 @@ exclusion and sense-pin serves this property.
 
 ---
 
-*End of Beyond CNL Lexicon v0.4.*
+*End of Beyond CNL Lexicon v0.4.2.*
