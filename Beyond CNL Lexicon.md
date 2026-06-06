@@ -193,7 +193,7 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 Each verb has one approved sense. Transitivity: (tr) transitive,
 (intr) intransitive, (both) either.
 
-### Procedure — physical action (82)
+### Procedure — physical action (81)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
@@ -279,7 +279,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `unlock` | tr | release from locked state |
 | `wrap` | tr | enclose by winding cover around |
 
-### Procedure — information and control (62)
+### Procedure — information and control (65)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
@@ -349,7 +349,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `verify` | tr | confirm by independent check |
 | `write` | tr | output data to destination |
 
-### Observation and measurement (48)
+### Observation and measurement (47)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
@@ -507,7 +507,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `satisfy` | tr | meet all conditions of |
 | `solve` | tr | find value that satisfies formula |
 
-### Sensory and detection (15)
+### Sensory and detection (13)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
@@ -525,7 +525,7 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `scan` | tr | examine systematically across range |
 | `sense` | tr | detect by instrument |
 
-### Astronomy and astrophysics (8)
+### Astronomy and astrophysics (7)
 
 | Verb | Tr | Sense pin |
 |---|---|---|
@@ -589,13 +589,13 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `render` | tr | produce a visual representation from data or instructions |
 
 ---
-## 5. Nouns (1014)
+## 5. Nouns (1084 unique)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
 lexical entries.
 
-### A. Physical Objects and Structures (190)
+### A. Physical Objects and Structures (213)
 
 | Word | Sense pin |
 |---|---|
@@ -921,7 +921,7 @@ the latter.
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (146)
+### C. Measurement and Quantity (163)
 
 | Word | Sense pin |
 |---|---|
@@ -1090,7 +1090,7 @@ the latter.
 | `zero` | the additive identity; point of origin on a scale |
 
 
-### D. Process and Procedure (147)
+### D. Process and Procedure (183)
 
 | Word | Sense pin |
 |---|---|
@@ -1314,7 +1314,7 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (193)
+### F. Natural and Scientific (225)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
@@ -1548,7 +1548,7 @@ expansion nouns.
 | `nadir` | point on the celestial sphere directly below the observer |
 
 
-### G. Abstract and System (178)
+### G. Abstract and System (220)
 
 | Word | Sense pin |
 |---|---|
@@ -2007,7 +2007,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `white` | reflecting a high fraction of visible light across the spectrum |
 | `yellow` | having dominant wavelength approximately 565–590 nm |
 
-### State and condition (28)
+### State and condition (29)
 
 | Adjective | Sense pin |
 |---|---|
@@ -2098,7 +2098,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `reversible` | capable of being returned to the previous state |
 | `specified` | defined by a requirement or instruction |
 
-### Spatial relation (21)
+### Spatial relation (22)
 
 | Adjective | Sense pin |
 |---|---|
@@ -2342,7 +2342,7 @@ exist in this vocabulary.
 |---|---|
 | Function words | 137 |
 | Method-only verbs | 325 |
-| Nouns (incl. dual-sense entries) | ~1027 |
+| Nouns | 1084 |
 | Adjectives | 239 |
 | Adverbs | 52 |
 | Numerals and units | 69 |

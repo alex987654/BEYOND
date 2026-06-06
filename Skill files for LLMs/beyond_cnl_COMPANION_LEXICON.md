@@ -79,13 +79,13 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 ---
 ---
 
-## 5. Nouns (1014)
+## 5. Nouns (1084 unique)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
 lexical entries.
 
-### A. Physical Objects and Structures (190)
+### A. Physical Objects and Structures (213)
 
 | Word | Sense pin |
 |---|---|
@@ -402,7 +402,7 @@ lexical entries.
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (146)
+### C. Measurement and Quantity (163)
 
 | Word | Sense pin |
 |---|---|
@@ -571,7 +571,7 @@ lexical entries.
 | `zero` | the additive identity; point of origin on a scale |
 
 
-### D. Process and Procedure (147)
+### D. Process and Procedure (183)
 
 | Word | Sense pin |
 |---|---|
@@ -795,7 +795,7 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (193)
+### F. Natural and Scientific (225)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
@@ -1029,7 +1029,7 @@ expansion nouns.
 | `nadir` | point on the celestial sphere directly below the observer |
 
 
-### G. Abstract and System (178)
+### G. Abstract and System (220)
 
 | Word | Sense pin |
 |---|---|
@@ -1489,7 +1489,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `white` | reflecting a high fraction of visible light across the spectrum |
 | `yellow` | having dominant wavelength approximately 565–590 nm |
 
-### State and condition (28)
+### State and condition (29)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1580,7 +1580,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `reversible` | capable of being returned to the previous state |
 | `specified` | defined by a requirement or instruction |
 
-### Spatial relation (21)
+### Spatial relation (22)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1800,7 +1800,7 @@ verifiable properties. No evaluative adjectives admitted.
 |---|---|---|
 | Function words | 137 | This file |
 | Method-only verbs | 325 | SKILL file |
-| Nouns | ~1027 | This file |
+| Nouns | 1084 | This file |
 | Adjectives | 239 | This file |
 | Adverbs | 52 | This file |
 | Numerals and units | 69 | This file |

@@ -183,7 +183,7 @@ This is the **complete** set. If a verb does not appear here,
 it cannot appear in a Beyond CNL document. Transitivity:
 (tr) transitive, (intr) intransitive, (both) either.
 
-### Physical action (82)
+### Physical action (81)
 
 | Verb | Tr | Sense |
 |---|---|---|
@@ -269,7 +269,7 @@ it cannot appear in a Beyond CNL document. Transitivity:
 | `unlock` | tr | release from locked state |
 | `wrap` | tr | enclose by winding cover around |
 
-### Information and control (62)
+### Information and control (65)
 
 | Verb | Tr | Sense |
 |---|---|---|
@@ -339,7 +339,7 @@ it cannot appear in a Beyond CNL document. Transitivity:
 | `verify` | tr | confirm by independent check |
 | `write` | tr | output data to destination |
 
-### Observation and measurement (48)
+### Observation and measurement (47)
 
 | Verb | Tr | Sense |
 |---|---|---|
@@ -497,7 +497,7 @@ it cannot appear in a Beyond CNL document. Transitivity:
 | `satisfy` | tr | meet all conditions of |
 | `solve` | tr | find value that satisfies formula |
 
-### Sensory and detection (15)
+### Sensory and detection (13)
 
 | Verb | Tr | Sense |
 |---|---|---|
@@ -515,7 +515,7 @@ it cannot appear in a Beyond CNL document. Transitivity:
 | `scan` | tr | examine systematically across range |
 | `sense` | tr | detect by instrument |
 
-### Astronomy (8)
+### Astronomy (7)
 
 | Verb | Tr | Sense |
 |---|---|---|
