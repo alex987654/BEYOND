@@ -149,5 +149,5 @@ A fault in one instrument produces some of the measurements (hypothesis, candida
 
 1. Align sensor `IR-1` and receiver `RR-4` to the listed position (procedure, step 1).
 2. Sample the flux of source `SRC-1` for one flux period at milli second cadence (procedure, step 2).
-3. Map the flux values to phase across 3.9 seconds (procedure, step 3).
+3. Map the flux values to the phase angle at 3.9 seconds (procedure, step 3).
 4. Compare the center of line `L-1` against the acceleration of source `SRC-1` (procedure, step 4).

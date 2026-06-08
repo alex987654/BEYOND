@@ -110,31 +110,22 @@ A word belongs in the lexicon if and only if:
 | `fundamental` (arts noun) | overlaps `ground-state` | `ground-state` |
 | `craft` | primary sense evaluative-adjacent | `transportation` + `device` |
 
-### Dual-sense nouns (both retained)
-
-| Noun | Sense 1 | Sense 2 |
-|---|---|---|
-| `cell` | (physical) compartment in a structure | (scientific) smallest unit of a living organism |
-| `current` | (measurement) electric charge flow per unit time | (scientific) directed fluid flow |
-| `element` | (materials) substance with one atom type | (physical) single part in a structure |
-| `field` | (measurement) region where force acts | (physical) bounded area of ground |
-| `lead` | (materials) metallic element, atomic number 82 | (physical) electrical conductor wire |
-| `plate` | (physical) flat rigid sheet | (scientific) tectonic crust section |
-| `crystal` | (materials) ordered-lattice solid | (physical) shaped optical solid |
-
 ---
 
 ## 3. Function Words (137)
 
 ### Articles and demonstratives (6)
+
 `a`, `an`, `the`, `this`, `that`, `each`
 
 ### Quantifiers and determiners (18)
+
 `all`, `any`, `both`, `either`, `enough`, `every`, `few`,
 `many`, `more`, `most`, `much`, `neither`, `no` (determiner),
 `none`, `other`, `several`, `some`, `such`
 
 ### Prepositions (32)
+
 `about`, `above`, `across`, `after`, `against`, `along`,
 `among`, `around`, `at`, `before`, `behind`, `below`,
 `beneath`, `beside`, `between`, `beyond`, `by`, `down`,
@@ -142,6 +133,7 @@ A word belongs in the lexicon if and only if:
 `on`, `out`, `over`, `through`, `to`, `under`
 
 ### Conjunctions (10)
+
 `and`, `or`, `nor`, `but`, `yet`, `if`, `then`,
 `unless`, `until`, `while`
 
@@ -150,10 +142,12 @@ through the E-PRO `for` slot or E-DER; logical consequence remains
 via `therefore` and E-DER `follows`.
 
 ### Relative and interrogative (8)
+
 `who`, `which`, `that` (relative), `what`, `where`, `when`,
 `how`, `whether`
 
 ### Pronouns — permitted subset (12)
+
 `it`, `its`, `they`, `them`, `their`, `themselves`,
 `one` (impersonal), `ones`,
 `this`, `that`, `these`, `those` (pronominal)
@@ -163,26 +157,32 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 `mine` excluded.
 
 ### Negation (4)
+
 `not`, `no` (adverbial), `never`, `without`
 
 ### Temporal connectives (14)
+
 `after`, `before`, `currently`, `during`, `finally`, `first`,
 `formerly`, `last`, `next`, `now`, `previously`, `simultaneously`,
 `then`, `subsequently`
 
 ### Logical and conditional (8)
+
 `if`, `then`, `else`, `only`, `also`, `therefore`, `however`,
 `provided`
 
 ### Degree and precision (12)
+
 `approximately`, `at least`, `at most`, `below`, `between`,
 `equal`, `exactly`, `fully`, `greater`, `less`, `partially`,
 `within`
 
 ### Existence and presence (5)
+
 `there` (locative only), `here`, `present`, `absent`, `available`
 
 ### Miscellaneous function (8)
+
 `as` (role: "as a precondition"), `per`, `plus`, `minus`,
 `times`, `via`, `with`, `versus`
 
@@ -589,13 +589,14 @@ Each verb has one approved sense. Transitivity: (tr) transitive,
 | `render` | tr | produce a visual representation from data or instructions |
 
 ---
+
 ## 5. Nouns (1084 unique)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
 lexical entries.
 
-### A. Physical Objects and Structures (213)
+### A. Physical Objects and Structures (210)
 
 | Word | Sense pin |
 |---|---|
@@ -624,7 +625,6 @@ lexical entries.
 | `cage` | open framework enclosing a space |
 | `cap` | cover that closes the end of a tube, opening, or container |
 | `case` | outer enclosure protecting internal components |
-| `cell` | (structure sense) enclosed compartment within a larger structure. Not the biological sense; see Scientific nouns |
 | `center` | geometric midpoint of a region or body |
 | `chain` | series of linked rigid elements |
 | `chamber` | enclosed space within a device or structure |
@@ -660,7 +660,6 @@ lexical entries.
 | `drum` | cylindrical container, usually with flat ends |
 | `duct` | enclosed passage for conveying air, fluid, or wiring |
 | `edge` | line where two surfaces of a solid meet |
-| `element` | (structure sense) single distinct part within a larger system. Not the chemical sense; see Materials |
 | `enclosure` | structure that surrounds and contains |
 | `engine` | device that converts stored energy into mechanical motion |
 | `equipment` | set of devices assembled for a particular operation |
@@ -709,7 +708,6 @@ lexical entries.
 | `knob` | rounded projection used for gripping or adjusting |
 | `lamp` | device that produces light |
 | `layer` | single thickness of material spread over or between surfaces |
-| `lead` | (wire sense) insulated conductor connecting a component to a circuit. Not the metal; see Materials |
 | `lens` | shaped transparent body that bends light to converge or diverge |
 | `lever` | rigid bar that pivots on a fulcrum to transmit force |
 | `lid` | removable cover for the top of a container |
@@ -738,7 +736,7 @@ lexical entries.
 | `pin` | thin rigid rod used for fastening, alignment, or pivoting |
 | `pipe` | rigid tube for conveying fluid under pressure |
 | `piston` | cylindrical piece that moves within a tube under fluid pressure |
-| `plate` | (structure sense) flat rigid sheet of material. Not the tectonic sense; see Scientific nouns |
+| `plate` | flat rigid sheet of material |
 | `platform` | flat raised surface on which operations or equipment are placed |
 | `plug` | piece inserted into an opening to seal it or make a connection |
 | `point` | location without spatial extent; or sharp tip |
@@ -848,14 +846,14 @@ the latter.
 | `coolant` | fluid circulated to absorb and remove heat |
 | `copper` | metallic element, atomic number 29 |
 | `corrosion` | gradual chemical degradation of a metal by its environment |
-| `crystal` | (material sense) solid with atoms arranged in a periodic lattice. Not the optical component; see Physical Objects (`lens`) |
+| `crystal` | solid with atoms arranged in a periodic lattice |
 | `dipole` | pair of equal and opposite charges separated by a distance |
 | `distillation` | separation of mixture components by evaporation and condensation |
 | `dust` | fine dry particles of solid material suspended in gas or settled on surfaces |
 | `dye` | substance that changes the color of a material by chemical bonding |
 | `electrode` | conductor through which current enters or leaves an electrolyte or device |
 | `electrolyte` | substance that conducts current through the movement of ions |
-| `element` | (chemical sense) substance containing only one type of atom. Not the structural component; see Physical Objects |
+| `element` | substance containing only one type of atom |
 | `emulsion` | colloid of one liquid dispersed in another |
 | `fiber` | (material sense) thin elongated strand of natural or synthetic material |
 | `filtration` | separation of solids from a fluid by passing through a porous medium |
@@ -871,7 +869,7 @@ the latter.
 | `iron` | metallic element, atomic number 26 |
 | `isomer` | molecule with the same atoms as another but a different arrangement |
 | `lattice` | (crystal sense) regular periodic arrangement of atoms in a solid |
-| `lead` | (metal sense) metallic element, atomic number 82. Not the electrical wire; see Physical Objects |
+| `lead` | metallic element, atomic number 82 |
 | `liquid` | state of matter with fixed volume but no fixed shape |
 | `lubricant` | substance applied between surfaces to reduce friction |
 | `material` | any substance from which things can be made |
@@ -950,7 +948,7 @@ the latter.
 | `coordinate` | numerical value specifying position along an axis |
 | `correlation` | measure of linear association between two variables, range -1 to +1 |
 | `count` | total number of discrete items in a set |
-| `current` | (electrical sense) flow of electric charge per unit time, in amperes. Not the fluid-flow sense; see Scientific nouns |
+| `current` | (electrical sense) flow of electric charge per unit time, in amperes |
 | `curve` | line that deviates continuously from straightness |
 | `cycle` | one complete repetition of a periodic process |
 | `data` | recorded values of observations or measurements (uncountable) |
@@ -979,7 +977,7 @@ the latter.
 | `estimate` | approximate value calculated from available data |
 | `exponent` | number indicating how many times a factor multiplies itself |
 | `factor` | number that multiplies another; or cause contributing to a result |
-| `field` | (physics sense) region of space where a force acts on susceptible objects. Not the ground area; see Physical Objects |
+| `field` | region of space where a force acts on susceptible objects |
 | `floor` | (measurement sense) lower bound of a parameter or operating range |
 | `flux` | rate of flow of energy, particles, or material through a surface |
 | `force` | interaction that changes the motion of a body, in newtons |
@@ -1314,7 +1312,7 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (225)
+### F. Natural and Scientific (223)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
@@ -1340,7 +1338,7 @@ expansion nouns.
 | `boson` | particle with integer spin that mediates forces |
 | `bow-shock` | boundary where a supersonic flow decelerates upon encountering an obstacle |
 | `causality` | relation between cause and effect, constrained by signal speed |
-| `cell` | (biological sense) smallest unit of a living organism. Not the structural compartment; see Physical Objects |
+| `cell` | smallest unit of a living organism |
 | `chromosome` | thread-like structure of DNA carrying genetic information |
 | `comet` | small icy body that releases gas and dust when near a star |
 | `conservation` | property of a quantity remaining constant in a closed system |
@@ -1351,7 +1349,6 @@ expansion nouns.
 | `cosmic-ray` | high-energy particle originating outside a star system |
 | `coupling` | interaction strength between two systems or fields |
 | `crust` | outermost solid layer of a rocky planet or moon |
-| `current` | (fluid sense) large-scale directed flow of fluid in an ocean or atmosphere. Not the electrical sense; see Measurement |
 | `dark-energy` | component inferred from accelerating expansion of the universe |
 | `dark-matter` | matter inferred from gravitational effects, not detected by electromagnetic radiation |
 | `dark-rift` | band of obscuring dust along the plane of a disc galaxy |
@@ -1467,7 +1464,6 @@ expansion nouns.
 | `planetary-surface` | outer solid or liquid boundary of a planet |
 | `planetary-transit` | passage of a smaller body across the disc of a larger body |
 | `plasma` | state of matter in which atoms are ionized |
-| `plate` | (tectonic sense) large rigid section of a planetary crust. Not the flat sheet; see Physical Objects |
 | `polarization` | orientation of oscillation of a transverse wave |
 | `pollen` | fine powder produced by seed plants for reproduction |
 | `porosity` | fraction of a material's volume that is empty space |
@@ -2278,6 +2274,7 @@ verifiable properties. No evaluative adjectives admitted.
 ## 8. Numerals and Units (69)
 
 ### Cardinals and ordinals
+
 `zero` through `twenty`, `thirty`, `forty`, `fifty`, `sixty`,
 `seventy`, `eighty`, `ninety`, `hundred`, `thousand`, `million`,
 `billion`, `trillion`
@@ -2285,24 +2282,29 @@ verifiable properties. No evaluative adjectives admitted.
 `first` through `tenth`, `last`, `final`, `penultimate`
 
 ### SI base units
+
 `meter`, `kilogram`, `second`, `ampere`, `kelvin`, `mole`,
 `candela`
 
 ### Common derived units
+
 `hertz`, `newton`, `pascal`, `joule`, `watt`, `coulomb`,
 `volt`, `ohm`, `farad`, `siemens`, `weber`, `tesla`, `henry`,
 `lumen`, `lux`, `becquerel`, `decibel`, `sievert`
 
 ### SI prefixes
+
 `yocto`, `zepto`, `atto`, `femto`, `pico`, `nano`, `micro`,
 `milli`, `centi`, `deci`, `deka`, `hecto`, `kilo`, `mega`,
 `giga`, `tera`, `peta`, `exa`, `zetta`, `yotta`
 
 ### Mathematical operators (as words)
+
 `plus`, `minus`, `times`, `divided-by`, `equals`,
 `greater-than`, `less-than`, `percent`, `per`
 
 ### Other measurement words
+
 `bit`, `byte`, `pixel`, `degree` (angle), `radian`,
 `steradian`, `day`, `hour`, `minute` (time), `year`,
 `light-year`, `parsec`, `astronomical-unit`
