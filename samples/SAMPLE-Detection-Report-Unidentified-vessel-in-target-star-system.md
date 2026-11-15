@@ -1,6 +1,6 @@
 ---
 schema: beyond-cnl-v0.4
-purpose: Describe and bound the temperature, the acceleration, the line, and the periodic flux of source SRC-1 within system TS-1.
+purpose: Describe and bound the temperature, the acceleration, the line, and the periodic flux of source `SRC-1` within system `TS-1`.
 phase: Discovery
 instruments:
   - id: IR-1
@@ -25,22 +25,22 @@ references:
 technical_names:
   - term: TS-1-DET
     pos: noun
-    definition: the detection protocol for system TS-1
+    definition: the detection protocol for system `TS-1`
   - term: TS-1
     pos: noun
     definition: the observed system
   - term: SRC-1
     pos: noun
-    definition: the compact source within system TS-1
+    definition: the compact source within system `TS-1`
   - term: L-1
     pos: noun
-    definition: the narrow spectral line of source SRC-1
+    definition: the narrow spectral line of source `SRC-1`
   - term: BLACKBODY-FIT
     pos: noun
     definition: the relation that sets the spectral peak of a thermal body from its temperature
 conditions:
   - id: COND-1
-    statement: Source SRC-1 diverges from the gravitational path.
+    statement: Source `SRC-1` diverges from the gravitational path.
   - id: COND-2
     statement: The line width falls below one in a million of the frequency.
 hypothesis_space:

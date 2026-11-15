@@ -1,10 +1,10 @@
 # Beyond CNL: Companion Lexicon
 
-## For use alongside Beyond CNL SKILL v0.4.1
+## For use alongside Beyond CNL SKILL v0.4.2
 
 This file contains nouns, adjectives, adverbs, numerals,
 units, and function words with sense pins. The **verb list**
-(313 verbs with transitivity and sense pins) appears in the
+(325 verbs with transitivity and sense pins) appears in the
 SKILL file, not here. Rules, pitfalls, examples, and the
 evidential system appear in the SKILL file.
 
@@ -79,13 +79,13 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 ---
 ---
 
-## 5. Nouns (1084 unique)
+## 5. Nouns (1105 unique)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
 lexical entries.
 
-### A. Physical Objects and Structures (210)
+### A. Physical Objects and Structures (216)
 
 | Word | Sense pin |
 |---|---|
@@ -96,6 +96,7 @@ lexical entries.
 | `assembly` | set of parts joined together to form a functional unit |
 | `axis` | straight line around which rotation occurs or along which symmetry holds |
 | `bar` | rigid straight piece of material with uniform cross-section |
+| `barrier` | structure or layer that blocks or limits passage |
 | `base` | lowest supporting part of a structure |
 | `basin` | concave container open at the top |
 | `beam` | long rigid structural member that resists bending |
@@ -121,6 +122,7 @@ lexical entries.
 | `circuit` | closed path through which electric current or fluid flows |
 | `clamp` | device that holds two or more parts together by applied pressure |
 | `coil` | conductor or tube wound in a spiral or helix |
+| `collector` | part of a device that receives charge carriers or radiation |
 | `column` | vertical structural member that bears compressive load |
 | `compass` | instrument or reference system for determining direction |
 | `compartment` | enclosed subdivision within a larger space |
@@ -149,6 +151,7 @@ lexical entries.
 | `drum` | cylindrical container, usually with flat ends |
 | `duct` | enclosed passage for conveying air, fluid, or wiring |
 | `edge` | line where two surfaces of a solid meet |
+| `emitter` | part of a device that releases charge carriers or radiation |
 | `enclosure` | structure that surrounds and contains |
 | `engine` | device that converts stored energy into mechanical motion |
 | `equipment` | set of devices assembled for a particular operation |
@@ -237,8 +240,10 @@ lexical entries.
 | `rack` | framework with rails or slots for holding items in order |
 | `rail` | horizontal bar or track that guides or supports |
 | `reflector` | surface shaped to redirect radiant energy |
+| `region` | bounded part of a space, surface, or body |
 | `relay` | device that opens or closes a circuit in response to a control signal |
 | `reservoir` | container or natural formation that stores fluid |
+| `resistor` | component that limits electric current |
 | `ring` | circular band of rigid material |
 | `rod` | straight rigid bar of circular cross-section |
 | `roller` | cylindrical body that rotates to support or move a load |
@@ -261,6 +266,7 @@ lexical entries.
 | `shutter` | hinged or sliding panel that opens and closes to control passage of light |
 | `slab` | thick flat piece of rigid material |
 | `sleeve` | tube fitted over a shaft or rod |
+| `slice` | thin flat piece cut from a larger body |
 | `slide` | flat surface or track along which a part moves linearly |
 | `slot` | narrow elongated opening in a surface |
 | `socket` | hollow fitting that receives and holds a mating part |
@@ -301,7 +307,7 @@ lexical entries.
 | `wire` | single strand of drawn metal |
 
 
-### B. Materials and Substances (92)
+### B. Materials and Substances (97)
 
 | Word | Sense pin |
 |---|---|
@@ -329,6 +335,7 @@ lexical entries.
 | `crystal` | solid with atoms arranged in a periodic lattice |
 | `dipole` | pair of equal and opposite charges separated by a distance |
 | `distillation` | separation of mixture components by evaporation and condensation |
+| `dopant` | substance added in small quantity to a semiconductor to change its conduction |
 | `dust` | fine dry particles of solid material suspended in gas or settled on surfaces |
 | `dye` | substance that changes the color of a material by chemical bonding |
 | `electrode` | conductor through which current enters or leaves an electrolyte or device |
@@ -343,9 +350,11 @@ lexical entries.
 | `gas` | state of matter with no fixed shape or volume |
 | `glass` | amorphous solid, typically transparent, made by cooling a melt without crystallization |
 | `gold` | metallic element, atomic number 79 |
+| `graphite` | soft conductive form of carbon |
 | `grease` | thick viscous lubricant |
 | `hydrogen` | element, atomic number 1; lightest element |
 | `ice` | solid phase of water |
+| `impurity` | substance present in small quantity within another substance |
 | `iron` | metallic element, atomic number 26 |
 | `isomer` | molecule with the same atoms as another but a different arrangement |
 | `lattice` | (crystal sense) regular periodic arrangement of atoms in a solid |
@@ -366,6 +375,7 @@ lexical entries.
 | `oxygen` | element, atomic number 8 |
 | `paint` | liquid coating that dries to form a colored film |
 | `particle` | small discrete piece of matter |
+| `peroxide` | compound that contains two oxygen atoms joined to each other |
 | `pigment` | substance producing color by selective absorption and reflection of light |
 | `plastic` | synthetic polymer that can be molded when heated |
 | `polymer` | large molecule composed of repeating bonded units |
@@ -396,10 +406,11 @@ lexical entries.
 | `titration` | measurement of a solution's concentration by controlled reaction |
 | `valence` | combining capacity of an atom, equal to the number of bonds it forms |
 | `vapor` | gaseous form of a substance that normally exists as liquid or solid at ambient conditions |
+| `waste` | material that remains after a process without further function |
 | `water` | compound of hydrogen and oxygen, H₂O |
 
 
-### C. Measurement and Quantity (163)
+### C. Measurement and Quantity (164)
 
 | Word | Sense pin |
 |---|---|
@@ -496,6 +507,7 @@ lexical entries.
 | `numerator` | number above the line in a fraction |
 | `offset` | constant value added to shift a baseline |
 | `output` | quantity produced by a system or process |
+| `part` | one of the equal portions into which a whole divides |
 | `peak` | highest instantaneous value in a time-varying quantity |
 | `percentage` | proportion expressed as parts per hundred |
 | `period` | time to complete one cycle of a periodic process |
@@ -568,7 +580,7 @@ lexical entries.
 | `zero` | the additive identity; point of origin on a scale |
 
 
-### D. Process and Procedure (183)
+### D. Process and Procedure (188)
 
 | Word | Sense pin |
 |---|---|
@@ -595,6 +607,7 @@ lexical entries.
 | `condition` | state of a system or environment at a specific time |
 | `configuration` | set of parameter values defining the state of a system |
 | `constraint` | limitation on the range of permitted values or actions |
+| `construction` | process of building from parts according to a plan |
 | `contact` | state of physical proximity allowing interaction; or first communication event |
 | `contingency` | planned response to a possible but uncertain event |
 | `control` | (process sense) act of regulating a system to maintain desired behavior |
@@ -616,6 +629,7 @@ lexical entries.
 | `effect` | measurable change produced by a cause |
 | `entry` | act of placing data into a record; or a single item in a record |
 | `environment` | set of external conditions surrounding a system |
+| `escape` | movement of a substance out of its container |
 | `event` | occurrence at a specific time and place |
 | `examination` | careful inspection or analysis |
 | `exception` | case that does not follow the general rule |
@@ -639,6 +653,7 @@ lexical entries.
 | `input` | material, energy, or data entering a system |
 | `inspection` | visual or instrumental examination of a component for defects |
 | `iteration` | one repetition of a recurring process |
+| `loss` | decrease of a quantity through removal or decay |
 | `maintenance` | set of actions that preserve a system in working condition |
 | `measurement` | act of determining a quantity by instrument or defined procedure |
 | `method` | defined sequence of steps for accomplishing a task |
@@ -694,6 +709,7 @@ lexical entries.
 | `retrieval` | act of obtaining stored data or material |
 | `review` | systematic re-examination of work, records, or procedures |
 | `revision` | updated version of a document or plan, with changes identified |
+| `rinse` | removal of residue by flow of clean liquid |
 | `rollback` | reversion of a system to a previous known state |
 | `rotation` | (process sense) scheduled cycling of personnel through roles |
 | `rule` | formal statement that defines permitted or required behavior |
@@ -754,6 +770,7 @@ lexical entries.
 | `warning` | notification that a condition approaches or has reached a threshold |
 | `window` | (process sense) bounded period during which an operation may occur |
 | `withdrawal` | removal of a component, statement, or permission from active status |
+| `work` | activity performed to carry out a procedure |
 | `workflow` | defined sequence of tasks performed by agents and systems |
 
 
@@ -792,7 +809,7 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (223)
+### F. Natural and Scientific (226)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
@@ -817,9 +834,11 @@ expansion nouns.
 | `blueshift` | decrease in wavelength of radiation from an approaching source |
 | `boson` | particle with integer spin that mediates forces |
 | `bow-shock` | boundary where a supersonic flow decelerates upon encountering an obstacle |
+| `burn` | damage to a surface from heat or chemical action |
 | `causality` | relation between cause and effect, constrained by signal speed |
 | `cell` | smallest unit of a living organism |
 | `chromosome` | thread-like structure of DNA carrying genetic information |
+| `combustion` | rapid chemical reaction with oxygen that releases heat and light |
 | `comet` | small icy body that releases gas and dust when near a star |
 | `conservation` | property of a quantity remaining constant in a closed system |
 | `constellation` | defined region of the celestial sphere |
@@ -836,6 +855,7 @@ expansion nouns.
 | `degeneracy` | condition where distinct quantum states have equal energy |
 | `deposition` | (geology sense) laying down of sediment by a natural process |
 | `diffraction` | bending of waves around obstacles or through apertures |
+| `diffusion` | net movement of particles from higher to lower concentration |
 | `dispersion` | dependence of wave propagation speed on wavelength |
 | `doppler-shift` | change in observed frequency due to relative motion between source and observer |
 | `dwarf-planet` | body orbiting a star, massive enough for round shape, that has not cleared its orbit |
@@ -1024,7 +1044,7 @@ expansion nouns.
 | `nadir` | point on the celestial sphere directly below the observer |
 
 
-### G. Abstract and System (220)
+### G. Abstract and System (221)
 
 | Word | Sense pin |
 |---|---|
@@ -1052,6 +1072,7 @@ expansion nouns.
 | `byte` | unit of 8 bits |
 | `cache` | fast-access storage holding recently used data |
 | `capacity` | (system sense) maximum throughput or storage of a system |
+| `catalogue` | ordered list of items with their recorded properties |
 | `category` | class defined by shared properties |
 | `chain` | (abstract sense) linked sequence of related items or events |
 | `checksum` | value derived from data for error detection |
@@ -1353,7 +1374,7 @@ confirm domain coverage. No duplication in the count.
 ---
 ---
 
-## 6. Adjectives (239 unique)
+## 6. Adjectives (246 unique)
 
 All adjectives describe physically measurable or logically
 verifiable properties. No evaluative adjectives admitted.
@@ -1396,13 +1417,14 @@ verifiable properties. No evaluative adjectives admitted.
 | `solid` | in the phase with fixed shape and fixed volume |
 | `warm` | having temperature slightly above a reference |
 
-### Speed and time (12)
+### Speed and time (13)
 
 | Adjective | Sense pin |
 |---|---|
 | `brief` | lasting a short duration |
 | `constant` | not changing over the specified interval |
 | `continuous` | occurring without interruption |
+| `delayed` | occurring after an interval from the cause |
 | `fast` | having high speed |
 | `frequent` | occurring at short intervals |
 | `gradual` | changing by small increments over time |
@@ -1434,7 +1456,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `spherical` | having the shape of a sphere |
 | `vertical` | perpendicular to the local gravitational equipotential surface |
 
-### Physical properties (28)
+### Physical properties (30)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1444,6 +1466,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `corrosive` | causing gradual chemical destruction of a material |
 | `dense` | having high mass per unit volume |
 | `elastic` | returning to original shape after removal of applied force |
+| `fine` | consisting of very small particles |
 | `flexible` | capable of bending without breaking |
 | `fragile` | breaking under small applied force |
 | `hard` | resisting indentation or scratching |
@@ -1455,6 +1478,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `organic` | (chemistry sense) containing carbon-hydrogen bonds |
 | `permeable` | allowing fluid to pass through |
 | `porous` | containing many small openings that allow fluid to pass |
+| `reducing` | able to remove oxygen from or supply electrons to another substance |
 | `reflective` | returning a high fraction of incident light from the surface |
 | `rigid` | resisting change in shape under applied force |
 | `rough` | having an uneven surface with measurable irregularities |
@@ -1484,7 +1508,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `white` | reflecting a high fraction of visible light across the spectrum |
 | `yellow` | having dominant wavelength approximately 565–590 nm |
 
-### State and condition (29)
+### State and condition (30)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1503,6 +1527,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `correct` | matching the specified or true value |
 | `current` | (state sense) existing at the present time |
 | `damaged` | having reduced function due to physical harm |
+| `dark` | without incident light |
 | `defective` | failing to meet specification due to a flaw |
 | `disabled` | prevented from operating by a control action |
 | `empty` | containing nothing |
@@ -1546,7 +1571,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `residual` | remaining after the primary quantity has been removed |
 | `single` | consisting of exactly one |
 
-### Logical and procedural (24)
+### Logical and procedural (25)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1554,6 +1579,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `accessible` | reachable for reading, writing, or physical access |
 | `applicable` | relevant to the current condition |
 | `automated` | performed by a system without human intervention |
+| `based` | having the named item as its main component |
 | `bilateral` | involving two parties |
 | `binary` | having exactly two possible states |
 | `certified` | verified by an authorized review to meet specification |
@@ -1618,7 +1644,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `planetary` | relating to a planet |
 | `suborbital` | following a trajectory that does not complete a full orbit |
 
-### Physics (16)
+### Physics (18)
 
 | Adjective | Sense pin |
 |---|---|
@@ -1633,9 +1659,11 @@ verifiable properties. No evaluative adjectives admitted.
 | `molecular` | relating to molecules |
 | `nonlinear` | not proportional; output not a linear function of input |
 | `nuclear` | relating to the nucleus of an atom |
+| `ohmic` | passing current in proportion to voltage in both polarities |
 | `optical` | relating to light in the visible range or to optics |
 | `quantum` | relating to discrete units of energy or to quantum mechanics |
 | `relativistic` | relating to effects at speeds approaching the speed of light |
+| `spectral` | relating to a spectrum |
 | `thermal` | relating to heat or temperature |
 | `thermodynamic` | relating to relations between heat, work, and energy |
 
@@ -1677,7 +1705,7 @@ verifiable properties. No evaluative adjectives admitted.
 ---
 ---
 
-## 7. Adverbs (52)
+## 7. Adverbs (55)
 
 ### Temporal (16)
 
@@ -1700,7 +1728,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `simultaneously` | at exactly the same time |
 | `subsequently` | after the event in question |
 
-### Manner (14)
+### Manner (15)
 
 | Adverb | Sense pin |
 |---|---|
@@ -1712,6 +1740,7 @@ verifiable properties. No evaluative adjectives admitted.
 | `evenly` | with uniform distribution |
 | `firmly` | with resistance to displacement |
 | `gradually` | by small increments over time |
+| `inward` | toward the interior |
 | `manually` | by direct human or operator action |
 | `precisely` | with small uncertainty |
 | `rapidly` | at high speed |
@@ -1719,17 +1748,19 @@ verifiable properties. No evaluative adjectives admitted.
 | `slowly` | at low speed |
 | `steadily` | at a constant rate |
 
-### Degree and frequency (14)
+### Degree and frequency (16)
 
 | Adverb | Sense pin |
 |---|---|
 | `almost` | within a small margin of a value |
 | `approximately` | close to but not exactly equal to |
 | `completely` | to the full extent |
+| `daily` | once in each day |
 | `entirely` | with no part excluded |
 | `exactly` | with zero deviation from the stated value |
 | `frequently` | at short intervals |
 | `fully` | to the maximum extent |
+| `hourly` | once in each hour |
 | `largely` | to a great extent but not entirely |
 | `mostly` | in the greater part |
 | `nearly` | within a small margin of |
@@ -1795,9 +1826,9 @@ verifiable properties. No evaluative adjectives admitted.
 |---|---|---|
 | Function words | 137 | This file |
 | Method-only verbs | 325 | SKILL file |
-| Nouns | 1084 | This file |
-| Adjectives | 239 | This file |
-| Adverbs | 52 | This file |
+| Nouns | 1105 | This file |
+| Adjectives | 246 | This file |
+| Adverbs | 55 | This file |
 | Numerals and units | 69 | This file |
 | Evidential markers | 15 | SKILL file |
 | **Core total** | **~2,284** | — |
@@ -1829,4 +1860,4 @@ verifiable properties. No evaluative adjectives admitted.
 
 ---
 
-*End of Beyond CNL Companion Lexicon v0.4.1.*
+*End of Beyond CNL Companion Lexicon v0.4.2.*
