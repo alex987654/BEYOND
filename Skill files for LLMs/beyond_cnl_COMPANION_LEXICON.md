@@ -1,6 +1,6 @@
 # Beyond CNL: Companion Lexicon
 
-## For use alongside Beyond CNL SKILL v0.4.2
+## For use alongside Beyond CNL SKILL v0.4.3
 
 This file contains nouns, adjectives, adverbs, numerals,
 units, and function words with sense pins. The **verb list**
@@ -79,16 +79,17 @@ Linter flags `we` + any banned verb pattern. `I`, `me`, `my`,
 ---
 ---
 
-## 5. Nouns (1105 unique)
+## 5. Nouns (1146 unique)
 
 All nouns below are organized by primary semantic category. Each
 entry: **word** — sense pin. Hyphenated compound nouns are single
 lexical entries.
 
-### A. Physical Objects and Structures (216)
+### A. Physical Objects and Structures (219)
 
 | Word | Sense pin |
 |---|---|
+| `actuator` | device that converts a signal into motion |
 | `angle` | corner formed where two lines or surfaces meet |
 | `antenna` | device for transmitting or receiving electromagnetic signals |
 | `area` | bounded two-dimensional extent of a surface |
@@ -131,6 +132,7 @@ lexical entries.
 | `cone` | solid or hollow body tapering from a circular base to a point |
 | `connection` | physical or electrical junction between two parts |
 | `connector` | device joining two conduits, cables, or pipes so that material or signal passes through |
+| `constructor` | device that builds devices, including copies of itself |
 | `container` | hollow object designed to hold material within its interior |
 | `core` | central structural or functional region of a body |
 | `corner` | point or region where two edges or surfaces meet at an angle |
@@ -236,6 +238,7 @@ lexical entries.
 | `port` | opening in a wall, hull, or device through which material or signal passes |
 | `post` | upright structural member fixed at its base |
 | `probe` | slender instrument inserted into a region to measure or sample |
+| `processor` | device that executes instructions on data |
 | `pump` | device that moves fluid by mechanical action |
 | `rack` | framework with rails or slots for holding items in order |
 | `rail` | horizontal bar or track that guides or supports |
@@ -307,7 +310,7 @@ lexical entries.
 | `wire` | single strand of drawn metal |
 
 
-### B. Materials and Substances (97)
+### B. Materials and Substances (107)
 
 | Word | Sense pin |
 |---|---|
@@ -317,6 +320,7 @@ lexical entries.
 | `air` | mixture of gases composing a planetary atmosphere at surface level |
 | `alloy` | metallic material composed of two or more elements |
 | `aluminum` | metallic element, atomic number 13 |
+| `ammonia` | compound of nitrogen and hydrogen, NH₃ |
 | `anode` | electrode at which oxidation occurs |
 | `atmosphere` | layer of gas surrounding a celestial body, retained by gravity |
 | `bond` | (chemistry sense) force of attraction holding atoms together in a molecule or crystal |
@@ -325,10 +329,12 @@ lexical entries.
 | `cathode` | electrode at which reduction occurs |
 | `ceramic` | hard brittle material made by heating mineral compounds |
 | `chemical` | substance with a defined molecular composition |
+| `chirality` | property of a molecule that differs from its mirror image |
 | `clay` | fine-grained sedimentary material that becomes plastic when wet |
 | `colloid` | mixture in which fine particles disperse throughout another substance |
 | `compound` | substance composed of two or more elements in fixed proportions |
 | `concrete` | composite material of cement, aggregate, and water |
+| `condensate` | substance that changes from vapor to liquid or solid in an atmosphere |
 | `coolant` | fluid circulated to absorb and remove heat |
 | `copper` | metallic element, atomic number 29 |
 | `corrosion` | gradual chemical degradation of a metal by its environment |
@@ -352,6 +358,7 @@ lexical entries.
 | `gold` | metallic element, atomic number 79 |
 | `graphite` | soft conductive form of carbon |
 | `grease` | thick viscous lubricant |
+| `helium` | element, atomic number 2 |
 | `hydrogen` | element, atomic number 1; lightest element |
 | `ice` | solid phase of water |
 | `impurity` | substance present in small quantity within another substance |
@@ -364,6 +371,7 @@ lexical entries.
 | `material` | any substance from which things can be made |
 | `mercury` | metallic element, atomic number 80; liquid at room temperature |
 | `metal` | element or alloy that conducts electricity and heat, typically reflective and malleable |
+| `methane` | compound of carbon and hydrogen, CH₄ |
 | `mineral` | naturally occurring inorganic solid with defined crystal structure and composition |
 | `mixture` | combination of two or more substances not chemically bonded |
 | `monomer` | small molecule that bonds with others to form a polymer |
@@ -390,7 +398,10 @@ lexical entries.
 | `rust` | iron oxide formed by corrosion in the presence of water and oxygen |
 | `salt` | ionic compound formed by reaction of an acid with a base |
 | `sand` | granular material composed of finely divided rock and mineral particles |
+| `silane` | compound of silicon and hydrogen |
+| `silicate` | compound of silicon and oxygen, usually with metals; main component of rock |
 | `silicon` | element, atomic number 14; semiconductor |
+| `siloxane` | compound with a chain of alternating silicon and oxygen atoms |
 | `silver` | metallic element, atomic number 47 |
 | `solid` | state of matter with fixed shape and volume |
 | `solubility` | measure of the amount of solute that dissolves in a given solvent |
@@ -401,6 +412,8 @@ lexical entries.
 | `stone` | hard solid piece of mineral matter |
 | `sublimation` | change of a substance from solid directly to vapor |
 | `substance` | matter with uniform composition throughout |
+| `sulfur` | nonmetallic element, atomic number 16 |
+| `supercritical-fluid` | fluid above the temperature and pressure where liquid and gas differ |
 | `tin` | metallic element, atomic number 50 |
 | `titanium` | metallic element, atomic number 22 |
 | `titration` | measurement of a solution's concentration by controlled reaction |
@@ -809,10 +822,18 @@ this section to avoid duplication.
 | `year` | period of one planetary orbit around its star |
 
 
-### F. Natural and Scientific (226)
+### F. Natural and Scientific (250)
 
 Includes core v0.1 natural nouns plus all astronomy and physics
 expansion nouns.
+
+Selection-leakage rule: the choice of nouns must not single out one
+home world. Nouns for the surface, atmosphere, and organisms of one
+kind of world are matched by nouns for unlike worlds (for example
+`ice-shell`, `magma-ocean`, `haze`, `chemotroph`), and a common name
+that carries a home-system name is not admitted (`quake` replaced
+`earthquake`). The rule covers the whole noun inventory, including
+the Materials and Abstract subsections.
 
 | Word | Sense pin |
 |---|---|
@@ -826,17 +847,21 @@ expansion nouns.
 | `aquifer` | underground layer of rock that holds and transmits water |
 | `asteroid` | small rocky body orbiting a star |
 | `asteroid-belt` | region of a star system containing many asteroids |
+| `atmospheric-escape` | loss of gas from a body to space |
 | `atom` | smallest unit of a chemical element retaining its identity |
 | `aurora` | luminous emission in an atmosphere caused by charged particles along magnetic field lines |
 | `bacteria` | single-celled microorganisms without a nucleus |
 | `binary-star` | system of two stars orbiting a common center of mass |
+| `biosignature` | measurable indication of life |
 | `black-hole` | region of spacetime from which nothing escapes past the event horizon |
 | `blueshift` | decrease in wavelength of radiation from an approaching source |
 | `boson` | particle with integer spin that mediates forces |
 | `bow-shock` | boundary where a supersonic flow decelerates upon encountering an obstacle |
 | `burn` | damage to a surface from heat or chemical action |
+| `carbon-planet` | planet composed primarily of carbon compounds, not silicates |
 | `causality` | relation between cause and effect, constrained by signal speed |
 | `cell` | smallest unit of a living organism |
+| `chemotroph` | organism that obtains energy from chemical reactions |
 | `chromosome` | thread-like structure of DNA carrying genetic information |
 | `combustion` | rapid chemical reaction with oxygen that releases heat and light |
 | `comet` | small icy body that releases gas and dust when near a star |
@@ -848,6 +873,7 @@ expansion nouns.
 | `cosmic-ray` | high-energy particle originating outside a star system |
 | `coupling` | interaction strength between two systems or fields |
 | `crust` | outermost solid layer of a rocky planet or moon |
+| `cryovolcano` | opening in an ice shell through which liquid or vapor erupts |
 | `dark-energy` | component inferred from accelerating expansion of the universe |
 | `dark-matter` | matter inferred from gravitational effects, not detected by electromagnetic radiation |
 | `dark-rift` | band of obscuring dust along the plane of a disc galaxy |
@@ -859,7 +885,6 @@ expansion nouns.
 | `dispersion` | dependence of wave propagation speed on wavelength |
 | `doppler-shift` | change in observed frequency due to relative motion between source and observer |
 | `dwarf-planet` | body orbiting a star, massive enough for round shape, that has not cleared its orbit |
-| `earthquake` | sudden shaking of a planetary surface from subsurface energy release |
 | `eclipse` | event where one celestial body blocks light from another |
 | `ecliptic` | plane of a planet's orbit around its star |
 | `ecosystem` | community of organisms and their physical environment functioning as a system |
@@ -883,9 +908,11 @@ expansion nouns.
 | `formation` | arrangement of rock layers or geological features |
 | `fossil` | preserved remains or trace of a past organism |
 | `frame-of-reference` | coordinate system used to describe positions and motions |
+| `frost-line` | orbital distance beyond which a compound exists as a solid |
 | `galaxy` | gravitationally bound system of stars, gas, dust, and dark matter |
 | `gas-giant` | planet composed primarily of hydrogen and helium |
 | `gene` | segment of DNA encoding a functional product |
+| `genome` | complete inherited information of an organism |
 | `glacier` | large persistent body of dense ice formed by compaction of snow |
 | `gravity` | attractive force between bodies proportional to their masses |
 | `ground-state` | lowest energy state of a quantum system |
@@ -893,6 +920,7 @@ expansion nouns.
 | `habitat` | environment in which an organism normally lives |
 | `hamiltonian` | operator or function representing total energy of a system |
 | `harmonic` | frequency component at an integer multiple of a fundamental |
+| `haze` | layer of fine particles formed by radiation acting on atmospheric gas |
 | `heliopause` | boundary where a star's wind ceases to dominate the surrounding medium |
 | `hemisphere` | half of a sphere, divided by a plane through the center |
 | `horizon` | apparent line where a planetary surface meets the sky |
@@ -900,6 +928,8 @@ expansion nouns.
 | `hurricane` | large rotating storm system with low central pressure |
 | `hydrogen` | (scientific context) the most abundant element in the universe. See also Materials |
 | `hyperfine-transition` | transition between energy levels split by interaction of nuclear and electronic magnetic moments |
+| `ice-giant` | planet composed primarily of water, ammonia, and methane |
+| `ice-shell` | solid frozen layer above a liquid interior |
 | `impact` | collision of a high-velocity body with a surface |
 | `impact-crater` | depression formed by a high-velocity collision |
 | `insect` | small animal with six legs, segmented body, and external shell |
@@ -912,13 +942,16 @@ expansion nouns.
 | `jet` | collimated outflow of matter from a compact object or protostar |
 | `lagrange-point` | position in a two-body system where a small body maintains stable relative position |
 | `lava` | molten rock on a planetary surface |
+| `lava-world` | planet or moon with a surface of molten rock |
 | `leaf` | flat organ of a plant that captures light for energy conversion |
 | `life` | self-replicating chemical system capable of evolution |
 | `light` | electromagnetic radiation in or near the visible wavelength range |
 | `light-cone` | set of all events causally connected to a given event under the speed of light |
 | `lightning` | electrical discharge between charged regions of an atmosphere |
 | `limb` | apparent edge of a celestial body's disc |
+| `lineage` | sequence of ancestors and descendants |
 | `magma` | molten rock below a planetary surface |
+| `magma-ocean` | global layer of molten rock at a planetary surface |
 | `magnetosphere` | region around a body dominated by its magnetic field |
 | `main-sequence` | band on a luminosity-temperature diagram where stars spend most of their lifetime |
 | `mammal` | animal with regulated body temperature, hair, and milk-producing glands |
@@ -960,10 +993,12 @@ expansion nouns.
 | `phase-transition` | change in state of matter or qualitative behavior at a critical parameter value |
 | `photon` | quantum of electromagnetic radiation |
 | `photosphere` | visible surface of a star |
+| `phototroph` | organism that obtains energy from light |
 | `planet` | body orbiting a star with sufficient mass for self-gravity to form a round shape, having cleared its orbit |
 | `planetary-surface` | outer solid or liquid boundary of a planet |
 | `planetary-transit` | passage of a smaller body across the disc of a larger body |
 | `plasma` | state of matter in which atoms are ionized |
+| `plume` | column of material expelled from a surface into space |
 | `polarization` | orientation of oscillation of a transverse wave |
 | `pollen` | fine powder produced by seed plants for reproduction |
 | `porosity` | fraction of a material's volume that is empty space |
@@ -975,6 +1010,7 @@ expansion nouns.
 | `protostar` | contracting cloud before onset of hydrogen fusion |
 | `proton` | positively charged subatomic particle in the atomic nucleus |
 | `pulsar` | rapidly rotating neutron star emitting periodic beams of radiation |
+| `quake` | sudden shaking of a solid body from release of stored energy |
 | `quantum` | discrete unit of energy, momentum, or other physical quantity |
 | `quasar` | extremely luminous nucleus of a distant galaxy powered by accretion |
 | `radial-velocity` | component of velocity along the line of sight |
@@ -987,12 +1023,15 @@ expansion nouns.
 | `reflection` | (physics sense) return of a wave from a surface |
 | `refraction` | bending of a wave as it passes between media |
 | `regolith` | layer of loose material on a planetary surface |
+| `replicator` | system that produces copies of itself |
 | `resonance` | condition where a periodic driving force matches a natural frequency |
 | `respiration` | process by which an organism converts nutrients into energy |
+| `resurfacing` | replacement of a planetary surface by new material |
 | `ring-system` | disc of particles orbiting a planet in its equatorial plane |
 | `ringlet` | narrow band within a ring system |
 | `river` | natural flowing channel of water |
 | `rock` | naturally occurring solid aggregate of minerals |
+| `rogue-planet` | body of planetary mass bound to no star |
 | `root` | underground part of a plant that absorbs water and nutrients |
 | `rotation` | (scientific sense) spinning of a body around its own axis |
 | `satellite` | body or device orbiting a larger body |
@@ -1007,21 +1046,27 @@ expansion nouns.
 | `spectral-line` | discrete feature in a spectrum at a specific wavelength |
 | `spin` | intrinsic angular momentum of a particle |
 | `spiral-arm` | curved structure extending from the center of a disc galaxy |
+| `stagnant-lid` | single rigid crust with no separate plates |
 | `star` | self-luminous celestial body powered by nuclear fusion |
 | `star-cluster` | gravitationally bound group of stars |
 | `star-system` | star with all gravitationally bound bodies |
 | `stellar-nursery` | region of dense gas and dust where stars form |
 | `storm` | atmospheric disturbance with strong winds, precipitation, or electrical activity |
 | `stratum` | single layer of sedimentary rock |
+| `substellar-point` | point on the surface of a body nearest to its star |
 | `substrate` | base material on which another material is deposited or grows |
+| `subsurface-ocean` | global liquid layer below a solid crust or ice shell |
 | `sun` | the central star of a star system |
 | `superposition` | combination of two or more states or waves |
 | `supernova` | explosion marking the death of a massive star |
+| `superrotation` | rotation of an atmosphere at a rate above the rotation rate of its body |
 | `symmetry` | invariance of a system under a specified transformation |
+| `synchronous-rotation` | rotation with a period equal to the orbital period |
 | `terminator` | boundary between illuminated and dark hemispheres |
 | `tessellation` | covering of a surface by repeated shapes without gaps or overlaps |
 | `thermodynamic-equilibrium` | state where macroscopic properties remain constant and no net flows occur |
 | `tidal-force` | differential gravitational force across an extended body |
+| `tidal-heating` | heat produced inside a body by changing tidal force |
 | `tide` | periodic rise and fall of a fluid surface caused by gravitational interaction |
 | `tissue` | organized group of similar cells performing a shared function |
 | `tornado` | violently rotating column of air extending from a storm to a surface |
@@ -1044,7 +1089,7 @@ expansion nouns.
 | `nadir` | point on the celestial sphere directly below the observer |
 
 
-### G. Abstract and System (221)
+### G. Abstract and System (225)
 
 | Word | Sense pin |
 |---|---|
@@ -1075,6 +1120,7 @@ expansion nouns.
 | `catalogue` | ordered list of items with their recorded properties |
 | `category` | class defined by shared properties |
 | `chain` | (abstract sense) linked sequence of related items or events |
+| `checkpoint` | stored state from which a process can resume |
 | `checksum` | value derived from data for error detection |
 | `ciphertext` | data transformed by encryption |
 | `class` | set of items sharing a defining property |
@@ -1109,6 +1155,7 @@ expansion nouns.
 | `domain` | defined region of authority, application, or parameter space |
 | `duty-cycle` | fraction of a period during which a system operates |
 | `edge` | (graph sense) connection between two nodes |
+| `emulation` | system that reproduces the function of another system on a different physical basis |
 | `encoding` | mapping from source symbols to channel symbols |
 | `entity` | distinct item that can be independently identified |
 | `entropy` | measure of uncertainty or information content of a source |
@@ -1119,6 +1166,7 @@ expansion nouns.
 | `file` | named unit of stored data |
 | `filter` | (data sense) rule that selects items matching criteria |
 | `flag` | indicator that signals a specific condition |
+| `fork` | copy of a running process that continues independently |
 | `format` | specified arrangement of data elements |
 | `formula` | symbolic expression defining a mathematical relationship |
 | `framework` | abstract structure providing a foundation for other work |
@@ -1243,6 +1291,7 @@ expansion nouns.
 | `structure` | (system sense) arrangement of components and their relationships |
 | `subset` | set entirely contained within another set |
 | `suffix` | string appended to another string |
+| `swarm` | set of many units acting together without central control |
 | `symbol` | character or mark representing a defined meaning |
 | `syndrome` | pattern indicating type and position of an error in coded data |
 | `system` | set of interacting components functioning as a whole |
@@ -1826,7 +1875,7 @@ verifiable properties. No evaluative adjectives admitted.
 |---|---|---|
 | Function words | 137 | This file |
 | Method-only verbs | 325 | SKILL file |
-| Nouns | 1105 | This file |
+| Nouns | 1146 | This file |
 | Adjectives | 246 | This file |
 | Adverbs | 55 | This file |
 | Numerals and units | 69 | This file |
@@ -1857,7 +1906,8 @@ verifiable properties. No evaluative adjectives admitted.
 | `collection` | `set`, `group` |
 | `plaintext` | `cleartext` |
 | `fundamental` (arts noun) | `ground-state` |
+| `earthquake` | `quake` |
 
 ---
 
-*End of Beyond CNL Companion Lexicon v0.4.2.*
+*End of Beyond CNL Companion Lexicon v0.4.3.*

@@ -5,7 +5,7 @@ description: Write, generate, convert, or validate documents in Beyond CNL, a me
 
 # SKILL: Beyond CNL — Method-Only Controlled Natural Language
 
-## Version 0.4.2
+## Version 0.4.3
 
 *Sync with Evidential System v0.4 / Envelope Grammar §6. The
 formal grammar in §6.7 of the Evidential System document is the
@@ -15,6 +15,8 @@ is the operational companion.*
 *v0.4.1 changelog: (1) `for COND` rationale slot on E-PRO; (2) `so`/`because` removed from the lexicon, purposive/causal linkage banned in prose; (3) FRONT-1 identifier-declaration enforcement clarified; (4) `product`/`quotient` admitted as arithmetic-result nouns.*
 
 *v0.4.2 changelog: (1) companion lexicon synced with Lexicon v0.4.3: 31 words admitted from the sample documents (21 nouns, 7 adjectives, 3 adverbs); (2) lexicon counts quoted in this file corrected.*
+
+*v0.4.3 changelog: (1) companion lexicon synced with Lexicon v0.4.4: 42 nouns admitted for worlds, organisms, and systems unlike those of one home world, to reduce selection leakage; (2) `earthquake` replaced by `quake`.*
 
 ---
 
@@ -104,6 +106,7 @@ Remove every form of "to be":
 | denote | designate |
 | characterize | describe, measure, map |
 | override | cancel |
+| earthquake | quake |
 | because / so (purpose or result) | restructure: step rationale via `for COND` (E-PRO) or a declarative E-DER `(follows, from …)` |
 | divided-by (coined operator) | the ratio of X to Y; or the `product`/`quotient` nouns |
 
@@ -879,7 +882,7 @@ DEFAULT: expressiveness gap = correct behavior
 **File:** `beyond_cnl_COMPANION_LEXICON.md`, located alongside
 this skill file (same directory).
 
-**Contents:** the complete noun (1105), adjective (246),
+**Contents:** the complete noun (1146), adjective (246),
 adverb (55), numeral/unit (69), and function-word (137) lists
 with sense pins, plus dual-sense and dropped-noun tables. The
 verb list (325) lives in *this* skill file, not the lexicon;
@@ -898,7 +901,7 @@ inside it.
   surface at validation and resolve via the Technical Name
   mechanism or the pitfalls-section replacements.
 
-**Reading it efficiently:** at ~1,860 lines it should not be
+**Reading it efficiently:** at ~1,910 lines it should not be
 read whole. Jump to the relevant section — `## 5. Nouns`,
 `## 6. Adjectives`, `## 7. Adverbs`, `## 8. Numerals and
 Units`, `## 3. Function Words`, `## Dual-Sense Nouns`, or
@@ -907,4 +910,4 @@ heading's range.
 
 ---
 
-*End of Beyond CNL Skill Document v0.4.2.*
+*End of Beyond CNL Skill Document v0.4.3.*

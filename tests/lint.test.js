@@ -97,6 +97,39 @@ test('a clause without an E-tag is rejected', () => {
 });
 
 // ---------------------------------------------------------------------------
+// Vocabulary: nouns for worlds, organisms and systems unlike one home world
+// ---------------------------------------------------------------------------
+
+test('nouns for unlike worlds and substrate-neutral systems are approved', () => {
+  const result = lintBody([
+    '> A plume above the ice-shell contains methane and ammonia (observed, operator).',
+    '',
+    '> The haze of the ice-giant shows superrotation (observed, operator).',
+    '',
+    '> One quake followed the tidal-heating peak of the lava-world (observed, operator).',
+    '',
+    '> The replicator copies its genome across each lineage (observed, operator).',
+    '',
+    '> The swarm creates each fork from a checkpoint (observed, operator).'
+  ].join('\n'));
+  assertClean(result);
+});
+
+test('earthquake is no longer a lexicon word and points to quake', () => {
+  const result = lintBody('> The earthquake lasted 4 second (measured, receiver `RX-4`).');
+  const hits = found(result, 'LEXICON-ALLOW-LIST', 'warning');
+  assert.equal(hits.length, 1, describe(result));
+  assert.match(hits[0].reason, /Use quake/);
+});
+
+test('a word that names an Object.prototype member gets a plain message', () => {
+  const result = lintBody('> The valueOf persists (observed, operator).');
+  const hits = found(result, 'LEXICON-ALLOW-LIST', 'warning');
+  assert.equal(hits.length, 1, describe(result));
+  assert.match(hits[0].reason, /not found in the Beyond CNL approved vocabulary/);
+});
+
+// ---------------------------------------------------------------------------
 // R1: every token is classified; nothing skips the lexicon
 // ---------------------------------------------------------------------------
 

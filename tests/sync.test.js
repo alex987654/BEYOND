@@ -158,6 +158,15 @@ test('version strings agree within and across the skill files', () => {
   assert.equal(companionFoot, skillHead);
 });
 
+test('a noun dropped for carrying a home-system name is rejected with a hint', () => {
+  const dropped = byNumber(canonical, 2).rows.filter(r => /home-planet|home-system/.test(r.rest));
+  assert.ok(dropped.length > 0, 'the dropped-noun table records at least one such noun');
+  for (const { word } of dropped) {
+    assert.equal(Lexicon.isApproved(word), false, word);
+    assert.ok(Lexicon.getHint(word), `${word} has a replacement hint`);
+  }
+});
+
 // ---------------------------------------------------------------------------
 // Backlog: known drift, kept visible. A failing todo test does not fail the run.
 // ---------------------------------------------------------------------------
