@@ -41,7 +41,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 
 - An evidential tag on every declarative clause: ``(measured, instrument `RX-4`, 1-sigma)``, ``(derived, from `MSR-4.2`, `DEF-1.1`)``, ``(simulated, from model `MOD-1`, parameters `PAR-1`, run `RUN-1`)``, `(procedure, step 3)`
 - YAML frontmatter declaring `schema: beyond-cnl-v0.4`, purpose, phase, instruments, references, technical names, conditions, models, parameter sets, simulation runs, datasets, methods, and hypothesis space entries
-- Markdown structural typing: ordered lists for procedures, blockquotes for observations, fenced code blocks for definitions, constraints, measurements, simulations, and aggregations
+- Markdown structural typing: ordered lists for procedures, blockquotes for observations, fenced code blocks for definitions, constraints, measurements, simulations, aggregations, and relations
 - Sense-pinned vocabulary: several thousand core words, each with one spelling, one part of speech, and only one approved meaning
 
 ## Repository Contents
@@ -53,6 +53,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 | `Beyond CNL Evidential System.md`      | Evidential system specification — nine E-tag types, enforcement architecture, frontmatter schema |
 | `Beyond CNL Lexicon.md`            | Full consolidated lexicon (single-source reference, all word classes) |
 | `Beyond-CNL-Linter.html (and .js files)` | Grammar and lexicon checker for Beyond CNL text                 |
+| `tests/`                               | Linter and lexicon consistency tests (run `node --test`)     |
 
 ## Links
 
