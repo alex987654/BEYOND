@@ -61,6 +61,7 @@ Beyond CNL synthesizes six separate design ideas into one stack:
 - [Linter](https://alex987654.github.io/BEYOND/Beyond-CNL-Linter.html)
 - [Evidential System](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Evidential%20System.md)
 - [Lexicon](https://github.com/alex987654/BEYOND/blob/main/Beyond%20CNL%20Lexicon.md)
+- [![DOI](https://zenodo.org/badge/1227612616.svg)](https://doi.org/10.5281/zenodo.24514186)
 
 ## Example
 
