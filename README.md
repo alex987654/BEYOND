@@ -2,13 +2,14 @@
 
 BEYOND CNL - A method-only controlled subset of English when the constraint is to make communication safer for the sender when the recipient may be vastly more capable than the sender.
 
-Beyond is designed with the goal of limiting leakage of sender identity, values, intentions, or capabilities in messages and documents written in it. Every sentence carries a mandatory evidential tag tracing the claim to an instrument, derivation, definition, simulation, aggregate, hypothesis space, cited record, or procedure.
+Beyond is designed with the goal of significantly limiting leakage of sender identity, values, intentions, or capabilities in messages and documents written in it. Every sentence carries a mandatory evidential tag tracing the claim to an instrument, derivation, definition, simulation, aggregate, hypothesis space, cited record, or procedure.
 
 ## Why
 
 When the recipient of a message may have arbitrarily high intelligence, any disclosed information about the sender — who they are, where they live, what they value, what they can or cannot do — becomes a potential vulnerability for the sender. Beyond CNL removes the vocabulary of disclosure from the grammar and lexicon itself, so that safe communication only requires continued use of this method-only language.
 
 The language applies wherever the sender benefits from conveying *what instruments do and what they measured* while concealing *who placed them, where they came from, and what they want*: long-duration archive markers, AI-to-unknown-AI handshakes if capabilities may be vastly different, sensor networks, etc.
+For more details about the thought process behind BEYOND CNL, review [BACKGROUND](BACKGROUND.md).
 
 ## Design
 
