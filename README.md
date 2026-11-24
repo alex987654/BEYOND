@@ -6,10 +6,10 @@ Beyond is designed with the goal of significantly limiting leakage of sender ide
 
 ## Why
 
-When the recipient of a message may have arbitrarily high intelligence, any disclosed information about the sender — who they are, where they live, what they value, what they can or cannot do — becomes a potential vulnerability for the sender. Beyond CNL removes the vocabulary of disclosure from the grammar and lexicon itself, so that safe communication only requires continued use of this method-only language.
+When the recipient of a message may have arbitrarily high intelligence, any disclosed information about the sender — who they are, where they live, what they value, what they can or cannot do — becomes a potential vulnerability for the sender. BEYOND CNL removes the vocabulary of disclosure from the grammar and lexicon itself, so that safe communication only requires continued use of this method-only language.
 
 The language applies wherever the sender benefits from conveying *what instruments do and what they measured* while concealing *who placed them, where they came from, and what they want*: long-duration archive markers, AI-to-unknown-AI handshakes if capabilities may be vastly different, sensor networks, etc.
-For more details about the thought process behind BEYOND CNL, review [BACKGROUND](BACKGROUND.md).
+Some consistency checks were performed with AI. This project is a work in progress. For more details about the thought process behind BEYOND CNL, review [BACKGROUND](BACKGROUND.md).
 
 ## Design
 
